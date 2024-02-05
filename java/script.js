@@ -27,3 +27,61 @@ function hideTooltip() {
 function openEmailPage() {
     window.location.href = "mailto:y.wiaux@hw.ac.uk";
 }
+
+
+
+
+// main page slide
+document.addEventListener('DOMContentLoaded', function () {
+    const slides = ['images/slides/30-doradus_0_3.png', 'images/slides/30_doradus_0_3_gdth.png', 'images/slides/30-doradus_0_3_dirty.png']; // Add your slide images
+    const mainSlidesContainer = document.getElementById('mainSlides');
+    const thumbnailSlidesContainer = document.getElementById('thumbnailSlides');
+
+    // Dynamically add slides and thumbnails
+    slides.forEach((slide, index) => {
+        const mainSlide = document.createElement('img');
+        mainSlide.src = slide;
+        mainSlidesContainer.appendChild(mainSlide);
+
+        const thumbnail = document.createElement('img');
+        thumbnail.src = slide;
+        thumbnail.classList.add('thumbnail');
+        thumbnail.onclick = () => showSlide(index);
+        thumbnailSlidesContainer.appendChild(thumbnail);
+    });
+
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        currentIndex = index;
+        updateSlides();
+        updateThumbnails();
+    }
+
+    function updateSlides() {
+        const slides = document.querySelectorAll('.slideshow-container img');
+        slides.forEach((slide, index) => {
+            slide.style.display = index === currentIndex ? 'block' : 'none';
+        });
+    }
+
+    function updateThumbnails() {
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        thumbnails.forEach((thumbnail, index) => {
+            thumbnail.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlides();
+        updateThumbnails();
+    }
+
+    // Automatically change slides every 3 seconds
+    setInterval(nextSlide, 3000);
+
+    // Initial setup
+    updateSlides();
+    updateThumbnails();
+});

@@ -14,10 +14,25 @@
             <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
             <nav>
                 <a href="index.html">Home</a>
-                <a href="R2D2.html">R2D2</a>
-                <a href="AIRI.html">AIRI</a>
-                <a href="SARA_family.html">SARA Family</a>
-
+                <a href="R2D2.html" class="popup-icon" onmouseover="showPopup('R2D2-popup')" onmouseout="hidePopup('R2D2-popup')">
+                R2D2
+                <div class="popup" id="R2D2-popup">
+                    <img src="images/logo/R2D2.png" alt="R2D2 Logo" width="20" height="20">
+                </div>
+            </a>
+            <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
+                AIRI
+                <div class="popup" id="AIRI-popup">
+                    <img src="images/logo/Chewbacca.png" alt="AIRI Logo" width="20" height="20">
+                </div>
+            </a>
+            <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
+                SARA
+                <div class="popup" id="SARA-popup">
+                    <img src="images/logo/leia2.png" alt="SARA Logo" width="20" height="20">
+                </div>
+            </a>
+            <a href="BUQO.html">BUQO</a>
                 <a href="#">About</a>
             </nav>
         </div>
@@ -27,7 +42,7 @@
                 <span class="tooltip" id="github-tooltip">GitHub</span>
             </a>
             <a href="#" class="contact-icon" onclick="openEmailPage()" onmouseover="showTooltip('Contact')" onmouseout="hideTooltip()">
-                <img src="images/contact-logo.jpeg" alt="Contact Logo" width="40" height="40">
+                <img src="images/contact-logo1.jpeg" alt="Contact Logo" width="40" height="40">
                 <span class="tooltip" id="contact-tooltip">Contact</span>
             </a>
             <div id="search-bar" class="search-bar">
@@ -37,7 +52,24 @@
         </div>
     </header>
 
-    <!-- Rest of your page content goes here -->
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-content">
+            <h2>AIRI - <strong>AI</strong> for <strong>R</strong>egularisation in <strong>I</strong>maging</h2>
+    <p>
+	The AIRI algorithms are Plug-and-Play (PnP) algorithms propelled by learned regularization denoisers and endowed with robust convergence guarantees.
+	The (unconstrained) AIRI algorithm is built on a Forward-Backward optimisation algorithmic backbone enabling handling soft data-fidelity terms,
+	while cAIRI (standing for "constrained AIRI") relies on a Primal-Dual Forward-Backward optimisation algorithmic backbone enabling handling hard data-fidelity
+	constraints. Their primary application is to solve large-scale high-resolution high-dynamic range inverse problems for synthesis imaging by
+	interferometry in radio astronomy, more specifically 2D planar monochromatic intensity imaging. AIRI and cAIRI provide improved precision and acceleration of the image reconstruction process over there pure optimisation counterparts
+	uSARA and SARA respectively (see uSARA and SARA tabs). As of early 2024, the transfer of AIRI algorithms to magnetic resonance imaging and ultrasound imaging
+	in medicine is the subject of active developments at BASP. Stay tuned!
+	</p>
+        </div>
+        <div class="right-content">
+            <img src="images/R2D2.jpeg" alt="Image Description"> <!-- Replace with your actual image path -->
+        </div>
+    </section>
 
     <script src="java/script.js"></script>
 </body>

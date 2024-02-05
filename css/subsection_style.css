@@ -1,0 +1,48 @@
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.button {
+    width: 200px;
+    height: 100px;
+    background-color: whitesmoke; /* Button background color */
+    color: dimgray; /* Button text color */
+    text-align: center;
+    /*line-height: 10px; !* Center text vertically *!*/
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid dimgray; /* Button border color */
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
+    transition: transform 0.2s, box-shadow 0.2s;
+
+}
+
+.button:hover {
+    transform: scale(1.05); /* Increase button size on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+}
+
+.github-logo {
+    margin-top: 15px; /* Adjust the value as needed */
+}
+
+.fancy-box {
+    margin-top: 30px; /* Adjust the value as needed to create the desired space */
+    border: 2px solid transparent;
+    background-color: #ecf0f1;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-clip: padding-box;
+    border-image: linear-gradient(90deg, saddlebrown, sandybrown);
+    border-image-slice: 1;
+}
+
+.fancy-box a {
+    color: cornflowerblue;
+}
+
