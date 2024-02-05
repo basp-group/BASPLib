@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R2D2</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="left-side">
+            <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="R2D2.html">R2D2</a>
+                <a href="AIRI.html">AIRI</a>
+                <a href="SARA_family.html">SARA Family</a>
+
+                <a href="#">About</a>
+            </nav>
+        </div>
+        <div class="right-side">
+            <a href="https://github.com/basp-group/BASPLib" target="_blank" class="github-icon" onmouseover="showTooltip('GitHub')" onmouseout="hideTooltip()">
+                <img src="images/GitHub-logo.png" alt="GitHub Logo" width="40" height="40">
+                <span class="tooltip" id="github-tooltip">GitHub</span>
+            </a>
+            <a href="#" class="contact-icon" onclick="openEmailPage()" onmouseover="showTooltip('Contact')" onmouseout="hideTooltip()">
+                <img src="images/contact-logo.jpeg" alt="Contact Logo" width="40" height="40">
+                <span class="tooltip" id="contact-tooltip">Contact</span>
+            </a>
+            <div id="search-bar" class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button onclick="performSearch()">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Rest of your page content goes here -->
+
+    <script src="java/script.js"></script>
+</body>
+</html>

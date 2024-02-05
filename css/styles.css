@@ -1,0 +1,141 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('path/to/your/image.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+    background-size: cover;
+}
+
+/* Navigation Bar Styles */
+header {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a box shadow below the navigation bar */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Split into two sides */
+    align-items: center; /* Center items vertically */
+}
+
+.left-side {
+    display: flex;
+    align-items: center;
+}
+
+.left-side img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+nav {
+    display: flex;
+    margin-left: 20px; /* Add margin to separate logo and navigation links */
+}
+
+nav a {
+    /*font-family: 'Times New Roman', serif; !* Change font to Times New Roman *!*/
+    font-weight: bold; /* Make text bold */
+    color: gray; /* Text color */
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: lightgray;
+    color: white; /* Change text color on hover */
+}
+
+.right-side {
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    margin-right: 40px; /* Add margin between search and GitHub icons */
+    cursor: pointer; /* Add cursor pointer for better UX */
+}
+
+.github-icon {
+    margin-right: 10px; /* Add margin between GitHub icon and search icon */
+    cursor: pointer;
+    position: relative; /* Position relative for positioning the tooltip */
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    bottom: -30px; /* Adjusted position to move the tooltip down */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: gray;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: 100%; /* Position the pointer above the tooltip */
+    left: 50%;
+    margin-left: -5px; /* Adjust as needed */
+    border-width: 5px;
+    border-style: solid;
+    border-color:  transparent transparent gray transparent; /* Change the order of colors to adjust the pointer direction */
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+.search-bar input:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #555;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #333;
+}
+
+.contact-icon {
+    margin-right: 10px; /* Add margin between contact and search icons */
+    cursor: pointer;
+    position: relative; /* Position relative for positioning the tooltip */
+}
+
+.contact-icon {
+    margin-right: 10px; /* Add margin between contact and search icons */
+    cursor: pointer;
+    position: relative; /* Position relative for positioning the tooltip */
+}
+
+.contact-icon img {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+}
