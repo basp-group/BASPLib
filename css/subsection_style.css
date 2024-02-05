@@ -81,3 +81,13 @@
     border-style: solid;
     border-color:  transparent transparent gray transparent; /* Change the order of colors to adjust the pointer direction */
 }
+
+.link-box {
+    border: 2px solid gray; /* Border color */
+    background-color: whitesmoke; /* Gray background color */
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}

@@ -33,10 +33,10 @@ function openEmailPage() {
 
 // main page slide
 document.addEventListener('DOMContentLoaded', function () {
-    const slides = ['images/slides/30-doradus_0_3.png', 'images/slides/30_doradus_0_3_gdth.png', 'images/slides/30-doradus_0_3_dirty.png',
-        'images/slides/Abell746_raw.png','images/slides/Abell746_gdth.png','images/slides/Abell746_dirty.png',
-        'images/slides/bio.png','images/slides/bio_gdth.png','images/slides/bio_dirty.png',
-        'images/slides/M87_clean.png','images/slides/M87_gdth.png','images/slides/M87_dirty.png',]; // Add your slide images
+    const slides = ['images/slides/30-doradus_0_3.png', 'images/slides/30_doradus_0_3_gdth.png', 'images/slides/30-doradus_0_3_dirty.png', 'images/slides/uv_30-doradus_0_3.png',
+        'images/slides/Abell746_raw.png','images/slides/Abell746_gdth.png','images/slides/Abell746_dirty.png', 'images/slides/uv_Abell746.png',
+        'images/slides/bio.png','images/slides/bio_gdth.png','images/slides/bio_dirty.png', 'images/slides/uv_bio.png',
+        'images/slides/M87_clean.png','images/slides/M87_gdth.png','images/slides/M87_dirty.png', 'images/slides/uv_M87.png',]; // Add your slide images
     const mainSlidesContainer = document.getElementById('mainSlides');
     const thumbnailSlidesContainer = document.getElementById('thumbnailSlides');
 
