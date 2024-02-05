@@ -17,7 +17,6 @@
                 <a href="R2D2.html">R2D2</a>
                 <a href="AIRI.html">AIRI</a>
                 <a href="SARA_family.html">SARA Family</a>
-
                 <a href="#">About</a>
             </nav>
         </div>
@@ -27,7 +26,7 @@
                 <span class="tooltip" id="github-tooltip">GitHub</span>
             </a>
             <a href="#" class="contact-icon" onclick="openEmailPage()" onmouseover="showTooltip('Contact')" onmouseout="hideTooltip()">
-                <img src="images/contact-logo.jpeg" alt="Contact Logo" width="40" height="40">
+                <img src="images/contact-logo1.jpeg" alt="Contact Logo" width="40" height="40">
                 <span class="tooltip" id="contact-tooltip">Contact</span>
             </a>
             <div id="search-bar" class="search-bar">
@@ -37,7 +36,39 @@
         </div>
     </header>
 
-    <!-- Rest of your page content goes here -->
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-content">
+            <h2>BASPLib</h2>
+            <p>
+BASPLib is an open-source library on GitHub, gathering Python and Matlab codes to solve challenging inverse imaging problems in astronomy and medicine. The primary
+imaging modality of focus is synthesis imaging by interferometry in radio astronomy, with functionality currently being developed for magnetic resonance imaging and
+ultrasound imaging in medicine.
+</p>
+
+<p>
+The BASPLib software suite gathers implementations of the most advanced computational imaging algorithms at the interface of optimisation and deep learning theories.
+The proposed algorithms can be seen as intermediate steps in the quest for an ultimate "intelligent" imaging algorithm (yet to be devised) providing the joint
+precision, robustness, efficiency, and scalability required by modern applications. A key feature on this past is algorithm modularity, with regularisation modules
+(enforcing image and calibration models) alternating with data-fidelity modules (enforcing consistency with the observed data).
+</p>
+
+<p>
+BASPLib algorithms and software are developed at Edinburgh's Biomedical and Astronomical Signal Processing Laboratory (<a href="https://basp.site.hw.ac.uk/">BASP</a>),
+headed by Prof. Wiaux. The library has emerged from previous developments by Prof. Wiaux and collaborators for radioastronomical imaging, namely the early optimisation code
+<a href="http://basp-group.github.io/purify/">Purify</a> (whose name echoes the CLEAN algorithm), and its <a href="http://basp-group.github.io/Puri-Psi/">Puri-Psi</a>
+upgrade (-Psi standing for &quot;Parallel Scalable Imaging&quot;) featuring first deep learning developments.
+</p>
+
+<p>
+If you use BASPLib, please cite both this webpage and relevant publications (see algorithm-specific pages). BASPLib code is provided under GNU general public licenses
+(please refer to the GitHub repository of individual algorithms for details).
+</p>
+        </div>
+        <div class="right-content">
+            <img src="images/back1.png" alt="Image Description"> <!-- Replace with your actual image path -->
+        </div>
+    </section>
 
     <script src="java/script.js"></script>
 </body>
