@@ -64,12 +64,12 @@ header {
     position: relative;
     margin: auto;
     /*margin-bottom: 10px;*/
-    /*margin-top: 45px;*/
+    /*margin-top: 10px;*/
 }
 
 .slideshow-container img {
     width: 100%; /* Make the images fill the width of the slideshow container */
-    height: auto; /* Maintain the original aspect ratio of the images */
+    height: 100%; /* Maintain the original aspect ratio of the images */
 }
 
 .thumbnail-container {
