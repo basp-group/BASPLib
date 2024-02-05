@@ -31,6 +31,7 @@
 }
 
 .fancy-box {
+    position: relative;
     margin-top: 30px; /* Adjust the value as needed to create the desired space */
     border: 2px solid transparent;
     background-color: #ecf0f1;
@@ -46,3 +47,37 @@
     color: cornflowerblue;
 }
 
+.github-logo-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.github-logo-button:hover + .tooltip {
+    display: block;
+}
+
+.tooltip_git {
+    display: none;
+    position: absolute;
+    bottom: -30px; /* Adjusted position to move the tooltip down */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: gray;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.tooltip_git::before {
+    content: '';
+    position: absolute;
+    bottom: 100%; /* Position the pointer above the tooltip */
+    left: 50%;
+    margin-left: -5px; /* Adjust as needed */
+    border-width: 5px;
+    border-style: solid;
+    border-color:  transparent transparent gray transparent; /* Change the order of colors to adjust the pointer direction */
+}
