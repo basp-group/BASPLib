@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASPLib</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="left-side">
+            <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="R2D2.html" class="popup-icon" onmouseover="showPopup('R2D2-popup')" onmouseout="hidePopup('R2D2-popup')">
+                R2D2
+                <div class="popup" id="R2D2-popup">
+                    <img src="images/logo/R2D2.png" alt="R2D2 Logo" width="20" height="20">
+                </div>
+            </a>
+            <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
+                AIRI
+                <div class="popup" id="AIRI-popup">
+                    <img src="images/Chewbacca1_rmb.png" alt="AIRI Logo" width="20" height="20">
+                </div>
+            </a>
+            <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
+                SARA
+                <div class="popup" id="SARA-popup">
+                    <img src="images/Leia_uSARA_rmb.png">
+                </div>
+            </a>
+            <a href="BUQO.html">BUQO</a>
+                <a href="EIRA.html">EIRA</a>
+            </nav>
+        </div>
+        <div class="right-side">
+            <a href="https://github.com/basp-group/BASPLib" target="_blank" class="github-icon" onmouseover="showTooltip('GitHub')" onmouseout="hideTooltip()">
+                <img src="images/GitHub-logo.png" alt="GitHub Logo" width="40" height="40">
+                <span class="tooltip" id="github-tooltip">GitHub</span>
+            </a>
+            <a href="#" class="contact-icon" onclick="openEmailPage()" onmouseover="showTooltip('Contact')" onmouseout="hideTooltip()">
+                <img src="images/contact-logo1.jpeg" alt="Contact Logo" width="40" height="40">
+                <span class="tooltip" id="contact-tooltip">Contact</span>
+            </a>
+            <div id="search-bar" class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button onclick="performSearch()">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+      <div class="left-section"></div>
+        <div class="middle-column">
+          <h2>EIRA</h2><br>
+            <h3>Extreme scale radio interferometry imaging</h3>
+        <div class="right-column">
+          <br><br><br><br><br><br>
+          <a href=""> The EIRA algorithm will be introduced soon.</a>
+
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+    </section>
+
+
+    <script src="java/script.js"></script>
+</body>
+</html>

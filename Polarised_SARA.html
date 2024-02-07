@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polarised SARA</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/subsection_style.css">
+
 </head>
 <body>
 
     <!-- Navigation Bar -->
     <header>
         <div class="left-side">
-            <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
+            <img src="images/logo_BASP_transp.png"> <!-- Replace with your actual logo path -->
             <nav>
                 <a href="index.html">Home</a>
                 <a href="R2D2.html" class="popup-icon" onmouseover="showPopup('R2D2-popup')" onmouseout="hidePopup('R2D2-popup')">
@@ -24,17 +25,17 @@
             <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
                 AIRI
                 <div class="popup" id="AIRI-popup">
-                    <img src="images/logo/Chewbacca.png" alt="AIRI Logo" width="20" height="20">
+                    <img src="images/Chewbacca1_rmb.png" alt="AIRI Logo" width="20" height="20">
                 </div>
             </a>
             <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
                 SARA
                 <div class="popup" id="SARA-popup">
-                    <img src="images/logo/leia2.png" alt="SARA Logo" width="20" height="20">
+                    <img src="images/Leia_uSARA_rmb.png" alt="SARA Logo" width="20" height="20">
                 </div>
             </a>
             <a href="BUQO.html">BUQO</a>
-                <a href="#">About</a>
+                <a href="EIRA.html">EIRA</a>
             </nav>
         </div>
         <div class="right-side">
@@ -55,43 +56,45 @@
 
     <!-- Content Section -->
     <section class="content-section">
-        <div class="left-content">
-            <h2>Polarised SARA - Polarised “Sparsity Averaging Reweighted Analysis” (SARA)</h2>
-            <br>
-            <br>
-            <div class="link-box">
-            <a href="https://github.com/basp-group/Polarised-SARA/">Latest <strong>Polarised SARA</strong> code for RI imaging.</a>
-            </div>
-            <div class="fancy-box">
+        <div class="left-column"></div>
+        <div class="middle-column">
+          <h2>Polarised SARA</h2><br>
+            <h3>Polarised Sparsity Averaging Reweighted Analysis</h3>
+            <br><br><br><br>
+            <a href="https://github.com/basp-group/Polarised-SARA/">
+                <div class="link-box">
+                    <span>Polarised SARA SII</span><br>
+                    <span class="white-line"></span><br>
+                    <span>latest code</span><br>
+                    <img src="images/GitHub-logo2.png" alt="GitHub Logo" width="85" height="25">
+                </div>
+            </a>
+                    <br><br>
+            <h1 class="fancy-heading">Papers</h1>
                 <p>
-                    J. Birdi, A. Repetti, and Y. Wiaux, <strong>Sparse interferometric Stokes imaging under polarization constraint (Polarized SARA)</strong>, <i>Mon. Not. Roy. Astron. Soc.</i>, 478(4):4442-4463, 2018. <br>
+                    <strong>Sparse interferometric Stokes imaging under polarization constraint (Polarized SARA)</strong><br>
+                    J. Birdi, A. Repetti, and Y. Wiaux,  <i>Mon. Not. Roy. Astron. Soc.</i>, 478(4):4442-4463, 2018. <br>
                     <a href="https://arxiv.org/abs/1801.02417">ArXiv:1801.02417</a> | <a href="https://doi.org/10.1093/mnras/sty1182">DOI: 10.1093/mnras/sty1182</a>
-                <!--	<a href="http://basp-group.github.io/Polarised-SARA/" class="button">Code and webpage</a>-->
-                    <button type="button" class="github-logo-button" onclick="location.href='https://basp-group.github.io/Polarised-SARA/';">
-                <!--    <span class="button-text">Code</span>-->
-                    <img src="images/GitHub-logo0.png" alt="GitHub Logo" width="50" height="25">
-                        </button>
-                </p>
-            </div>
-            <div class="fancy-box">
-                <p> J. Birdi, A. Repetti, and Y. Wiaux, <strong>Scalable algorithm for polarization constrained
-                    sparse interferometric Stokes imaging</strong>, <i>in Proc. IEEE SAM Workshop </i>, pp. 465-469, Sheffield, United Kingdom, July 2018. <br>
+                    | <a href="https://basp-group.github.io/Polarised-SARA/">Paper Code <img src="images/GitHub-logo1.png"  class="github-logo" width="25" height="25" > </a>
+                    <div class="horizontal-line"></div>
+
+                    <p> <strong>Scalable algorithm for polarization constrained sparse interferometric Stokes imaging</strong><br>
+                            J. Birdi, A. Repetti, and Y. Wiaux,  <i>in Proc. IEEE SAM Workshop </i>, pp. 465-469, Sheffield, United Kingdom, July 2018. <br>
                     <a href="https://doi.org/10.1109/SAM.2018.8448968">DOI:10.1109/SAM.2018.8448968</a>
-            </p>
-            </div>
-            <div class="fancy-box">
-                <p> A. Dabbech, M. Terris, A. Jackson, M. Ramatsoku, O. Smirnov, and Y. Wiaux, <strong>First AI for deep super-resolution wide-field imaging in radio astronomy: unveiling structure in ESO 137-006</strong>, <i>Astrophys. J. Lett.</i>, 939:L4, 2022. <br>
+
+                  <div class="horizontal-line"></div>
+                  <p> <strong>First AI for deep super-resolution wide-field imaging in radio astronomy: unveiling structure in ESO 137-006</strong><br>
+                    A. Dabbech, M. Terris, A. Jackson, M. Ramatsoku, O. Smirnov, and Y. Wiaux, <i>Astrophys. J. Lett.</i>, 939:L4, 2022. <br>
                 <a href="http://arxiv.org/abs/2207.11336">ArXiv:2207.11336</a>
                 | <a href="https://doi.org/10.3847/2041-8213/ac98af">DOI:10.3847/2041-8213/ac98af</a>
+
             </p>
+            <br><br>
             </div>
 
-
-        </div>
-        <div class="right-content">
-            <img src="images/Leia_uSARA5.jpeg" alt="Image Description"> <!-- Replace with your actual image path -->
-        </div>
+        <div class="right-column"></div>
     </section>
+
 
     <script src="java/script.js"></script>
 </body>

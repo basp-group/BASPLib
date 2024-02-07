@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIRI</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/subsection_style.css">
+
 </head>
 <body>
 
@@ -24,17 +25,17 @@
             <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
                 AIRI
                 <div class="popup" id="AIRI-popup">
-                    <img src="images/logo/Chewbacca.png" alt="AIRI Logo" width="20" height="20">
+                    <img src="images/Chewbacca1_rmb.png">
                 </div>
             </a>
             <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
                 SARA
                 <div class="popup" id="SARA-popup">
-                    <img src="images/logo/leia2.png" alt="SARA Logo" width="20" height="20">
+                    <img src="images/logo/leia.webp" alt="SARA Logo" width="20" height="20">
                 </div>
             </a>
             <a href="BUQO.html">BUQO</a>
-                <a href="#">About</a>
+                <a href="EIRA.html">EIRA</a>
             </nav>
         </div>
         <div class="right-side">
@@ -55,29 +56,43 @@
 
     <!-- Content Section -->
     <section class="content-section">
-        <div class="left-content">
-<!--            <h2>AIRI - <strong>AI</strong> for <strong>R</strong>egularisation in <strong>I</strong>maging</h2>-->
-            <h2>Chewbacca is AIRI, not Hairy!</h2>
-    <p>
-	The AIRI algorithms are Plug-and-Play (PnP) algorithms propelled by learned regularization denoisers and endowed with robust convergence guarantees.
-	The (unconstrained) AIRI algorithm is built on a Forward-Backward optimisation algorithmic backbone enabling handling soft data-fidelity terms,
-	while cAIRI (standing for "constrained AIRI") relies on a Primal-Dual Forward-Backward optimisation algorithmic backbone enabling handling hard data-fidelity
-	constraints. Their primary application is to solve large-scale high-resolution high-dynamic range inverse problems for synthesis imaging by
-	interferometry in radio astronomy, more specifically 2D planar monochromatic intensity imaging. AIRI and cAIRI provide improved precision and acceleration of the image reconstruction process over there pure optimisation counterparts
-	uSARA and SARA respectively (see uSARA and SARA tabs). As of early 2024, the transfer of AIRI algorithms to magnetic resonance imaging and ultrasound imaging
-	in medicine is the subject of active developments at BASP. Stay tuned!
-	</p>
+        <div class="left-column"></div>
+        <div class="middle-column_left">
+            <h2>AIRI</h2><br>
+            <h3><strong>AI</strong> for <strong>R</strong>egularisation in <strong>I</strong>maging</h3>
+          <h4>"Chewbacca is AIRI, not Hairy!"</h4>
+            <p>
+            The AIRI algorithms are Plug-and-Play (PnP) algorithms propelled by learned regularization denoisers and endowed with robust convergence guarantees.
+            The (unconstrained) AIRI algorithm is built on a Forward-Backward optimisation algorithmic backbone enabling handling soft data-fidelity terms,
+            while cAIRI (standing for "constrained AIRI") relies on a Primal-Dual Forward-Backward optimisation algorithmic backbone enabling handling hard data-fidelity
+            constraints. Their primary application is to solve large-scale high-resolution high-dynamic range inverse problems for synthesis imaging by
+            interferometry in radio astronomy, more specifically 2D planar monochromatic intensity imaging. AIRI and cAIRI provide improved precision and acceleration of the image reconstruction process over there pure optimisation counterparts
+            uSARA and SARA respectively (see uSARA and SARA tabs). As of early 2024, the transfer of AIRI algorithms to magnetic resonance imaging and ultrasound imaging
+            in medicine is the subject of active developments at BASP. Stay tuned!
+            </p>
 
-            <div class="buttons-container">
-            <a href="uAIRI.html" class="button">AIRI code and papers <br> <img src="images/GitHub-logo.png" alt="GitHub Logo" class="github-logo" width="30" height="30"></a>
-            <a href="cAIRI.html" class="button">cAIRI code and papers <br> <img src="images/GitHub-logo.png" alt="GitHub Logo" class="github-logo" width="30" height="30"></a>
+            <div class="sub_algo-container">
+                <a href="uAIRI.html">
+                <div class="link-box_main_s">
+                    <span class="arrow_right">➤</span>AIRI<span class="arrow_left">➤</span><br>
+                    <span class="white-line_main"></span><br>
+                    <span>Code & Paper</span><br>
+                </div>
+            </a>
+            <a href="cAIRI.html">
+                <div class="link-box_main_s">
+                    <span class="arrow_right">➤</span>cAIRI<span class="arrow_left">➤</span><br>
+                    <span class="white-line_main"></span><br>
+                    <span>Code & Paper</span><br>
+                </div>
+            </a>
+            </div>
+            <br><br>
         </div>
-
-        </div>
-        <div class="right-content">
-            <img src="images/Chewbacca4.jpeg" alt="Image Description"> <!-- Replace with your actual image path -->
-        </div>
+        <div class="middle-column_right"><img src="images/Chewbacca1_rmb.png"></div>
+        <div class="right-column"></div>
     </section>
+
 
     <script src="java/script.js"></script>
 </body>

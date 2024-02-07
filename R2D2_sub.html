@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R2D2</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="left-side">
+            <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="R2D2.html" class="popup-icon" onmouseover="showPopup('R2D2-popup')" onmouseout="hidePopup('R2D2-popup')">
+                R2D2
+                <div class="popup" id="R2D2-popup">
+                    <img src="images/logo/R2D2.png" alt="R2D2 Logo" width="20" height="20">
+                </div>
+            </a>
+            <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
+                AIRI
+                <div class="popup" id="AIRI-popup">
+                    <img src="images/Chewbacca1_rmb.png" alt="AIRI Logo" width="20" height="20">
+                </div>
+            </a>
+            <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
+                SARA
+                <div class="popup" id="SARA-popup">
+                    <img src="images/Leia_uSARA_rmb.png">
+                </div>
+            </a>
+            <a href="BUQO.html">BUQO</a>
+                <a href="EIRA.html">EIRA</a>
+            </nav>
+        </div>
+        <div class="right-side">
+            <a href="https://github.com/basp-group/BASPLib" target="_blank" class="github-icon" onmouseover="showTooltip('GitHub')" onmouseout="hideTooltip()">
+                <img src="images/GitHub-logo.png" alt="GitHub Logo" width="40" height="40">
+                <span class="tooltip" id="github-tooltip">GitHub</span>
+            </a>
+            <a href="#" class="contact-icon" onclick="openEmailPage()" onmouseover="showTooltip('Contact')" onmouseout="hideTooltip()">
+                <img src="images/contact-logo1.jpeg" alt="Contact Logo" width="40" height="40">
+                <span class="tooltip" id="contact-tooltip">Contact</span>
+            </a>
+            <div id="search-bar" class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button onclick="performSearch()">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-column"></div>
+        <div class="middle-column">
+          <h2>R2D2</h2><br>
+            <h3>Residual-to-Residual DNN series for high-Dynamic range imaging</h3>
+            <br><br><br><br>
+            <a href="https://github.com/basp-group/R2D2/tree/main">
+                <div class="link-box">
+                    <span>R2D2 SII</span><br>
+                    <span class="white-line"></span><br>
+                    <span>latest code</span><br>
+                    <img src="images/GitHub-logo2.png" alt="GitHub Logo" width="85" height="25">
+                </div>
+            </a>
+                    <br><br>
+            <h1 class="fancy-heading">Papers</h1>
+                <p> <strong>The R2D2 deep neural network series for ultra-fast high-dynamic range imaging in radio astronomy</strong>
+                    <br>
+                    A. Aghabiglou, C. S. Chu, A. Dabbech, Y. Wiaux,
+                  <i>submitted to Astrophys. J.</i>, 2024.
+                  <br>
+                  <a href="https://researchportal.hw.ac.uk/en/publications/ultra-fast-residual-to-residual-dnn-series-for-high-dynamic-range">researchportal.hw.ac.uk:94082117</a>
+                    | <a href="https://basp-group.github.io/R2D2">Paper Code <img src="images/GitHub-logo1.png"  class="github-logo" width="25" height="25" > </a>
+
+                  <div class="horizontal-line"></div>
+                    <strong>Ultra-fast high-dynamic range imaging of Cygnus A with the R2D2 deep neural network series</strong> <br>
+                  A. Aghabiglou, C. S. Chu, A. Jackson, A. Dabbech, Y. Wiaux,
+
+                  <i>submitted to Astrophys. J. Lett.</i>, 2023.
+                  <br>
+                  <a href="https://arxiv.org/abs/2309.03291">ArXiv:2309.03291</a> | <a href="https://basp-group.github.io/R2D2" >Paper Code <img src="images/GitHub-logo1.png" class="github-logo"  width="25" height="25" > </a>
+
+<!--                  <button type="button" class="github-logo-button" onclick="location.href='https://basp-group.github.io/R2D2/';">-->
+<!--                -->
+<!--                    <img src="images/GitHub-logo0.png" alt="GitHub Logo" width="50" height="25">-->
+<!--                  </button>-->
+                   <div class="horizontal-line"></div>
+                    <strong>Deep network series for large-scale high-dynamic range imaging</strong> <br>
+                    A. Aghabiglou, M. Terris, A. Jackson, Y. Wiaux,  <i>in Proc. IEEE ICASSP 2023, pp. 1–5</i>, 2023. <br>
+                <a href="https://arxiv.org/abs/2210.16060">ArXiv:2210.16060</a>| <a href="https://doi.org/10.1109/ICASSP49357.2023.10094843">DOI:10.1109/ICASSP49357.2023.10094843</a>
+            </p>
+        </div>
+
+
+
+        <div class="right-column"></div>
+    </section>
+
+
+    <script src="java/script.js"></script>
+</body>
+</html>

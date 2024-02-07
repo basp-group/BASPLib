@@ -1,4 +1,33 @@
 // JavaScript to handle search functionality and tooltip
+// function addImagesToMiddleColumn() {
+//     const imageContainer = document.getElementById("image-container");
+//
+//     // Image paths
+//     const imagePaths = [
+//         "images/slides/BASPLib.png",
+//         "",
+//         "images/BLACKHOLE.jpg",
+//         "images/BRAIN.jpg",
+//         "images/cyga_heat.png",
+//         "images/HEART.jpg"
+//     ];
+//
+//     // Loop through image paths and create image elements
+//     imagePaths.forEach(path => {
+//         const img = document.createElement("img");
+//         img.src = path;
+//         imageContainer.appendChild(img);
+//     });
+// }
+//
+// // Call the function to add images when the page loads
+// window.onload = function() {
+//     addImagesToMiddleColumn();
+// };
+
+
+
+
 function toggleSearchBar() {
     var searchBar = document.getElementById("search-bar");
     searchBar.style.display = (searchBar.style.display === "none") ? "flex" : "none";

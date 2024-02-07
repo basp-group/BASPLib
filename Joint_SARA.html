@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joint SARA</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/subsection_style.css">
+
 </head>
 <body>
 
     <!-- Navigation Bar -->
     <header>
         <div class="left-side">
-            <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
+            <img src="images/logo_BASP_transp.png"> <!-- Replace with your actual logo path -->
             <nav>
                 <a href="index.html">Home</a>
                 <a href="R2D2.html" class="popup-icon" onmouseover="showPopup('R2D2-popup')" onmouseout="hidePopup('R2D2-popup')">
@@ -24,17 +25,17 @@
             <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
                 AIRI
                 <div class="popup" id="AIRI-popup">
-                    <img src="images/logo/Chewbacca.png" alt="AIRI Logo" width="20" height="20">
+                    <img src="images/Chewbacca1_rmb.png" alt="AIRI Logo" width="20" height="20">
                 </div>
             </a>
             <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
                 SARA
                 <div class="popup" id="SARA-popup">
-                    <img src="images/logo/leia2.png" alt="SARA Logo" width="20" height="20">
+                    <img src="images/Leia_uSARA_rmb.png" alt="SARA Logo" width="20" height="20">
                 </div>
             </a>
             <a href="BUQO.html">BUQO</a>
-                <a href="#">About</a>
+                <a href="EIRA.html">EIRA</a>
             </nav>
         </div>
         <div class="right-side">
@@ -55,62 +56,52 @@
 
     <!-- Content Section -->
     <section class="content-section">
-        <div class="left-content">
-            <h2>Joint SARA - Joint calibration and imaging with “Sparsity Averaging Reweighted Analysis” (SARA)</h2>
-            <br>
-            <br>
-            <div class="link-box">
-            <a href="https://github.com/basp-group/SARA-CALIB-realdata/">Latest <strong>Joint SARA</strong> code for RI imaging.</a>
-            </div>
-            <div class="fancy-box">
-                <p>
-                    A. Dabbech, A. Repetti, R. Perley, O. Smirnov and Y. Wiaux, <strong>Cygnus A jointly calibrated and imaged via non-convex optimisation from JVLA data</strong>, <i>Mon. Not. Roy. Astron. Soc.</i>, 506(4):4855–4876, 2021. <br>
+        <div class="left-column"></div>
+        <div class="middle-column">
+          <h2>Joint SARA</h2><br>
+            <h3>Joint Sparsity Averaging Reweighted Analysis</h3>
+            <br><br><br><br>
+            <a href="https://github.com/basp-group/SARA-CALIB-realdata/">
+                <div class="link-box">
+                    <span>Joint SARA SII</span><br>
+                    <span class="white-line"></span><br>
+                    <span>latest code</span><br>
+                    <img src="images/GitHub-logo2.png" alt="GitHub Logo" width="85" height="25">
+                </div>
+            </a>
+                    <br><br>
+            <h1 class="fancy-heading">Papers</h1>
+                <p> <strong>Cygnus A jointly calibrated and imaged via non-convex optimisation from JVLA data</strong><br>
+                    A. Dabbech, A. Repetti, R. Perley, O. Smirnov and Y. Wiaux, <i>Mon. Not. Roy. Astron. Soc.</i>, 506(4):4855–4876, 2021. <br>
                         <a href="https://arxiv.org/abs/2102.00065">ArXiv:2102.00065</a>| <a href="https://doi.org/10.1093/mnras/stab1903">DOI:10.1093/mnras/stab1903</a>
-            <!--			<a href="http://basp-group.github.io/SARA-CALIB-realdata/" class="button">Code and webpage</a>-->
-                <button type="button" class="github-logo-button" onclick="location.href='https://basp-group.github.io/SARA-CALIB-realdata/';">
-            <!--    <span class="button-text">Code</span>-->
-                <img src="images/GitHub-logo0.png" alt="GitHub Logo" width="50" height="25">
-                    </button>
-                </p>
-            </div>
-            <div class="fancy-box">
-                <p>
-                    J. Birdi, A. Repetti, and Y. Wiaux, <strong>Polca SARA - Full polarization, direction-dependent calibration and sparse imaging for radio interferometry</strong>, <i>Mon. Not. Roy. Astron. Soc.</i>, 492(3):3509–3528, 2019. <br>
+                    | <a href="https://basp-group.github.io/SARA-CALIB-realdata/">Paper Code <img src="images/GitHub-logo1.png"  class="github-logo" width="25" height="25" > </a>
+                    <div class="horizontal-line"></div>
+                    <strong>Polca SARA - Full polarization, direction-dependent calibration and sparse imaging for radio interferometry</strong><br>
+                    J. Birdi, A. Repetti, and Y. Wiaux,  <i>Mon. Not. Roy. Astron. Soc.</i>, 492(3):3509–3528, 2019. <br>
                     <a href="https://arxiv.org/abs/1904.00663">ArXiv:1904.00663</a> | <a href="https://doi.org/10.1093/mnras/stz3555">DOI:10.1093/mnras/stz3555</a>
-                        <br>
-                        <br>
-                     P.-A. Thouvenin, A. Repetti, A. Dabbech and Y. Wiaux, <strong>Time-Regularized Blind Deconvolution Approach for Radio Interferometry</strong>, <i>in Proc. IEEE SAM Workshop </i>, pp. 475-479, Sheffield, United Kingdom, July 2018. <br>
+
+                  <div class="horizontal-line"></div>
+                  P.-A. Thouvenin, A. Repetti, A. Dabbech and Y. Wiaux, <strong>Time-Regularized Blind Deconvolution Approach for Radio Interferometry</strong>, <i>in Proc. IEEE SAM Workshop </i>, pp. 475-479, Sheffield, United Kingdom, July 2018. <br>
                     <a href="https://doi.org/10.1109/SAM.2018.8448891">DOI:10.1109/SAM.2018.8448891</a>
-                    <!--<a href="http://basp-group.github.io/SARA-CALIB-time-regularised/" class="button">Code and webpage</a>-->
-                        <button type="button" class="github-logo-button" onclick="location.href='https://basp-group.github.io/Polca-SARA/';">
-                    <!--    <span class="button-text">Code</span>-->
-                        <img src="images/GitHub-logo0.png" alt="GitHub Logo" width="50" height="25">
-                            </button>
-            </p>
-            </div>
-            <div class="fancy-box">
-                <p>
+                    | <a href="https://basp-group.github.io/Polca-SARA/">Paper Code <img src="images/GitHub-logo1.png"  class="github-logo" width="25" height="25" > </a>
+
+                    <div class="horizontal-line"></div>
                     A. Repetti and Y. Wiaux, <strong>A non-convex perspective on calibration and imaging in radio interferometry</strong>, <i>Proceedings of the conference on Wavelets and Sparsity XVII, part of the SPIE Optical Engineering + Applications</i>, San Diego, California, United States, 6-9 August 2017.
-				<br>
-				<a href="https://doi.org/10.1117/12.2273766">DOI: 10.1117/12.2273766</a>
-                <!--				<a href="http://basp-group.github.io/SARA-CALIB/" class="button">Code and webpage</a>-->
-                <br>
-                    <br>
-                    A. Repetti, J. Birdi, A. Dabbech and Y. Wiaux, <strong>Non-convex optimization for self-calibration of direction-dependent effects in radio interferometric imaging</strong>, <i>Mon. Not. Roy. Astron. Soc.</i>, 470(4):3981-4006, 2017. <br>
+				    <br><a href="https://doi.org/10.1117/12.2273766">DOI: 10.1117/12.2273766</a>
+
+                    <div class="horizontal-line"></div>
+                    <strong>Non-convex optimization for self-calibration of direction-dependent effects in radio interferometric imaging</strong><br>
+                    A. Repetti, J. Birdi, A. Dabbech and Y. Wiaux,  <i>Mon. Not. Roy. Astron. Soc.</i>, 470(4):3981-4006, 2017. <br>
                                 <a href="https://arxiv.org/abs/1701.03689">ArXiv:1701.03689</a> | <a href="http://dx.doi.org/10.1093/mnras/stx1267">DOI:10.1093/mnras/stx1267</a>
-                <!--				<a href="http://basp-group.github.io/SARA-CALIB/" class="button">Code and webpage</a>-->
-                        <button type="button" class="github-logo-button" onclick="location.href='https://basp-group.github.io/SARA-CALIB/';">
-                <!--    <span class="button-text">Code</span>-->
-                    <img src="images/GitHub-logo0.png" alt="GitHub Logo" width="50" height="25">
-            </p>
+                    | <a href="https://basp-group.github.io/SARA-CALIB/">Paper Code <img src="images/GitHub-logo1.png"  class="github-logo" width="25" height="25" > </a>
+
+                </p>
+            <br><br>
             </div>
 
-
-        </div>
-        <div class="right-content">
-            <img src="images/Leia_uSARA6.jpeg" alt="Image Description"> <!-- Replace with your actual image path -->
-        </div>
+        <div class="right-column"></div>
     </section>
+
 
     <script src="java/script.js"></script>
 </body>
