@@ -123,21 +123,6 @@ header {
 
 
 
-/*#image-container {*/
-/*    display: grid;*/
-/*    grid-template-columns: repeat(2, 1fr);*/
-/*    !*grid-gap: 0;*!*/
-/*    !*justify-content: center;*!*/
-/*    align-items: center;*/
-/*    !*margin-top: 0;*!*/
-/*}*/
-
-#image-container img {
-    max-width: 100%;
-    height: auto;
-    margin: 0; /* Remove any margins */
-    padding: 0; /* Remove any padding */
-}
 
 
 /*.content p {*/
@@ -383,10 +368,10 @@ a:hover {
 
 .link-box {
     text-align: center; /* Align text to center */
-background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color gradient */
+    background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color gradient */
     color: white; /* Change text color to white */
     display: inline-block;
-    padding: 5px 20px;
+    padding: 15px 25px;
     font-size: 20px;
     font-family: 'Segoe UI';
     border-radius: 20px; /* Add border radius for rounded corners */
@@ -395,85 +380,52 @@ background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color grad
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
     transition: transform 0.2s, box-shadow 0.2s;
 }
+
 
 .link-box_main {
     text-align: center; /* Align text to center */
-    background: linear-gradient(90deg, orangered, indianred); /* Apply color gradient */
+    background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color gradient */
     color: white; /* Change text color to white */
-    display: inline-block;
-    width: 230px;
+    display: inline-flex;
+    justify-content: center; /* Align horizontally */
+    align-items: center; /* Align vertically */
+    width: 125px;
     height: 70px;
     padding: 15px 25px;
-    /*font-size: 20px;*/
+    font-size: 25px;
     font-family: 'Segoe UI';
-    border-radius: 20px; /* Add border radius for rounded corners */
-    text-decoration: none; /* Remove underline */
-    position: relative; /* Set position relative for the white line */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
+    border-radius: 30px;
+    text-decoration: none;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.link-box_main_s {
-    text-align: center; /* Align text to center */
-    background: linear-gradient(90deg, orangered, indianred); /* Apply color gradient */
-    color: white; /* Change text color to white */
-    display: inline-block;
-    width: 190px;
-    height: 70px;
-    padding: 15px 25px;
-    font-size: 20px;
-    font-family: 'Segoe UI';
-    border-radius: 20px; /* Add border radius for rounded corners */
-    text-decoration: none; /* Remove underline */
-    position: relative; /* Set position relative for the white line */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.arrow_right {
-    font-size: 20px; /* Adjust size of the arrow */
-    font-weight: bold; /* Make the arrow bold */
-    transform: rotate(0deg); /* Rotate the arrow */
-    display: inline-block;
-    margin-right: 5px; /* Add space between arrow and text */
-}
-
-.arrow_right:before {
-    content: "➤"; /* Unicode for the arrow */
-}
-
-.arrow_left {
-    font-size: 20px; /* Adjust size of the arrow */
-    font-weight: bold; /* Make the arrow bold */
-    transform: rotate(180deg); /* Rotate the arrow */
-    display: inline-block;
-    margin-right: 5px; /* Add space between arrow and text */
-    margin-bottom: 7px;
-}
-
-.arrow_left:before {
-    content: "➤"; /* Unicode for the arrow */
-}
-
-.link-box_main .link-box a {
-color: white;text-align: center;
-}
-
-
-.link-box_main .link-box:hover {
-    transform: scale(1.05); /* Increase button size on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
 }
 
 .link-box_main a {
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+.link-box_main:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    text-decoration-color: white;
+}
+
+.link-box a {
 color: white;text-align: center;
 }
 
 
-.link-box_main:hover {
+.link-box:hover {
     transform: scale(1.05); /* Increase button size on hover */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
 }
+
+
+
+
 
 
 .white-line {
@@ -481,7 +433,8 @@ color: white;text-align: center;
     width: 100%;
     height: 1px; /* Set height for the white line */
     background-color: white; /* Set color for the white line */
-    margin-bottom: -20px; /* Add margin bottom for spacing */
+    margin-bottom: -15px; /* Add margin bottom for spacing */
+    margin-top: 6px;
 }
 
 .white-line_main {
@@ -528,6 +481,13 @@ color: white;text-align: center;
     margin-top: 10px;
 }
 
+.image-container img {
+    /*max-width: 100%;*/
+    /*height: auto;*/
+    margin: 0; /* Remove any margins */
+    padding: 0; /* Remove any padding */
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+}
 
 .box-3d {
   position: relative;
