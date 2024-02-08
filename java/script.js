@@ -1,45 +1,46 @@
 // JavaScript to handle search functionality and tooltip
-// function addImagesToMiddleColumn() {
-//     const imageContainer = document.getElementById("image-container");
-//
-//     // Image paths
-//     const imagePaths = [
-//         "images/slides/BASPLib.png",
-//         "",
-//         "images/BLACKHOLE.jpg",
-//         "images/BRAIN.jpg",
-//         "images/cyga_heat.png",
-//         "images/HEART.jpg"
-//     ];
-//
-//     // Loop through image paths and create image elements
-//     imagePaths.forEach(path => {
-//         const img = document.createElement("img");
-//         img.src = path;
-//         imageContainer.appendChild(img);
-//     });
-// }
-//
-// // Call the function to add images when the page loads
-// window.onload = function() {
-//     addImagesToMiddleColumn();
-// };
-
-
-
-
-function toggleSearchBar() {
-    var searchBar = document.getElementById("search-bar");
-    searchBar.style.display = (searchBar.style.display === "none") ? "flex" : "none";
-}
 
 function performSearch() {
-    // Implement your search logic here
-    // You can use JavaScript to search for content on the website based on the input value
-    // For simplicity, let's just log the input value to the console
-    var searchInput = document.querySelector(".search-bar input").value;
-    console.log("Searching for:", searchInput);
+    var query = document.getElementById('searchInput').value.toLowerCase();
+    var searchResults = document.getElementById('searchResults');
+    searchResults.innerHTML = ''; // Clear previous search results
+
+    var pages = ['index.html', 'R2D2.html', 'AIRI.html', 'SARA_family.html', 'BUQO.html', 'EIRA.html'];
+
+    pages.forEach(function(page) {
+        fetch(page)
+            .then(response => response.text())
+            .then(html => {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, 'text/html');
+                var pageContent = doc.body.innerText.toLowerCase();
+
+                if (pageContent.includes(query)) {
+                    var link = document.createElement('a');
+                    link.href = page;
+                    link.textContent = page;
+                    searchResults.appendChild(link);
+                    searchResults.appendChild(document.createElement('br'));
+                }
+            })
+            .catch(error => console.error('Error fetching page:', error));
+    });
 }
+
+
+
+// function toggleSearchBar() {
+//     var searchBar = document.getElementById("search-bar");
+//     searchBar.style.display = (searchBar.style.display === "none") ? "flex" : "none";
+// }
+//
+// function performSearch() {
+//     // Implement your search logic here
+//     // You can use JavaScript to search for content on the website based on the input value
+//     // For simplicity, let's just log the input value to the console
+//     var searchInput = document.querySelector(".search-bar input").value;
+//     console.log("Searching for:", searchInput);
+// }
 
 function showTooltip(text) {
     var tooltip = document.getElementById(text.toLowerCase() + "-tooltip");
