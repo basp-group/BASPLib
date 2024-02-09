@@ -4,19 +4,6 @@ body {
     background-color: #f0f0f0; /* Add a background color to the body */
 }
 
-/* Navigation Bar Styles */
-header {
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative; /* Ensure the navigation bar stays on top */
-    z-index: 2; /* Set a higher z-index to bring the navigation bar forward */
-}
-
-
 .content-section {
     display: flex;
     background-color: white; /* White background */
@@ -29,17 +16,15 @@ header {
 }
 
 
-.left-column {
-    flex: 0 0 20%; /* 20% width */
-}
 
-.right-column {
-    flex: 0 0 20%; /* 15% width */
+.left-column, .right-column {
+    /*flex: 0 0 20%; !* 15% width *!*/
+    flex:1;
 }
 
 .middle-column {
-    /*flex: 1; !* Take up remaining space *!*/
-    flex: 0 0 60%; /* 70% width */
+    flex: 2; /* Take up remaining space */
+    /*flex: 0 0 60%; !* 70% width *!*/
     max-width: 800px; /* Limit maximum width */
     /*padding: 0 20px; !* Add padding to the sides *!*/
     margin-top: 2%;
@@ -152,167 +137,7 @@ header {
 
 
 /*Navigation bar styles*/
-.left-side {
-    display: flex;
-    align-items: center;
-}
 
-.left-side img {
-    width: 100px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-}
-
-nav {
-    display: flex;
-    margin-left: 20px; /* Add margin to separate logo and navigation links */
-}
-
-nav a {
-    /*font-family: 'Times New Roman', serif; !* Change font to Times New Roman *!*/
-    font-weight: bold; /* Make text bold */
-    color: gray; /* Text color */
-    text-decoration: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-nav a:hover {
-    background-color: lightgray;
-    color: white; /* Change text color on hover */
-}
-
-.popup-icon {
-    position: relative;
-}
-
-.popup {
-    display: none;
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 3; /* Set a higher z-index to bring the popup forward */
-}
-.popup::before {
-    content: '';
-    position: absolute;
-    bottom: 100%; /* Position the pointer above the tooltip */
-    left: 50%;
-    margin-left: -5px; /* Adjust as needed */
-    border-width: 5px;
-    border-style: solid;
-    border-color:  transparent transparent lightgray transparent; /* Change the order of colors to adjust the pointer direction */
-}
-
-.popup-icon:hover .popup {
-    display: block;
-}
-
-nav a:hover,
-.popup-icon:hover {
-    background-color: lightgray;
-    color: white; /* Change text color on hover */
-}
-.popup img {
-    width: 40px;
-    height: 40px;
-}
-
-
-.right-side {
-    display: flex;
-    align-items: center;
-}
-
-.search-icon {
-    margin-right: 40px; /* Add margin between search and GitHub icons */
-    cursor: pointer; /* Add cursor pointer for better UX */
-}
-
-.github-icon {
-    margin-right: 10px; /* Add margin between GitHub icon and search icon */
-    cursor: pointer;
-    position: relative; /* Position relative for positioning the tooltip */
-}
-
-.tooltip {
-    display: none;
-    position: absolute;
-    bottom: -30px; /* Adjusted position to move the tooltip down */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: gray;
-    color: white;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 12px;
-    white-space: nowrap; /* Prevent text from wrapping */
-}
-
-.tooltip::before {
-    content: '';
-    position: absolute;
-    bottom: 100%; /* Position the pointer above the tooltip */
-    left: 50%;
-    margin-left: -5px; /* Adjust as needed */
-    border-width: 5px;
-    border-style: solid;
-    border-color:  transparent transparent gray transparent; /* Change the order of colors to adjust the pointer direction */
-}
-
-
-.search-bar {
-    display: flex;
-    align-items: center;
-}
-
-.search-bar input {
-    padding: 10px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s, background-color 0.3s;
-}
-
-.search-bar input:focus {
-    outline: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.search-bar button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #555;
-    color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.search-bar button:hover {
-    background-color: #333;
-}
-
-
-.contact-icon {
-    margin-right: 50px; /* Add margin between contact and search icons */
-    cursor: pointer;
-    position: relative; /* Position relative for positioning the tooltip */
-}
-
-.contact-icon img {
-    width: 50px; /* Adjust the width as needed */
-    height: 50px; /* Adjust the height as needed */
-}
 
 
 /*.left-content {*/
