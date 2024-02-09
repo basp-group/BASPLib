@@ -565,6 +565,9 @@ color: white;text-align: center;
     left: 0; /* Position the line at the left edge */
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+.fancy-heading img {
+    float: right;
+}
 
 .horizontal-line {
     width: 100%; /* Set width to span the entire container */
@@ -579,6 +582,7 @@ color: white;text-align: center;
     align-items: center;
     /*margin-top: 5px; !* Add margin to the left of the image *!*/
 }
+
 
 .paper-title {color: black}
 
