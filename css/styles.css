@@ -1,18 +1,18 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0; /* Add a background color to the body */
+    background-color: white; /* Add a background color to the body */
 }
 
 .content-section {
     display: flex;
     background-color: white; /* White background */
-    flex-wrap: wrap;
+    /*flex-wrap: wrap;*/
 }
 
 .left-column, .middle-column, .right-column {
     height: auto; /* Adjust height automatically */
-    padding-bottom: 20%;
+    padding-bottom: 2%;
 }
 
 
@@ -114,23 +114,6 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-
-/*Navigation bar styles*/
-
-
-
-/*.left-content {*/
-/*    max-width: 800px;*/
-/*    margin: 0 auto;*/
-/*}*/
-
-/*h2 {*/
-/*    font-size: 2.5em;*/
-/*    !*color: #333; !* Dark text color *!*!*/
-/*    !*border-bottom: 2px solid #333; !* Underline effect *!*!*/
-/*    !*padding-bottom: 10px; !* Space between heading and content *!*!*/
-/*}*/
-
 p {
     font-size: 1em;
     line-height: 1.6;
@@ -149,44 +132,6 @@ a:hover {
 }
 
 /*xxxxxxxxxxxxxxxxxxxxxxx Subsection styles xxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
-.left-section, .middle-section, .right-section {
-    height: auto; /* Adjust height automatically */
-}
-.left-section {
-    flex: 0 0 15%; /* 15% width */
-}
-
-.middle-section {
-    flex: 0 0 55%; /* 70% width */
-    /*padding: 40px;*/
-    margin-top: 40px;
-    margin-right: 30px;
-    justify-content: left;
-    text-align: justify;
-    z-index: 2;
-}
-.middle-section h2 {
-    background: linear-gradient(90deg, saddlebrown, sandybrown); /* Orange to light orange gradient */
-    -webkit-background-clip: text;
-    color: transparent;
-    display: inline;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-.right-section {
-    flex: 0 0 25%; /* 15% width */
-}
-
-.right-section img {
-    width: 100%;
-    margin-top: 40px;
-    opacity: 0.2;
-    border: none;
-    z-index: 0;
-    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5); /* Adjust the spread and color as needed */
-}
-
-
-
 .link-box {
     text-align: center; /* Align text to center */
     background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color gradient */
@@ -201,7 +146,6 @@ a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
     transition: transform 0.2s, box-shadow 0.2s;
 }
-
 
 .link-box_main {
     text-align: center; /* Align text to center */
@@ -243,11 +187,6 @@ color: white;text-align: center;
     transform: scale(1.05); /* Increase button size on hover */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
 }
-
-
-
-
-
 
 .white-line {
     display: block;
