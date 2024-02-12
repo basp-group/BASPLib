@@ -43,8 +43,8 @@ body {
 }
 
 .image-container img {
-    /*max-width: 100%;*/
-    /*height: auto;*/
+    max-width: 24%;
+    height: auto;
     margin: 0; /* Remove any margins */
     padding: 0; /* Remove any padding */
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
