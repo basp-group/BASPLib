@@ -3,7 +3,7 @@ header {
     display: flex;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding: 1%;
     justify-content: space-between;
     align-items: center;
     position: relative; /* Ensure the navigation bar stays on top */
@@ -23,7 +23,7 @@ header {
 
 nav {
     display: flex;
-    margin-left: 20px; /* Add margin to separate logo and navigation links */
+    margin-left: 1%; /* Add margin to separate logo and navigation links */
 }
 
 nav a {
