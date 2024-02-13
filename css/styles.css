@@ -62,8 +62,8 @@ body {
 
 .middle-column_right {
     /*flex: 0 0 20%; !* 70% width *!*/
-    flex:1;
-    /*padding: 20px;*/
+    /*flex:1;*/
+    width: 230px;
     margin-top: 2%;
     margin-right: 2%;
     justify-content: left;
