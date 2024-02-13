@@ -3,8 +3,9 @@ header {
     display: flex;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1%;
-    justify-content: space-between;
+    /*padding: 1%;*/
+    height: 100px;
+    /*justify-content: space-between;*/
     align-items: center;
     position: relative; /* Ensure the navigation bar stays on top */
     z-index: 2; /* Set a higher z-index to bring the navigation bar forward */
@@ -13,7 +14,22 @@ header {
 .left-side {
     display: flex;
     align-items: center;
-    flex:14;
+    width: 150px;
+    Justify-content:center;
+}
+.middle-nav {
+    display: flex;
+    align-items: center;
+    flex:1;
+    Justify-content:start;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.right-side {
+    display: flex;
+    align-items: center;
+    width: 100px;
 }
 
 .left-side img {
@@ -84,11 +100,7 @@ nav a:hover,
 }
 
 
-.right-side {
-    display: flex;
-    align-items: center;
-    flex:1;
-}
+
 
 .search-icon {
     margin-right: 40px; /* Add margin between search and GitHub icons */
