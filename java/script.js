@@ -119,4 +119,11 @@ document.addEventListener('DOMContentLoaded', function () {
     updateThumbnails();
 });
 
+// Function to toggle the visibility of the header links
+function toggleHeader() {
+    var nav = document.querySelector('.middle-nav');
+    nav.style.display = nav.style.display === 'none' ? 'flex' : 'none';
+}
+
+
 

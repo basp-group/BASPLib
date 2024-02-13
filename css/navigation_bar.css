@@ -185,3 +185,46 @@ nav a:hover,
     width: 50px; /* Adjust the width as needed */
     height: 50px; /* Adjust the height as needed */
 }
+
+/* Hide hamburger menu by default */
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+    /* Add styles for hamburger icon */
+}
+
+/* Styles for hamburger bars */
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: black;
+    margin: 5px 0;
+}
+
+/* Add media query to show hamburger menu on smaller screens */
+/*@media screen and (max-width: 768px) {*/
+/*    .hamburger-menu {*/
+/*        display: block;*/
+/*    }*/
+
+/*    !* Hide header links when hamburger menu is shown *!*/
+/*    .middle-nav {*/
+/*        display: flex;*/
+/*        flex-direction: column; !* Change direction to column *!*/
+/*        position: absolute;*/
+/*        top: 100%; !* Position below the hamburger menu *!*/
+/*        left: 0;*/
+/*        background-color: white; !* Adjust as needed *!*/
+/*        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); !* Add shadow *!*/
+/*        z-index: 999; !* Ensure it's on top *!*/
+/*    }*/
+
+/*    !* Adjust styles for menu items *!*/
+/*    .middle-nav a {*/
+/*        display: block; !* Display items as blocks *!*/
+/*        padding: 10px;*/
+/*        white-space: nowrap; !* Prevent wrapping *!*/
+/*    }*/
+/*}*/
+
+
