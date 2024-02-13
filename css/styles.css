@@ -52,7 +52,7 @@ body {
 
 .middle-column_left {
     /*flex: 0 0 40%; !* 70% width *!*/
-    flex:1;
+    flex:3;
     /*padding: 20px;*/
     margin-top: 2%;
     margin-right: 4%;
