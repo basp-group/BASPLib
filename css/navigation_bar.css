@@ -30,6 +30,7 @@ header {
     display: flex;
     align-items: center;
     width: 100px;
+    Justify-content:end;
 }
 
 .left-side img {
@@ -197,8 +198,9 @@ nav a:hover,
 .bar {
     width: 25px;
     height: 3px;
-    background-color: black;
-    margin: 5px 0;
+    background-color: dimgray;
+    margin: 5px 15px;
+
 }
 
 /* Add media query to show hamburger menu on smaller screens */
