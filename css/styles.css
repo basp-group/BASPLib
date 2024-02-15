@@ -214,11 +214,8 @@ color: white;text-align: center;
 }
 
 .Github_logo {
-    width: 8vw;
-    height: auto;
-}
-
-.Github_logo_sub {
+    vertical-align: middle; /* Align the image vertically */
+    align-items: center;
     width: 8vw;
     height: auto;
 }
@@ -338,14 +335,6 @@ color: white;text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.github-logo {
-    vertical-align: middle; /* Align the image vertically */
-    align-items: center;
-    /*margin-top: 5px; !* Add margin to the left of the image *!*/
-}
-
-
-.paper-title {color: black}
 
 
 @media screen and (max-width: 768px) {
