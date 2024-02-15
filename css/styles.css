@@ -27,7 +27,7 @@ body {
     /*flex: 0 0 60%; !* 70% width *!*/
     max-width: 800px; /* Limit maximum width */
     /*padding: 0 20px; !* Add padding to the sides *!*/
-    margin-top: 2%;
+    margin-top: 4%;
     margin-right: 2%;
     justify-content: left;
     text-align: justify;
@@ -343,7 +343,7 @@ color: white;text-align: center;
         /*flex: 0 0 60%; !* 70% width *!*/
         max-width: 800px; /* Limit maximum width */
         /*padding: 0 20px; !* Add padding to the sides *!*/
-        margin-top: 2%;
+        margin-top: 4%;
         margin-right: 2%;
         justify-content: left;
         text-align: justify;
