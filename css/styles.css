@@ -145,6 +145,7 @@ a:hover {
     position: relative; /* Set position relative for the white line */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
     transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 1vw;
 }
 
 .link-box_main {
@@ -164,6 +165,7 @@ a:hover {
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 1vw;
 }
 
 .link-box_main a {
@@ -299,18 +301,20 @@ color: white;text-align: center;
     text-align: left; /* Align text to left */
     position: relative; /* Set position relative for the pseudo-element */
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);;
+
 }
 
 .fancy-heading::after {
     content: ''; /* Add content */
     display: block; /* Display as block element */
     width: 100%; /* Set width of the line */
-    height: 5px; /* Set height of the line */
+    height: 0.5vw; /* Set height of the line */
     background-color: darkgray; /* Set color of the line */
     position: absolute; /* Position absolutely */
-    bottom: -10px; /* Position the line below the text */
+    bottom: -1vw; /* Position the line below the text */
     left: 0; /* Position the line at the left edge */
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 1vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .fancy-heading img {
     float: right;
