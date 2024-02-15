@@ -56,6 +56,7 @@ body {
     /*padding: 20px;*/
     margin-top: 2%;
     margin-right: 4%;
+    margin-bottom: 4%;
     justify-content: left;
     text-align: justify;
 }
@@ -85,7 +86,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline;
-    font-size: 40px;
+    font-size: 4vw;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 .middle-column h3 {
@@ -93,7 +94,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline;
-    font-size: 20px;
+    font-size: 1.6vw;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 .middle-column_left h2 {
@@ -101,7 +102,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline;
-    font-size: 40px;
+    font-size: 4vw;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -110,12 +111,16 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline;
-    font-size: 18px;
+    font-size: 1.6vw;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.middle-column_left h4{
+    font-size: 1.5vw;
+}
+
 p {
-    font-size: 1em;
+    font-size: 1.4vw;
     line-height: 1.6;
     color: #555; /* Slightly darker text color */
     margin-bottom: 15px; /* Space between paragraphs */
@@ -158,7 +163,7 @@ a:hover {
     width: 10vw;
     height: 6vw;
     padding: 1.5vw 1vw;
-    font-size: 2.5vw;
+    font-size: 2vw;
     font-family: 'Segoe UI';
     border-radius: 2.5vw;
     text-decoration: none;
@@ -195,8 +200,8 @@ color: white;text-align: center;
     width: 100%;
     height: 1px; /* Set height for the white line */
     background-color: white; /* Set color for the white line */
-    margin-bottom: -15px; /* Add margin bottom for spacing */
-    margin-top: 6px;
+    margin-bottom: -1vw; /* Add margin bottom for spacing */
+    margin-top: 0.8vw;
 }
 
 .white-line_main {
@@ -209,6 +214,11 @@ color: white;text-align: center;
 }
 
 .Github_logo {
+    width: 8vw;
+    height: auto;
+}
+
+.Github_logo_sub {
     width: 8vw;
     height: auto;
 }
@@ -336,5 +346,35 @@ color: white;text-align: center;
 
 
 .paper-title {color: black}
+
+
+@media screen and (max-width: 768px) {
+    .middle-column {
+        flex: 6; /* Take up remaining space */
+        /*flex: 0 0 60%; !* 70% width *!*/
+        max-width: 800px; /* Limit maximum width */
+        /*padding: 0 20px; !* Add padding to the sides *!*/
+        margin-top: 2%;
+        margin-right: 2%;
+        justify-content: left;
+        text-align: justify;
+    }
+    .middle-column_left {
+    flex:8;
+    margin-top: 2%;
+    margin-right: 4%;
+        margin-bottom: 1%;
+    justify-content: left;
+    text-align: justify;
+}
+
+    .middle-column_right {
+    width: 20vw;
+    margin-top: 2%;
+    margin-right: 2%;
+    justify-content: left;
+    text-align: justify;
+    }
+}
 
 
