@@ -229,6 +229,17 @@ nav a:hover,
         padding: 10px;
         white-space: nowrap; /* Prevent wrapping */
     }
+    .right-side {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    Justify-content:end;
+    margin-left: 40%;
+    }
+    .left-side img {
+    width: 20vw; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    }
 }
 
 
