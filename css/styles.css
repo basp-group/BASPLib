@@ -23,9 +23,9 @@ body {
 }
 
 .middle-column {
-    flex: 2; /* Take up remaining space */
+    flex: 4; /* Take up remaining space */
     /*flex: 0 0 60%; !* 70% width *!*/
-    max-width: 800px; /* Limit maximum width */
+    max-width: 3000px; /* Limit maximum width */
     /*padding: 0 20px; !* Add padding to the sides *!*/
     margin-top: 4%;
     margin-right: 2%;
