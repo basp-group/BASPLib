@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BASPLib</title>
+    <title>UTILS</title>
     <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/navigation_bar.css">
-</head>
 
+</head>
 <body>
 
     <!-- Navigation Bar -->
@@ -85,44 +85,45 @@
     <!-- Content Section -->
     <section class="content-section">
         <div class="left-column"></div>
-        <div class="middle-column">
-            <h2>BASPLib</h2>
-            <br>
-            <h3>BASP’s Computational Imaging code library</h3>
-            <p>
-            BASPLib is an open-source library on GitHub, gathering Python and Matlab codes to solve challenging inverse imaging problems in astronomy and medicine. The primary
-            imaging modality of focus is synthesis imaging by interferometry (SII) in radio astronomy, with functionality
-            currently being developed for magnetic resonance imaging (MRI) and ultrasound imaging in medicine.
+        <div class="middle-column_left">
+          <h2>UTILITIES</h2><br>
+            <h3>Some of the building blocks behind the algorithms</h3>
+            <h4><strong>"The most useful tools in the galaxy."</strong></h4>
+            <p>BASPLib offers a suite of utility codes for simulations in Matlab and Python.
+                The suite features two standalone libraries. The first is dedicated to the implementation of the SII measurement operator.
+                It also provides scripts for simulating a wide-variety of Fourier sampling patterns from the antenna configurations of modern telescopes.
+                The second is dedicated to the implementation of the SARA wavelet dictionary, which underpins the regularisation module of the SARA family.
             </p>
 
-            <p>
-            The BASPLib software suite gathers implementations of the most advanced computational imaging algorithms at the interface of optimisation and deep learning theories.
-            The proposed algorithms can be seen as intermediate steps in the quest for an ultimate "intelligent" imaging algorithm (yet to be devised!) providing the joint
-            precision, robustness, efficiency, and scalability required by modern applications. A key feature on this path is algorithm modularity, with regularisation modules
-            (enforcing image and calibration models) alternating with data-fidelity modules (enforcing consistency with the observed data).
-            </p>
+            <h1 class="fancy-heading">Codes <img src="images/GitHub-logo2.png"  class="Github_logo"></h1>
+            <div class="sub_algo-container">
+<!--            <a href="UTILS_Meas_op.html">-->
+<!--                <div class="link-box_main">RI-measurement-operator</div>-->
+<!--            </a>-->
+                <a href="https://github.com/basp-group/RI-measurement-operator">
+                <div class="link-box">
+                    <span>RI-Measurement-Operator V1.0</span><br>
+                    <span class="white-line"></span><br>
+                    <img src="images/GitHub-logo2.png"  class="Github_logo">
+                </div>
+                </a>
 
-            <div class="image-container">
-                <img src="images/BLACKHOLE.jpg">
-                <img src="images/cyga_heat.png">
-                <img src="images/HEART.jpg">
-                <img src="images/BRAIN1.jpg">
+<!--            <a href="UTILS_SARA_Dict.html">-->
+<!--                <div class="link-box_main">SARA-dictionary</div>-->
+<!--            </a>-->
+                <a href="https://github.com/basp-group/uSARA">
+                <div class="link-box">
+                    <span>SARA-Dictionary V1.0</span><br>
+                    <span class="white-line"></span><br>
+                    <img src="images/GitHub-logo2.png"  class="Github_logo">
+                </div>
+            </a>
+
             </div>
 
-
-            <p>
-            BASPLib algorithms and software are developed at Edinburgh's Biomedical and Astronomical Signal Processing Laboratory (<a href="https://basp.site.hw.ac.uk/">BASP</a>),
-            headed by Prof. Wiaux. The library has emerged from previous software developments led by BASP: the early optimisation code <a href="http://basp-group.github.io/purify/">Purify</a>
-            (whose name echoes the CLEAN algorithm), and its <a href="http://basp-group.github.io/Puri-Psi/">Puri-Psi</a> upgrade (-Psi standing for &quot;Parallel Scalable Imaging&quot;)
-            featuring first deep learning developments.
-            </p>
-
-            <p>
-            If you use BASPLib, please cite the library's URL together with relevant publications (see algorithm-specific pages). BASPLib code is provided under GNU general public licenses
-            (please refer to the GitHub repository of individual algorithms for details).
-            </p>
-
         </div>
+            <div class="middle-column_right"><img src="images/falcon2.png"></div>
+
         <div class="right-column"></div>
     </section>
 
