@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://basp-group.github.io/BASPLib/index.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/R2D2.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/AIRI.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/SARA_family.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/EIRA.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/BUQO.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/UTILS.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/R2D2_sub.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/uAIRI.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/cAIRI.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/uSARA.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/Faceted_HyperSARA.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/SARA.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/Polarised_SARA.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/Joint_SARA.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://basp-group.github.io/BASPLib/BUQO_sub.html</loc>
+  <lastmod>2024-05-23T19:01:25+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
