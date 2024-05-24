@@ -379,6 +379,8 @@ color: white;text-align: center;
     font-size: 20px;
     color: transparent;
     display: inline;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);}
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    }
 
 
