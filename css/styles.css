@@ -373,4 +373,12 @@ color: white;text-align: center;
     }
 }
 
+.basplib {
+    background: linear-gradient(90deg, saddlebrown, sandybrown); /* Orange to light orange gradient */
+    -webkit-background-clip: text;
+    font-size: 20px;
+    color: transparent;
+    display: inline;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);}
+
 
