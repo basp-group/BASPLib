@@ -89,6 +89,13 @@ body {
     font-size: 4vw;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+.middle-column h2 .styled-link {
+    color: inherit;
+    text-decoration: none;
+    background: inherit;
+    -webkit-background-clip: text;
+}
 .middle-column h3 {
     background: linear-gradient(90deg, saddlebrown, sandybrown); /* Orange to light orange gradient */
     -webkit-background-clip: text;
