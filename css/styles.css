@@ -133,6 +133,13 @@ p {
     margin-bottom: 15px; /* Space between paragraphs */
 }
 
+li {
+    font-size: 1.4vw;
+    line-height: 1.6;
+    color: #555; /* Slightly darker text color */
+    margin-bottom: 15px; /* Space between paragraphs */
+}
+
 a {
     color: #007bff; /* Link color */
     text-decoration: none;
@@ -159,6 +166,15 @@ a:hover {
     transition: transform 0.2s, box-shadow 0.2s;
     margin-top: 1vw;
 }
+
+.column_box {
+    flex: 1;
+        }
+.container_box {
+    display: flex;
+    /*justify-content: space-between;*/
+    /*padding: 20px;*/
+        }
 
 .link-box_main {
     text-align: center; /* Align text to center */
@@ -189,7 +205,8 @@ a:hover {
 .link-box_main:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    text-decoration-color: white;
+    /*text-decoration-color: white;*/
+    /*text-decoration: none;*/
 }
 
 .link-box a {
@@ -224,6 +241,24 @@ color: white;text-align: center;
     vertical-align: middle; /* Align the image vertically */
     align-items: center;
     width: 8vw;
+    height: auto;
+}
+.jupyter_logo {
+    vertical-align: middle; /* Align the image vertically */
+    align-items: center;
+    width: 2.2vw;
+    height: auto;
+}
+.excel_logo{
+    vertical-align: middle; /* Align the image vertically */
+    align-items: center;
+    width: 2vw;
+    height: auto;
+}
+.dropbox {
+    vertical-align: middle; /* Align the image vertically */
+    align-items: center;
+    width: 2vw;
     height: auto;
 }
 
@@ -376,11 +411,20 @@ color: white;text-align: center;
 .basplib {
     background: linear-gradient(90deg, saddlebrown, sandybrown); /* Orange to light orange gradient */
     -webkit-background-clip: text;
-    font-size: 20px;
+    font-size: 1.5vw;
     color: transparent;
     display: inline;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     text-decoration: none;
     }
 
+.indented {
+    padding-left: 3vw; /* Adjust the value as needed */
+}
+.main_title {
+    font-size: 3vw;
+}
+.middle-title {
+    font-size: 1.8vw;
+}
 

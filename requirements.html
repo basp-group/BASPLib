@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requirements</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navigation_bar.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/rec_image.css">
+
+</head>
+<body onload="loadNav()">
+
+    <!-- Navigation Bar -->
+    <div id="nav-placeholder"></div>
+    <script src="java/loadNav.js"></script>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-column"></div>
+        <div class="middle-column">
+          <h2>Challenge Requirements</h2><br>
+            <h3>Dataset</h3>
+            <br><br>
+            <p>Here, we offer a comprehensive training database of ground-truth images meticulously curated to encompass a diverse
+            array of features and dynamic ranges, meticulously crafted to be free from any noise or artifact structure.
+            These images serve as invaluable resources for the robust training of deep-learning models.
+            <br>
+            Our database is constructed from a meticulous selection of ground-truth images sourced from real low-dynamic
+            range astronomical and medical imaging sources. Radio astronomy images are meticulously gathered from esteemed
+            repositories such as the National Radio Astronomy Observatory (NRAO) Archives, as well as prominent surveys
+            like the LOFAR HBA Virgo cluster survey (<a href="https://www.aanda.org/articles/aa/abs/2023/08/aa46458-23/aa46458-23.html">Edler et al., 2023</a>)
+            and the LoTSS-DR2 survey (<a href="https://www.aanda.org/articles/aa/full_html/2022/03/aa42484-21/aa42484-21.html">Shimwell et al., 2022</a>).
+            Optical astronomy images are meticulously curated from the prestigious National Optical-Infrared Astronomy Research Laboratory.
+            In the realm of medical imaging, our selection process is equally rigorous, with images carefully chosen
+            from the esteemed NYU fastMRI Initiative Database (<a href="https://arxiv.org/abs/1811.08839">Zbontar et al., 2018</a>;
+                <a href="https://pubs.rsna.org/doi/full/10.1148/ryai.2020190007">Knoll et al., 2020</a>).
+            <br>
+                Ground-truth images of size 512x512 are generated using the pre-processing procedure
+                proposed in <a href="https://arxiv.org/html/2312.07137v2"> Terris et al., 2023</a>. More precisely, various operations including concatenation,
+                rotation, translation, and edge smoothing, are applied specifically to the medical images to deconstruct
+                their anatomical features. Denoising is applied to all images, of both medical and astronomical origins,
+                to eliminate artifacts and noise, using a denoising DNN
+                (<a href="https://link.springer.com/article/10.1007/s11633-023-1466-0">zhang et al.,2023</a>) in combination with soft-thresholding operations.
+                Additionally, a pixel-wise exponentiation transform can be applied to the curated ground-truth images
+                to emulate the characteristic high dynamic range of radio images
+                (<a href="https://academic.oup.com/mnras/article/518/1/604/6711697?login=true">Terris et al., 2022</a>).
+            <br>
+            The validation dataset comprises images of giant radio galaxies (e.g., Messier 87; third column), and radio
+            galaxy clusters (e.g., Abell746; fourth column)
+            <br>
+            Test datasets were created using four real radio images: the giant radio galaxies 3C353 (NRAO Archives)
+            and Messier106 (<a href="https://www.aanda.org/articles/aa/full_html/2022/03/aa42484-21/aa42484-21.html">Shimwell et al., 2022</a>),
+            and the radio galaxy clusters Abell2034
+            and PSZ2G165.68+44.01 (<a href="https://www.aanda.org/articles/aa/abs/2022/04/aa43020-21/aa43020-21.html">Botteon et al., 2022</a>).
+            From each radio image, 50 ground-truth images of size 512x512 with varying dynamic range were
+            generated following the pre-processing procedure used for the training datasets. Different Fourier sampling
+            patterns were used to simulate the RI data associated with the ground-truth images.
+            The resulting test dataset comprises 200 inverse problems.
+            <br>
+                The comprehensive details about the provided dataset and the VLA sampling pattern can be found in the paper:
+                <a href="https://arxiv.org/abs/2403.05452">The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy.</a>
+
+            </p>
+
+
+            <h1 class="fancy-heading">Dataset</h1>
+          <table id="fancyTable">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Subset name</th>
+            <th>image size</th>
+            <th># slices</th>
+            <th>Source link</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Training</td>
+            <td>512x512</td>
+            <td>20000</td>
+            <td class="source_code"><a href="https://github.com/basp-group/uSARA" > <img src="images/dropbox.png" class="dropbox"> </a>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>validation</td>
+            <td>512x512</td>
+            <td>250</td>
+            <td class="source_code"><a href="https://github.com/basp-group/AIRI" > <img src="images/dropbox.png" class="dropbox"> </a>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Test</td>
+            <td>512x512</td>
+            <td>200</td>
+            <td class="source_code"><a href="https://github.com/basp-group/R2D2-SII" > <img src="images/dropbox.png" class="dropbox"> </a>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Sampling patterns</td>
+            <td>-</td>
+            <td>20000</td>
+            <td class="source_code"><a href="https://github.com/basp-group/R2D2-SII" > <img src="images/dropbox.png" class="dropbox"> </a>
+        </tr>
+
+    </tbody>
+</table>
+
+        </div>
+
+
+
+        <div class="right-column"></div>
+    </section>
+
+
+    <script src="java/script.js"></script>
+    <script src="java/challenge_table.js"></script>
+    <script src="java/upload_form.js"></script>
+</body>
+</html>

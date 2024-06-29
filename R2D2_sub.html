@@ -9,77 +9,11 @@
     <link rel="stylesheet" href="css/navigation_bar.css">
 
 </head>
-<body>
+<body onload="loadNav()">
 
     <!-- Navigation Bar -->
-    <header>
-        <div class="hamburger-menu" onclick="toggleHeader()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-        <div class="left-side">
-            <a href="https://basp.site.hw.ac.uk/">
-                <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
-            </a>
-        </div>
-        <div class="middle-nav">
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="R2D2.html" class="popup-icon" onmouseover="showPopup('R2D2-popup')" onmouseout="hidePopup('R2D2-popup')">
-                R2D2
-                <div class="popup" id="R2D2-popup">
-                    <img src="images/R2D2.png" alt="R2D2 Logo" width="20" height="20">
-                </div>
-            </a>
-            <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
-                AIRI
-                <div class="popup" id="AIRI-popup">
-                    <img src="images/Chewbacca1_rmb.png" alt="AIRI Logo" width="20" height="20">
-                </div>
-            </a>
-            <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
-                SARA
-                <div class="popup" id="SARA-popup">
-                    <img src="images/Leia_uSARA_rmb.png">
-                </div>
-            </a>
-
-            <a href="EIRA.html" class="popup-icon" onmouseover="showPopup('EIRA-popup')" onmouseout="hidePopup('EIRA-popup')">
-                EIRA
-                <div class="popup" id="EIRA-popup">
-                    <img src="images/DarthVader.png">
-                </div>
-            </a>
-               <a href="BUQO.html" class="popup-icon" onmouseover="showPopup('BUQO-popup')" onmouseout="hidePopup('BUQO-popup')">
-                BUQO
-                <div class="popup" id="BUQO-popup">
-                    <img src="images/Yoda.png">
-                </div>
-            </a>
-            <a href="UTILS.html" class="popup-icon" onmouseover="showPopup('UTILS-popup')" onmouseout="hidePopup('UTILS-popup')">
-                UTILITIES
-                <div class="popup" id="UTILS-popup">
-                    <img src="images/falcon3.png">
-                </div>
-            </a>
-            </nav>
-        </div>
-        <div class="right-side">
-<!--            <a href="https://github.com/basp-group/BASPLib" target="_blank" class="github-icon" onmouseover="showTooltip('GitHub')" onmouseout="hideTooltip()">-->
-<!--                <img src="images/GitHub-logo.png" alt="GitHub Logo" width="40" height="40">-->
-<!--                <span class="tooltip" id="github-tooltip">GitHub</span>-->
-<!--            </a>-->
-            <a href="#" class="contact-icon" onclick="openEmailPage()" onmouseover="showTooltip('Contact')" onmouseout="hideTooltip()">
-                <img src="images/contact-logo1.jpeg" alt="Contact Logo" width="40" height="40">
-                <span class="tooltip" id="contact-tooltip">Contact</span>
-            </a>
-<!--            <div id="search-bar" class="search-bar">-->
-<!--                <input type="text" placeholder="Search...">-->
-<!--                <button onclick="performSearch()">Search</button>-->
-<!--            </div>-->
-        </div>
-    </header>
+    <div id="nav-placeholder"></div>
+    <script src="java/loadNav.js"></script>
 
     <!-- Content Section -->
     <section class="content-section">
@@ -88,14 +22,24 @@
           <h2>R2D2</h2><br>
             <h3>Residual-to-Residual DNN series for high-Dynamic range imaging</h3>
             <br><br>
-            <h1 class="fancy-heading">Main codes</h1>
+            <h1 class="fancy-heading">Main codes & Tutorials</h1>
+            <div class="sub_algo-container">
             <a href="https://github.com/basp-group/R2D2/tree/main">
                 <div class="link-box">
                     <span>R2D2 SII V1.0</span><br>
                     <span class="white-line"></span><br>
                     <img src="images/GitHub-logo2.png"  class="Github_logo">
-                </div>
-            </a>
+                </div></a>
+
+                <a href="https://www.dropbox.com/scl/fi/nn4t3lud7javxm1cwqyfj/tutorial_r2d2_python.ipynb?rlkey=ngcxdgw4wprkembw95lx0lqak&dl=1" download>
+                <div class="link-box">
+                    <span>Tutorials</span><br>
+                    <span class="white-line"></span><br>
+                    <img src="images/jupyter.png"  class="jupyter_logo">
+                </div></a>
+            </div>
+
+
                     <br><br>
             <h1 class="fancy-heading">Papers & Paper codes</h1>
             <p>
@@ -113,23 +57,24 @@
                     <strong>The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy</strong>
                     <br>
                     A. Aghabiglou, C. S. Chu, A. Dabbech, Y. Wiaux,
-                  <i>accepted for publication at APJS</i>, 2024.
-                  <br>
-                     <a href="https://arxiv.org/abs/2403.05452">ArXiv:2403.05452</a> | <a href="https://github.com/basp-group/R2D2-SII" >
-                <img src="images/GitHub-logo2.png" class="Github_logo"> </a>
+                    <i>ApJS</i>, 273(1):3, 2024.
+                    <br>
+                    <a href="https://arxiv.org/abs/2403.05452">ArXiv:2403.05452</a> |
+                    <a href="https://doi.org/10.3847/1538-4365/ad46f5">DOI:10.3847/1538-4365/ad46f5</a>
+                    <a href="https://github.com/basp-group/R2D2-SII" ><img src="images/GitHub-logo2.png" class="Github_logo"></a>
                 </p>
 
                   <div class="horizontal-line"></div>
-            <p>
+                <p>
                     <strong>CLEANing Cygnus A deep and fast with R2D2</strong> <br>
-                  A. Dabbech, A. Aghabiglou, C. S. Chu, Y. Wiaux,
+                    A. Dabbech, A. Aghabiglou, C. S. Chu, Y. Wiaux,
 
-                  <i>MNRAS</i>, 966(2):L34, 2024.
-                  <br>
-                  <a href="https://arxiv.org/abs/2309.03291">ArXiv:2309.03291</a> | <a href="https://github.com/basp-group/R2D2-SII" >
-                <a href="https://doi.org/10.3847/2041-8213/ad41df">DOI:10.3847/2041-8213/ad41df</a>
-                <img src="images/GitHub-logo2.png" class="Github_logo"> </a>
-            </p>
+                    <i>ApJL</i>, 966(2):L34, 2024.
+                    <br>
+                    <a href="https://arxiv.org/abs/2309.03291">ArXiv:2309.03291</a> |
+                    <a href="https://doi.org/10.3847/2041-8213/ad41df">DOI:10.3847/2041-8213/ad41df</a>
+                    <a href="https://github.com/basp-group/R2D2-SII" ><img src="images/GitHub-logo2.png" class="Github_logo"></a>
+                </p>
                    <div class="horizontal-line"></div>
             <p>
                     <strong>Deep network series for large-scale high-dynamic range imaging</strong> <br>

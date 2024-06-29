@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R2D2 SII</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navigation_bar.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body onload="loadNav()">
+
+    <!-- Navigation Bar -->
+    <div id="nav-placeholder"></div>
+    <script src="java/loadNav.js"></script>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-column"></div>
+        <div class="middle-column">
+          <h2>Tutorial</h2><br>
+            <h3>Simulating VLA-Specific Data Models</h3>
+<!--            <h4><strong>"Did you know that R2D2 is a DNN series?"</strong></h4>-->
+            <p>Welcome to our tutorial where we provide detailed explanations and scripts to simulate
+                Very Large Array (VLA) specific data models. We will guide you through the setup and execution
+                of state-of-the-art imaging algorithms from <a href="https://basp-group.github.io/BASPLib/" class="basplib">BASPLib</a>, including R2D2, uSARA, and AIRI. While the
+                methodology is implemented for the VLA, a similar process can be undertaken for other telescopes as well.
+            </p>
+            <h1 class="fancy-heading">The SII data model</h1>
+            <p>In radio interferometry, especially in the context of aperture synthesis, each pair of antennas at a
+                given moment acquires a noisy complex measurement called visibility. This visibility corresponds to
+                a Fourier component of the desired radio emission.
+                The ensemble of these measurements, accumulated over the entire observation period, forms what is
+                known as the Fourier sampling pattern. This pattern represents an incomplete coverage of
+                the 2-dimensional (2D) Fourier plane. To better understand the imaging process, consider the following model:</p>
+
+    <p>Let \({\boldsymbol{x}^{\star}} \in \mathbb{R}_{+}^{N}\) denote the unknown radio image of interest.
+            The observed radio interferometric data, \({\boldsymbol{y}} \in \mathbb{C}^M\), can be mathematically represented as:
+
+
+            \[
+            {\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{x}^{\star}} + \boldsymbol{n}}
+            \]
+
+    </p>
+    <p>where:</p>
+    <p>\({\boldsymbol{n}} \in \mathbb{C}^M\) is the complex Gaussian random noise with a standard deviation τ>0 and a mean of 0.</p>
+    <p>\({\boldsymbol{\Phi}}\colon \mathbb{R}^N \to \mathbb{C}^M\) is the measurement operator that encapsulates the acquisition process via non-uniform Fourier sampling.</p>
+    <p>In this context, we use the <b>TorchKbNufft</b> library as the non-uniform Fast Fourier Transform (FFT) backend to implement this operator.</p>
+            <a href="https://www.dropbox.com/scl/fi/29c0v8oj3p5t1wvzq1q8d/tutorial_ri_measurement_operator_python.ipynb?rlkey=lpnfs7fc14l1t4vheuqfk5ze4&dl=1" download>
+                <div class="link-box_main">SII Measurement Operator</div>
+            </a>
+
+            <h1 class="fancy-heading">Setting Up BASPLib Imaging Algorithms</h1>
+            <p>Here, we detail the steps to set up and run the advanced imaging algorithms provided by <a href="https://basp-group.github.io/BASPLib/" class="basplib">BASPLib</a>, including:</p>
+            <div class="container_box">
+                <div class="column_box">
+                    <a href="https://www.dropbox.com/scl/fi/nn4t3lud7javxm1cwqyfj/tutorial_r2d2_python.ipynb?rlkey=ngcxdgw4wprkembw95lx0lqak&dl=1" download>
+                        <div class="link-box_main">R2D2</div>
+                    </a>
+                </div>
+                <div class="column_box">
+                    <a href="https://www.dropbox.com/scl/fi/xuodqyqsrwp5pelry6vj3/tutorial_airi_matlab.mlx?rlkey=4biv2b9k65u1k1ew36n9cjdmd&dl=1" download>
+                        <div class="link-box_main">AIRI</div>
+                    </a>
+                </div>
+                <div class="column_box">
+    <a href="https://www.dropbox.com/scl/fi/3rohz41s3ftxofch98trq/tutorial_usara_matlab.mlx?rlkey=13a8u1ww29jpkd3mhgdhbeagh&dl=1" download>
+        <div class="link-box_main">uSARA</div>
+    </a>
+</div>
+
+            </div>
+
+        <br><br>
+        </div>
+<!--            <div class="middle-column_right"><img src="images/R2D2.png"></div>-->
+
+        <div class="right-column"></div>
+    </section>
+
+
+    <script src="java/script.js"></script>
+</body>
+</html>

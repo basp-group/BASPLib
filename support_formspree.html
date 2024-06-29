@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="description" content="Explore BASPLib, the comprehensive library for BASP Group, offering extensive resources and documentation.">
+    <title>BASPLib help desk</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navigation_bar.css">
+    <link rel="stylesheet" href="css/support_form.css">
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lch2wEqAAAAAAUgANOIG0jTtaxRfHe5E_twJQ_-"></script>
+<!--    <script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
+</head>
+
+<body onload="loadNav()">
+
+    <!-- Navigation Bar -->
+    <div id="nav-placeholder"></div>
+    <script src="java/loadNav.js"></script>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-column"></div>
+        <div class="middle-column">
+            <h2><a href="https://basp-group.github.io/BASPLib/" class="styled-link">BASPLib support</a></h2>
+            <br>
+            <h3>Connect to BASPLib support team</h3>
+            <p>
+                You can connect to our support team by completing the form below. We will get in touch with you as soon as possible.
+            </p>
+
+            <form id="support-form" action="https://formspree.io/f/xldrrzpw" method="POST" onsubmit="return validateForm()">
+                <label for="name">Name:
+                    <input type="text" id="name" name="name" required>
+                </label>
+                <br><br>
+                <label for="email">Email:
+                    <input type="email" id="email" name="email" required>
+                </label>
+                <br><br>
+                <label for="topic">Topic:
+                    <input type="text" id="topic" name="topic" required>
+                </label>
+
+                <label for="issue">Message:
+                    <textarea id="issue" name="issue" rows="8" required></textarea>
+                </label>
+                <br><br>
+
+                <!-- reCAPTCHA Enterprise widget -->
+                <div id="recaptcha-container"></div>
+
+                <!-- Honeypot field -->
+                <div style="display:none;">
+                    <label for="website">Website:
+                        <input type="text" id="website" name="website">
+                    </label>
+                </div>
+                <!-- CAPTCHA Section -->
+                <label for="captcha">Solve the equation: <span id="captcha-equation"></span></label>
+                <input type="text" id="captcha" name="captcha" required>
+                <br><br>
+
+                <button type="submit">Send</button>
+            </form>
+
+        </div>
+        <div class="right-column"></div>
+    </section>
+
+    <!-- Your JavaScript code -->
+    <script src="java/script.js"></script>
+    <script src="java/form.js"></script>
+</body>
+</html>

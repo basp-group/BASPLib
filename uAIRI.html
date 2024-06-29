@@ -9,78 +9,11 @@
     <link rel="stylesheet" href="css/navigation_bar.css">
 
 </head>
-<body>
+<body onload="loadNav()">
 
     <!-- Navigation Bar -->
-    <header>
-        <div class="hamburger-menu" onclick="toggleHeader()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-        <div class="left-side">
-            <a href="https://basp.site.hw.ac.uk/">
-                <img src="images/logo_BASP_transp.png" alt="Logo"> <!-- Replace with your actual logo path -->
-            </a>
-        </div>
-        <div class="middle-nav">
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="R2D2.html" class="popup-icon" onmouseover="showPopup('R2D2-popup')" onmouseout="hidePopup('R2D2-popup')">
-                R2D2
-                <div class="popup" id="R2D2-popup">
-                    <img src="images/R2D2.png" alt="R2D2 Logo" width="20" height="20">
-                </div>
-            </a>
-            <a href="AIRI.html" class="popup-icon" onmouseover="showPopup('AIRI-popup')" onmouseout="hidePopup('AIRI-popup')">
-                AIRI
-                <div class="popup" id="AIRI-popup">
-                    <img src="images/Chewbacca1_rmb.png" alt="AIRI Logo" width="20" height="20">
-                </div>
-            </a>
-            <a href="SARA_family.html" class="popup-icon" onmouseover="showPopup('SARA-popup')" onmouseout="hidePopup('SARA-popup')">
-                SARA
-                <div class="popup" id="SARA-popup">
-                    <img src="images/Leia_uSARA_rmb.png">
-                </div>
-            </a>
-
-            <a href="EIRA.html" class="popup-icon" onmouseover="showPopup('EIRA-popup')" onmouseout="hidePopup('EIRA-popup')">
-                EIRA
-                <div class="popup" id="EIRA-popup">
-                    <img src="images/DarthVader.png">
-                </div>
-            </a>
-               <a href="BUQO.html" class="popup-icon" onmouseover="showPopup('BUQO-popup')" onmouseout="hidePopup('BUQO-popup')">
-                BUQO
-                <div class="popup" id="BUQO-popup">
-                    <img src="images/Yoda.png">
-                </div>
-            </a>
-
-             <a href="UTILS.html" class="popup-icon" onmouseover="showPopup('UTILS-popup')" onmouseout="hidePopup('UTILS-popup')">
-                UTILITIES
-                <div class="popup" id="UTILS-popup">
-                    <img src="images/falcon3.png">
-                </div>
-            </a>
-            </nav>
-        </div>
-        <div class="right-side">
-<!--            <a href="https://github.com/basp-group/BASPLib" target="_blank" class="github-icon" onmouseover="showTooltip('GitHub')" onmouseout="hideTooltip()">-->
-<!--                <img src="images/GitHub-logo.png" alt="GitHub Logo" width="40" height="40">-->
-<!--                <span class="tooltip" id="github-tooltip">GitHub</span>-->
-<!--            </a>-->
-            <a href="#" class="contact-icon" onclick="openEmailPage()" onmouseover="showTooltip('Contact')" onmouseout="hideTooltip()">
-                <img src="images/contact-logo1.jpeg" alt="Contact Logo" width="40" height="40">
-                <span class="tooltip" id="contact-tooltip">Contact</span>
-            </a>
-<!--            <div id="search-bar" class="search-bar">-->
-<!--                <input type="text" placeholder="Search...">-->
-<!--                <button onclick="performSearch()">Search</button>-->
-<!--            </div>-->
-        </div>
-    </header>
+    <div id="nav-placeholder"></div>
+    <script src="java/loadNav.js"></script>
 
     <!-- Content Section -->
     <section class="content-section">
@@ -89,7 +22,8 @@
            <h2>AIRI</h2><br>
             <h3><strong>AI</strong> for <strong>R</strong>egularisation in <strong>I</strong>maging</h3>
             <br><br>
-            <h1 class="fancy-heading">Main codes</h1>
+            <h1 class="fancy-heading">Main codes  & Tutorials</h1>
+            <div class="sub_algo-container">
             <a href="https://github.com/basp-group/AIRI">
                 <div class="link-box">
                     <span>AIRI SII V1.0</span><br>
@@ -97,6 +31,13 @@
                     <img src="images/GitHub-logo2.png" class="Github_logo">
                 </div>
             </a>
+            <a href="https://www.dropbox.com/scl/fi/xuodqyqsrwp5pelry6vj3/tutorial_airi_matlab.mlx?rlkey=4biv2b9k65u1k1ew36n9cjdmd&dl=1" download>
+                <div class="link-box">
+                    <span>Tutorials</span><br>
+                    <span class="white-line"></span><br>
+                    <img src="images/maltalb_logo.png"  class="jupyter_logo">
+                </div></a>
+            </div>
                     <br><br>
             <h1 class="fancy-heading">Papers & Paper codes</h1>
                 <p>
