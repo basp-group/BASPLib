@@ -1,0 +1,46 @@
+.DS_Store
+__pycache__/
+*/__pycache__/
+lightning_logs/
+archive/
+*/archive/
+.idea/
+jobs/
+jobs/*
+*.slurm
+*.err
+*.out
+*.ckpt
+*.log
+
+*.mat
+# exclude
+!./data/3c353/data_3c353.mat
+
+*.fits
+# exclude
+!./data/3c353/3c353_GTfits.fits
+
+*.yaml
+# exclude
+!config/data/dirty.yaml
+!config/data/residual.yaml
+!config/imaging/r2d2.yaml
+
+
+local/
+results/
+test/
+
+*.MS
+*.pre
+*.last
+*.txt
+*.sqlite
+
+*.ipynb
+*.DS_Store
+
+*.m
+*.asv
+*.gz
