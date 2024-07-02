@@ -1,7 +1,7 @@
 function onClick(e) {
             e.preventDefault();
             grecaptcha.enterprise.ready(async () => {
-                const token = await grecaptcha.enterprise.execute('6Lch2wEqAAAAAAUgANOIG0jTtaxRfHe5E_twJQ_-', { action: 'submit' });
+                const token = await grecaptcha.enterprise.execute('6LdbrgYqAAAAAG0oO7l3MfECHFQhCpqsE_0zI-7x', { action: 'submit' });
                 document.getElementById('recaptcha-container').innerHTML = '<input type="hidden" name="token" value="' + token + '">';
                 document.getElementById('support-form').submit();
             });
