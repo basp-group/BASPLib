@@ -2,7 +2,7 @@ import requests
 import json
 
 # URL to which the request is to be sent
-url = "https://basp-group.github.io/BASPLib/index.html"
+url = "https://basp-group.github.io/"
 
 # API key
 api_key = "https://recaptchaenterprise.googleapis.com/v1/projects/basplib-1719408011143/assessments?key=API_KEY"
