@@ -914,15 +914,11 @@ end</pre></div>
 
 <span class="comment"># Loop through each .mat file in the directory</span>
 <span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_files</span>"/*.mat; <span class="keyword">do</span>
-  <span class="comment"># Extract the file name without extension for srcName and groundtruth</span>
-  <span class="variable">baseName</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)
-  <span class="variable">srcName</span>=<span class="input"><span class="string">"$baseName"</span></span>
-  <span class="variable">groundtruth</span>=<span class="input"><span class="string">"/path/to/Ground/truth/folder/${baseName}_gdth.fits"</span></span>
 
   <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>
 
   <span class="comment"># Run the MATLAB command for each .mat file</span>
-  <span class="string">"wsclean -size 512  512  -scale %sasec -data-column DATA -padding 2 -weight briggs %s  \
+  <span class="string">"wsclean -size 512  512  -scale %sasec -data-column DATA -padding 2 -weight briggs 0  \
     -niter %d -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
       -auto-threshold  0.5  -name %s/wsclean-briggs%s-  %s"</span> % \
     (cellsize, briggs_factor, niter, output_path, briggs_factor, data_file)
