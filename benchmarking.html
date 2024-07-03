@@ -927,16 +927,16 @@ end</pre></div>
     continue
   <span class="command">fi</span>
   <span class="comment"># Run the MATLAB command for each .mat file</span>
-  <span class="command">wsclean</span> -size 512  512  -scale "$cellsize"asec -data-column DATA -padding 2 -weight briggs "$briggs_factor"  \
-    -niter "$niter" -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
-      -auto-threshold  0.5  -name "$output_path"/wsclean-briggs"$briggs_factor"- "$data_file"
+  <span class="command">wsclean</span> -size 512  512  -scale <span class="string">"</span><span class="input">$cellsize</span><span class="string">"</span>asec -data-column DATA -padding 2 -weight briggs <span class="string">"</span><span class="input">$briggs_factor</span><span class="string">"</span>  \
+    -niter <span class="string">"</span><span class="input">$niter</span><span class="string">"</span> -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
+      -auto-threshold  0.5  -name <span class="string">"</span><span class="input">$output_path</span><span class="string">"</span>/wsclean-briggs<span class="string">"</span><span class="input">$briggs_factor</span><span class="string">"</span>- <span class="string">"</span><span class="input">$data_file</span><span class="string">"</span>
 
   <span class="comment"># Log the completion of each file</span>
   <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>"</span>
 <span class="keyword">done</span>
 
 <span class="comment"># Log the end time</span>
-<span class="command">echo</span> <span class="string">"Script completed at: $(date)"</span>
+<span class="command">echo</span> <span class="string">"Script completed at: <span class="input">$(date)</span>"</span>
         </pre>
     </div>
 </div>
