@@ -904,8 +904,9 @@ end</pre></div>
         </div>
         <pre><span class="keyword">#!/bin/bash</span>
 <span class="comment"># Define variables</span>
-<span class="variable">data_files</span>=<span class="string">"/path/to/data/folder"</span>
+<span class="variable">data_files</span>=<span class="string">"/path/to/ms_files/folder"</span>
 <span class="variable">output_path</span>=<span class="string">"/path/to/save/outputs/"</span>
+<span class="variable">msFile_detail_path</span>=<span class="string">"/path/to/meas_convert.csv"</span>
 <span class="variable">niter</span>=<span class="input">2000000</span>
 <span class="variable">briggs_factor</span>=<span class="input">0</span>
 
@@ -914,14 +915,21 @@ end</pre></div>
 
 <span class="comment"># Loop through each .mat file in the directory</span>
 <span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_files</span>"/*.mat; <span class="keyword">do</span>
-
+  <span class="input">base_name</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)
   <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>
 
+  <span class="comment"># Read cell_size from the CSV file based on the base_name</span>
+  cellsize=<span class="input">$(awk -F, -v filename="$base_name" 'NR > 1 && $1 == filename {print $3}' "$msFile_detail_path")</span>
+
+  <span class="comment"># Check if cellsize is found</span>
+  <span class="command">if</span> [ -z "<span class="input">$cellsize</span>" ]; then
+    echo <span class="string">"Error: No matching cell size found for</span> <span class="input">$base_name</span> <span class="string">in</span> <span class="input">$msFile_detail_path"</span>
+    continue
+  <span class="command">fi</span>
   <span class="comment"># Run the MATLAB command for each .mat file</span>
-  <span class="string">"wsclean -size 512  512  -scale %sasec -data-column DATA -padding 2 -weight briggs %s  \
-    -niter %d -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
-      -auto-threshold  0.5  -name %s/wsclean-briggs%s-  %s"</span> % \
-    (cellsize, briggs_factor, niter, output_path, briggs_factor, data_file)
+  <span class="command">wsclean</span> -size 512  512  -scale "$cellsize"asec -data-column DATA -padding 2 -weight briggs "$briggs_factor"  \
+    -niter "$niter" -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
+      -auto-threshold  0.5  -name "$output_path"/wsclean-briggs"$briggs_factor"- "$data_file"
 
   <span class="comment"># Log the completion of each file</span>
   <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>"</span>
