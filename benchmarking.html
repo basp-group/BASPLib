@@ -902,49 +902,43 @@ end</pre></div>
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
-        <pre><span class="comment">In progress. The command will be added soon.</span>
+        <pre><span class="keyword">#!/bin/bash</span>
+<span class="comment"># Define variables</span>
+<span class="variable">data_files</span>=<span class="string">"/path/to/data/folder"</span>
+<span class="variable">output_path</span>=<span class="string">"/path/to/save/outputs/"</span>
+<span class="variable">niter</span>=<span class="input">2000000</span>
+<span class="variable">briggs_factor</span>=<span class="input">0</span>
+
+<span class="comment"># Log the start time</span>
+<span class="command">echo</span> <span class="string">"Script started at: $(date)"</span>
+
+<span class="comment"># Loop through each .mat file in the directory</span>
+<span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_files</span>"/*.mat; <span class="keyword">do</span>
+  <span class="comment"># Extract the file name without extension for srcName and groundtruth</span>
+  <span class="variable">baseName</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)
+  <span class="variable">srcName</span>=<span class="input"><span class="string">"$baseName"</span></span>
+  <span class="variable">groundtruth</span>=<span class="input"><span class="string">"/path/to/Ground/truth/folder/${baseName}_gdth.fits"</span></span>
+
+  <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>
+
+  <span class="comment"># Run the MATLAB command for each .mat file</span>
+  <span class="string">"wsclean -size 512  512  -scale %sasec -data-column DATA -padding 2 -weight briggs %s  \
+    -niter %d -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
+      -auto-threshold  0.5  -name %s/wsclean-briggs%s-  %s"</span> % \
+    (cellsize, briggs_factor, niter, output_path, briggs_factor, data_file)
+
+  <span class="comment"># Log the completion of each file</span>
+  <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>"</span>
+<span class="keyword">done</span>
+
+<span class="comment"># Log the end time</span>
+<span class="command">echo</span> <span class="string">"Script completed at: $(date)"</span>
         </pre>
     </div>
 </div>
-<!--            <div class="center-wrapper">-->
-<!--    <div class="code-container">-->
-<!--        <div class="copy-btn" onclick="copyText(this)">-->
-<!--            <img src="images/copy.png" class="copy_logo">-->
-<!--        </div>-->
-<!--        <pre><span class="keyword">#!/bin/bash</span>-->
-<!--<span class="comment"># Define variables</span>-->
-<!--<span class="variable">data_files</span>=<span class="string">"/path/to/data/folder"</span>-->
-<!--<span class="variable">output_path</span>=<span class="string">"/path/to/save/outputs/"</span>-->
-<!--<span class="variable">niter</span>=<span class="input">2000000</span>-->
-<!--<span class="variable">briggs_factor</span>=<span class="input">0</span>-->
-
-<!--<span class="comment"># Log the start time</span>-->
-<!--<span class="command">echo</span> <span class="string">"Script started at: $(date)"</span>-->
-
-<!--<span class="comment"># Loop through each .mat file in the directory</span>-->
-<!--<span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_files</span>"/*.mat; <span class="keyword">do</span>-->
-<!--  <span class="comment"># Extract the file name without extension for srcName and groundtruth</span>-->
-<!--  <span class="variable">baseName</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)-->
-<!--  <span class="variable">srcName</span>=<span class="input"><span class="string">"$baseName"</span></span>-->
-<!--  <span class="variable">groundtruth</span>=<span class="input"><span class="string">"/path/to/Ground/truth/folder/${baseName}_gdth.fits"</span></span>-->
-
-<!--  <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>-->
-
-<!--  <span class="comment"># Run the MATLAB command for each .mat file</span>-->
-<!--  <span class="string">"wsclean -size 512  512  -scale %sasec -data-column DATA -padding 2 -weight briggs %s  \-->
-<!--    -niter %d -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \-->
-<!--      -auto-threshold  0.5  -name %s/wsclean-briggs%s-  %s"</span> % \-->
-<!--    (cellsize, briggs_factor, niter, output_path, briggs_factor, data_file)-->
-
-<!--  <span class="comment"># Log the completion of each file</span>-->
-<!--  <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>"</span>-->
-<!--<span class="keyword">done</span>-->
-
-<!--<span class="comment"># Log the end time</span>-->
-<!--<span class="command">echo</span> <span class="string">"Script completed at: $(date)"</span>-->
-<!--        </pre>-->
-<!--    </div>-->
-<!--</div>-->
+            <p><span class="command"><b>Note:</b></span> Additional information on how to convert the data files into a
+                measurement set that is readable by WSClean will be provided soon.
+            </p>
             <h1 class="fancy-heading">References</h1>
             [1] Aghabiglou A, Chu CS, Dabbech A, Wiaux Y.
             The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy.
