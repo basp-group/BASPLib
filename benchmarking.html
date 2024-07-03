@@ -918,7 +918,7 @@ end</pre></div>
   <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>
 
   <span class="comment"># Run the MATLAB command for each .mat file</span>
-  <span class="string">"wsclean -size 512  512  -scale %sasec -data-column DATA -padding 2 -weight briggs 0  \
+  <span class="string">"wsclean -size 512  512  -scale %sasec -data-column DATA -padding 2 -weight briggs %s  \
     -niter %d -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
       -auto-threshold  0.5  -name %s/wsclean-briggs%s-  %s"</span> % \
     (cellsize, briggs_factor, niter, output_path, briggs_factor, data_file)
