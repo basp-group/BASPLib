@@ -28,13 +28,13 @@
             <h3>Benchmarking Platform for State-of-the-Art SII Imaging Algorithms</h3>
             <br><br>
             <p>
-                We present a benchmarking platform for the state-of-the-art SII imaging algorithms of <a class="basplib">BASPLib</a>: uSARA, AIRI, and R2D2.
+                We present a benchmarking platform for the state-of-the-art algorithms for synthesis imaging by interferometry (SII) provided by <a class="basplib">BASPLib</a>: uSARA, AIRI, and R2D2.
                 We provide access to our simulated comprehensive testbed that is composed of 200 SII inverse problems,
                 and offer detailed guidelines to reproduce the reconstruction results published in our study [1].
             </p>
         <h1 class="fancy-heading">SII inverse problem</h1>
             <p>
-                In SII, each pair of antennas acquires a
+                In radio interferometry, each pair of antennas acquires a
                 noisy complex measurement corresponding to a spatial Fourier component of the target radio
                 sky, at a given time instant. The collection of the sensed spatial Fourier modes accumulated over the total observation period forms
                 the Fourier sampling pattern, describing an incomplete coverage of the 2D Fourier plane.
@@ -50,7 +50,7 @@
                 resolution.
             </p>
 <p>
-                The SII data model can be expressed in the image domain via a normalised back-projection using the adjoint of the measurement operator  \(\boldsymbol{\Phi}^\dagger \) such that:
+                The radio-interferometric data model can be expressed in the image domain via a normalised back-projection using the adjoint of the measurement operator  \(\boldsymbol{\Phi}^\dagger \) such that:
 
                 \[\boldsymbol{x}_{\textrm{d}} =\kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{y}\}=
                 \kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{\Phi}\boldsymbol{x}^{\star}\}+ \kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{n}\}\]
@@ -75,7 +75,7 @@
                 combining both VLA configurations A and C were considered for a balanced Fourier coverage. The total number of points in the resulting Fourier sampling patterns ranges from 0.2M to 2M. The data are corrupted with additive Gaussian noise with mean 0 and a standard deviation commensurate of the dynamic range of the corresponding ground truth images.
                   </p>
                    <p>
-                       The simulated data are such that the spatial bandwidth of the Fourier sampling is fixed to 2/3
+                       The simulated data are such that the spatial bandwidth of the Fourier sampling is fixed to 2/3 of
                        the spatial Fourier bandwidth of the ground-truth images. Under these considerations, the
                        testbed comprises 200 unique inverse problems. During imaging, the Briggs weighting scheme was applied to the
                        data  (also injected into the measurement operator) to enhance the effective resolution of
@@ -144,7 +144,7 @@
                 <p>
                     In addition to <a class="basplib">BASPLib</a> imaging algorithms, the benchmarking results also include the celebrated CLEAN algorithm.
                     CLEAN, recognised as a standard algorithm for SII imaging, is represented here by its multiscale
-                    variant implemented in the widely used WSClean software [8].
+                    variant implemented in the widely used <a href="https://gitlab.com/aroffringa/wsclean">WSClean</a> software [8].
                  </p>
 
 
@@ -648,8 +648,8 @@ end</pre></div>
 </div>
             <br>
              <h3>CLEAN</h3>
-            <p> We use the <a href="https://casaguides.nrao.edu/index.php/VLA_CASA_Imaging-CASA4.7.0#Multi-Scale_CLEAN">multi-scale variant of CLEAN</a> in WSClean. Please refer  to
-                <a href="https://wsclean.readthedocs.io/en/latest/installation.html">WSClean official website</a> for full instructions of how to install the software.
+            <p> We use the multi-scale variant of CLEAN in WSClean. Please refer  to
+                <a href="https://wsclean.readthedocs.io/">WSClean official website</a> for full instructions on how to install the software.
             </p>
 
             <p><strong class="main_title">Imaging</strong>
