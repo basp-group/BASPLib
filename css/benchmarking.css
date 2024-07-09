@@ -100,4 +100,6 @@ pre {
 .command { color: purple; }
 .input {color: cornflowerblue}
 .keyword { color: #401340; }
+.import { color: saddlebrown; }
+.function{color: #7c08ec;}
 
