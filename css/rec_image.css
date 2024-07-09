@@ -36,7 +36,7 @@
     width: 50%;
     perspective: 1000px; /* Add perspective to the container */
 }
-.tutorial_2container {
+.two_image_container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2vw;
