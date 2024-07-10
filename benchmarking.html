@@ -316,7 +316,7 @@
             <h1 class="fancy-heading">Reconstructions & Residual dirty images</h1>
             <p>
                 Reconstruction images obtained by the SII algorithms associated with one inverse problem selected from
-                our testbed (ID:8009) are displayed below. In this case, the ground truth is characterised by a dynamic range of 150,000.
+                our testbed (ID:80009) are displayed below. In this case, the ground truth is characterised by a dynamic range of 150,000.
 <!--                The observation setting for this particular inverse problem includes a total observation time of 8 hours,-->
 <!--                three frequencies, and a frequency ratio of 1.28.-->
             </p>
@@ -943,6 +943,37 @@ end</pre></div>
             <p><span class="command"><b>Note:</b></span> Additional information on how to convert the data files into a
                 measurement set that is readable by WSClean will be provided soon.
             </p>
+            <h1 class="fancy-heading">Evaluation metrics calculation</h1>
+            <p>
+                The evaluation metrics can be calculated using this
+                <a href="https://www.dropbox.com/scl/fi/q2uyd9tykxe45ghwjfzfe/calculate_metrics.py?rlkey=94h62bohwwdz7qnvv04kiu8vv&dl=1">
+                    Python file</a>.
+                To run calculate_metrics.py you can use below bash script:
+            </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="comment">#!/bin/bash</span>
+
+<span class="comment"># Define variables</span>
+<span class="variable">DATA_FILE</span>=<span class="string">"/path/to/data/folder"</span>
+<span class="variable">EXCEL_SAVE_PATH</span>=<span class="string">"/path/to/save/metrics/AIRI.xlsx"</span>
+<span class="variable">GT_PATH</span>=<span class="string">"/path/to/ground/truth/images/folder"</span>
+<span class="variable">MODEL_OUTPUTS</span>=<span class="string">"/path/to/model/outputs/folder/"</span>
+<span class="variable">MODEL</span>=<span class="string">"R2D2"</span> <span class="comment"># or "R3D3" or "AIRI" or "uSARA"</span>
+
+<span class="comment"># Activate your virtual environment if needed</span>
+<span class="keyword">source</span> <span class="variable">/path/to/your/virtualenv/bin/activate</span>
+
+<span class="comment"># Run the Python script</span>
+<span class="keyword">python</span> <span class="function">calculate_metrics.py</span> <span class="variable">--data_file</span> <span class="string">"$DATA_FILE"</span> <span class="variable">--excel_save_path</span> <span class="string">"$EXCEL_SAVE_PATH"</span> <span class="variable">--GT_path</span> <span class="string">"$GT_PATH"</span> <span class="variable">--model_outputs</span> <span class="string">"$MODEL_OUTPUTS"</span> <span class="variable">--model</span> <span class="string">"$MODEL"</span>
+        </pre>
+    </div>
+</div>
+
             <h1 class="fancy-heading">References</h1>
             [1] Aghabiglou A, Chu CS, Dabbech A, Wiaux Y.
             The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy.
