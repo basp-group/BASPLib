@@ -316,7 +316,7 @@
             <h1 class="fancy-heading">Reconstructions & Residual dirty images</h1>
             <p>
                 Reconstruction images obtained by the SII algorithms associated with one inverse problem selected from
-                our testbed (ID:3) are displayed below. In this case, the ground truth is characterised by a dynamic range of 150,000.
+                our testbed (ID:8009) are displayed below. In this case, the ground truth is characterised by a dynamic range of 150,000.
 <!--                The observation setting for this particular inverse problem includes a total observation time of 8 hours,-->
 <!--                three frequencies, and a frequency ratio of 1.28.-->
             </p>
@@ -693,6 +693,7 @@ end</pre></div>
 <span class="variable">imDimx</span>=<span class="input"><span class="string">512</span></span>
 <span class="variable">imDimy</span>=<span class="input"><span class="string">512</span></span>
 <span class="variable">runID</span>=<span class="input"><span class="string">0</span></span>
+<span class="variable">log_file</span>=<span class="string">"/path/to/save/log/file/"</span>
 
 <span class="comment"># Log the start time</span>
 <span class="command">echo</span> <span class="string">"Script started at: $(date)"</span>
@@ -704,19 +705,19 @@ end</pre></div>
   <span class="variable">srcName</span>=<span class="input"><span class="string">"$baseName"</span></span>
   <span class="variable">groundtruth</span>=<span class="input"><span class="string">"/path/to/Ground/truth/folder/${baseName}_gdth.fits"</span></span>
 
-  <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>
+  <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>" | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
 
   <span class="comment"># Run the MATLAB command for each .mat file</span>
   <span class="command">matlab</span> -batch <span class="string">"run_imager('<span class="input">$config_path</span>', 'srcName', '<span class="input">$srcName</span>', 'dataFile', '<span class="input">$data_file</span>', \
   'resultPath', '<span class="input">$output_path</span>', 'imDimx', <span class="input">$imDimx</span>, 'imDimy', <span class="input">$imDimy</span>, \
-  'groundtruth', '<span class="input">$groundtruth</span>', 'runID', <span class="input">$runID</span>); exit"</span>
+  'groundtruth', '<span class="input">$groundtruth</span>', 'runID', <span class="input">$runID</span>); exit" 2>&1 | <span class="input">tee</span> -a <span class="input">"$log_file"</span></span>
 
   <span class="comment"># Log the completion of each file</span>
-  <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>"</span>
+  <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>" | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
 <span class="keyword">done</span>
 
 <span class="comment"># Log the end time</span>
-<span class="command">echo</span> <span class="string">"Script completed at: $(date)"</span>
+<span class="command">echo</span> <span class="string">"Script completed at: $(date)" | <span class="command">tee</span> -a <span class="input">"$log_file"</span></span>
         </pre>
     </div>
 </div>
@@ -798,6 +799,7 @@ end</pre></div>
 <span class="variable">num_iter</span>=<span class="string">""</span>
 <span class="variable">series</span>=<span class="string">""</span>
 <span class="variable">layers</span>=<span class="string">""</span>
+<span class="variable">log_file</span>=<span class="string">"/path/to/save/log/file/"</span>
 <span class="command">source</span> <span class="input">$main_dir/basplib/bin/activate</span>
 
 <span class="comment"># Function to set parameters based on the series</span>
@@ -832,7 +834,7 @@ end</pre></div>
             <span class="variable">layers</span>=<span class="number">6</span>
             ;;
         <span class="keyword">*</span>)
-            <span class="command">echo</span> <span class="string">"Unknown algorithm: <span class="input">$1</span>"</span>
+            <span class="command">echo</span> <span class="string">"Unknown algorithm: <span class="input">$1</span>" | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
             <span class="keyword">exit</span> <span class="number">1</span>
             ;;
     <span class="keyword">esac</span>
@@ -844,7 +846,7 @@ end</pre></div>
 
 <span class="comment"># Validate the input</span>
 <span class="keyword">if</span> [[ -<span class="keyword">z</span> "<span class="input">$algo_name</span>" ]]; <span class="keyword">then</span>
-    <span class="command">echo</span> <span class="string">"No algorithm name provided. Exiting."</span>
+    <span class="command">echo</span> <span class="string">"No algorithm name provided. Exiting." | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
     <span class="keyword">exit</span> <span class="number">1</span>
 <span class="keyword">fi</span>
 
@@ -872,7 +874,7 @@ end</pre></div>
     <span class="command">sed</span> -i <span class="string">'s|res_on_gpu:.*|res_on_gpu: True|'</span> <span class="input">$yaml_file</span>
 
     <span class="comment"># Run the Python script with the updated yaml file</span>
-    <span class="command">python3</span> <span class="variable">src/run_series.py</span> --<span class="variable">yaml_file</span> "<span class="variable">$yaml_file</span>"
+    <span class="command">python3</span> <span class="variable">src/run_series.py</span> --<span class="variable">yaml_file</span> "<span class="input">$yaml_file</span>" 2>&1 | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
 <span class="keyword">done</span>
         </pre>
     </div>
