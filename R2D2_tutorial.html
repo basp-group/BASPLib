@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R2D2 Tutorial</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navigation_bar.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/rec_image.css">
+    <link rel="stylesheet" href="css/benchmarking.css">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body onload="loadNav()">
+
+    <!-- Navigation Bar -->
+    <div id="nav-placeholder"></div>
+    <script src="java/loadNav.js"></script>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-column"></div>
+        <div class="middle-column">
+          <h2>R2D2 Tutorial</h2><br>
+            <h3>Imaging with R2D2</h3>
+            <p>
+                The R2D2 algorithm takes a hybrid structure between a Plug-and-Play (PnP) algorithm and a learned
+                version of the well-know "Matching Pursuit" algorithm. Its reconstruction is formed as a series of
+                residual images, iteratively estimated as outputs of Deep Neural Networks (DNNs) taking the previous
+                iteration’s image estimate and associated data residual as inputs. R2D2's primary application is to
+                solve large-scale high-resolution high-dynamic range inverse problems in radio astronomy, more
+                specifically 2D planar monochromatic intensity imaging. Please refer to the following papers:
+                <br><br>
+                [1] Aghabiglou, A., Chu, C. S., Dabbech, A. & Wiaux, Y., The R2D2 deep neural network series paradigm
+                for fast precision imaging in radio astronomy, ApJS, 273(1):3, 2024,
+                <a href="https://arxiv.org/abs/2403.05452">arXiv:2403.05452</a> |
+                <a href="https://doi.org/10.3847/1538-4365/ad46f5">DOI:10.3847/1538-4365/ad46f5</a>
+                <br>
+                [2] Dabbech, A., Aghabiglou, A., Chu, C. S. & Wiaux, Y., CLEANing Cygnus A deep and fast with R2D2,
+                ApJL, 2024 May 7;966(2):L34., <a href="https://arxiv.org/abs/2309.03291">ArXiv:2309.03291</a> |
+                <a href="https://doi.org/10.3847/2041-8213/ad41df">DOI:10.3847/2041-8213/ad41df</a>
+            </p>
+            <h1 class="fancy-heading">SII Inverse Problem</h1>
+            <p>
+                The  imaging inverse problem in SII can be formulated as:
+                \[
+                {\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}
+                \]
+                where \(\boldsymbol{y} \in \mathbb{C}^M\) is the measurement vector,
+                \(\boldsymbol{\bar{x}} \in \mathbb{R}^N\) is the unknown radio image,
+                \(\boldsymbol{\Phi} \in \mathbb{C}^{N \times M}\) is the measurement operator corresponding to
+                incomplete Fourier sampling, and \(\boldsymbol{n} \in \mathbb{C}^M\) is s a realisation of a random
+                Gaussian noise with standard deviation \(\tau\) and mean 0.
+                <br><br>
+                R2D2 aims to recover the unknown \(\boldsymbol{\bar{x}}\) from the measurements \(\boldsymbol{y}\).
+
+            </p>
+
+            <h1 class="fancy-heading">R2D2's iteration structure</h1>
+            <p>
+                R2D2 consists of a series of \(I\) DNNs interleaved with \(I-1\) data fidelity steps. Each DNN
+                \(\boldsymbol{N}_{\widehat{\boldsymbol{\theta}}^{(i)}}\), parametrized by \(\widehat{\boldsymbol{\theta}}\),
+                takes the previous iteration's image estimate and associated residual dirty image as input.
+                The residual dirty image is given by:
+
+                \[\boldsymbol{r}^{(i-1)} = \kappa \textrm{Re} \{\boldsymbol{\Phi}^\dagger (\boldsymbol{y} - \boldsymbol{\Phi} \boldsymbol{x}^{(i-1)})\}\].
+
+                The image estimate and residual dirty image are initialized to \(\boldsymbol{x}^{(0)} = \boldsymbol{0}\)
+                and \(\boldsymbol{r}^{(0)} = \boldsymbol{x}_{\textrm{d}}\), i.e. the dirty image, respectively.
+                At each iteration \(i\), the image estimate is updated as:
+
+                \[\boldsymbol{x}^{(i)} = \boldsymbol{x}^{(i-1)} + \boldsymbol{N}_{\widehat{\boldsymbol{\theta}}^{(i)}}(\boldsymbol{x}^{(i-1)}, \boldsymbol{r}^{(i-1)})\].
+            </p>
+
+            <h1 class="fancy-heading">Clone Repository</h1>
+            <p>
+                You can clone the repository to the current directory by running the command below.
+            </p>
+                <div class="code-container">
+                <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+                <pre><span class="command">git</span> clone --recurse-submodules https://github.com/basp-group-private/R2D2-RI.git
+<span class="command">cd</span> ./R2D2-RI</pre></div>
+
+            <p>
+                The flag "--recurse-submodules" is required to clone the sub-module
+                <a href="https://github.com/basp-group/RI-measurement-operator/tree/python)"><b>RI-measurement-operator</b></a>.
+            </p>
+            <h1 class="fancy-heading">Dependencies</h1>
+            <p>
+                PyTorch and torchvision should be installed following instruction by
+                <a href="https://pytorch.org/get-started/locally/">PyTorch</a> to ensure the latest version compatible with your
+                CUDA version is installed. If your CUDA version is older than 11.8, then you can find the instruction
+                <a href="https://pytorch.org/get-started/previous-versions/">here</a>. For example, to install PyTorch with CUDA
+                version 11.6, use the command below:
+            </p>
+            <div class="code-container">
+                <div class="copy-btn" onclick="copyText(this)">
+                <img src="images/copy.png" class="copy_logo">
+            </div>
+            <pre><span class="command">pip</span> install torch==1.13.1+cu116 torchvision==0.14.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116</pre></div>
+            <p>
+                All other required Python packages are listed in the <b>requirements.txt</b> file. Python version <code>3.10</code> or higher is required.
+                <br>
+                Install the packages using the command below:
+            </p>
+            <div class="code-container">
+                <div class="copy-btn" onclick="copyText(this)">
+                <img src="images/copy.png" class="copy_logo">
+            </div>
+            <pre><span class="command">pip</span> install -r requirements.txt</pre></div>
+
+            <h1 class="fancy-heading">Pre-trained R2D2 checkpoints</h1>
+            <p>
+                The pre-trained checkpoints for R2D2 (15 iterations), R3D3 (3 UNet layers, 7 iterations) and
+                R3D3 (6 UNet layers, 8 iterations) are available at the DOI:<a href="https://researchportal.hw.ac.uk/en/datasets/r2d2-deep-neural-network-series-for-radio-interferometric-imaging"> 10.17861/99cbe654-5071-4625-b59d-a26c790cbeb4</a>. In this tutorial, we will work with R2D2.
+            </p>
+            <p>
+            Download the pretrained R2D2 models.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre>r2d2_ckpt_path=./ckpt/R2D2/
+<span class="command">mkdir</span> -p $r2d2_ckpt_path
+<span class="command">wget</span> https://researchportal.hw.ac.uk/files/110702953/v1_R2D2_15UNets.zip -P $r2d2_ckpt_path <span class="comment"># pre-trained model for R2D2</span>
+<span class="comment"># Extract the files</span>
+<span class="command">unzip</span> $r2d2_ckpt_path/v1_R2D2_15UNets.zip -d $r2d2_ckpt_path
+<span class="comment"># Remove the zip file</span>
+<span class="command">rm</span> $r2d2_ckpt_path/v1_R2D2_15UNets.zip
+</pre></div>
+            <p>
+                The checkpoints for R3D3 (3 UNet layers, 7 iterations) and R3D3 (6 UNet layers, 8 iterations) can be downloaded and extracted in the same manner.
+            </p>
+
+            <h1 class="fancy-heading">Test Dataset</h1>
+
+            <p>
+                For this tutorial, we provide a test dataset composed of a ground truth image in <b>.fits</b> format and its associated measurement file in <b>.mat</b> format.
+                <br>
+                The ground truth \(\boldsymbol{\bar{x}}\) is a post-processed image of the radio galaxy 3c353 of size \(N = 512 \times 512\).
+                The measurements are generated using a simulated Fourier sampling pattern of MeerKAT.
+                <br>
+                First, let us read and visualise the ground truth.
+            </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre><span class="import">from</span> astropy.io <span class="import">import</span> <span class="function">fits</span>
+<span class="import">import</span> matplotlib.pyplot <span class="import">as</span> plt
+
+<span class="variable">gdth</span> = <span class="function">fits.getdata</span>(<span class="string">'data/3c353/3c353_GTfits.fits'</span>)
+<span class="variable">fig</span>, ax = plt.subplots()
+<span class="variable">pcm</span> = ax.imshow(gdth, cmap='afmhot')
+<span class="variable">cb</span> = plt.colorbar(pcm, ax=ax)
+<span class="variable">titl</span> = ax.set_title(<span class="string">r'Ground Truth, $\overline{\boldsymbol{x}}$'</span>, <span class="keyword">y</span>=<span class="number">-0.15</span>)
+        </pre>
+    </div>
+</div>      <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/GT_tutorial.png" alt="Image 1">
+            </figure>
+            </div>
+        <p>
+            Given the large dynamic range of the ground truth, only bright features are visible in linear scale.
+            For a better visualisation, we map its pixels intensities to the logarithmic scale using the function below:
+            \[\textrm{rlog}(\boldsymbol{\bar{x}}) = \boldsymbol{\bar{x}}_{\textrm{max}}
+            \log_{a}(\frac{a}{\boldsymbol{\bar{x}}_{\textrm{max}}} \boldsymbol{\bar{x}} + \boldsymbol{1}),\]
+
+            where \(a>0\) is  the dynamic range of the ground truth \(\boldsymbol{\bar{x}}\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}\)
+            is the maximum intensity. In the case of the considered ground truth \(a=2500\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\).
+        </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre><span class="import">import</span> <span class="module">numpy</span> <span class="import">as</span> <span class="variable">np</span>
+<span class="import">import</span> <span class="module">matplotlib.colors</span> <span class="import">as</span> <span class="variable">colors</span>
+
+<span class="import">class</span> <span class="class">rlog</span>(<span class="module">colors.Normalize</span>):
+    <span class="import">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">a</span>):
+        <span class="variable">self.a</span> = <span class="variable">a</span>
+        <span class="keyword">super</span>().<span class="function">__init__</span>(<span class="keyword">vmin</span>=<span class="keyword">None</span>, <span class="keyword">vmax</span>=<span class="keyword">None</span>, <span class="keyword">clip</span>=<span class="keyword">False</span>)
+
+    <span class="import">def</span> <span class="function">__call__</span>(<span class="variable">self</span>, <span class="variable">im</span>):
+        <span class="import">if</span> <span class="function">len</span>(<span class="variable">im</span>) == <span class="number">0</span>:
+            <span class="import">return</span> <span class="variable">im</span>
+        <span class="variable">im_max</span> = <span class="module">np.max</span>(<span class="variable">im</span>)
+        <span class="import">if</span> <span class="variable">im_max</span> &lt; <span class="number">1</span>/<span class="variable">self.a</span>:
+            <span class="import">return</span> <span class="variable">im</span>
+        <span class="import">else</span>:
+            <span class="import">return</span> <span class="variable">im_max</span> * <span class="module">np.log10</span>(<span class="variable">self.a</span> * <span class="variable">im</span> / <span class="variable">im_max</span> + <span class="number">1</span>) / <span class="module">np.log10</span>(<span class="variable">self.a</span>)
+
+    <span class="import">def</span> <span class="function">inverse</span>(<span class="variable">self</span>, <span class="variable">im</span>):
+        <span class="import">return</span> (<span class="variable">self.a</span>**(<span class="variable">im</span>) - <span class="number">1</span>) / <span class="variable">self.a</span>
+
+<span class="variable">a</span> = <span class="number">1e5</span>
+
+<span class="variable">norm</span> = <span class="class">rlog</span>(<span class="variable">a</span>)
+
+<span class="variable">fig</span>, <span class="variable">ax</span> = <span class="module">plt.subplots</span>()
+<span class="variable">pcm</span> = <span class="variable">ax.imshow</span>(<span class="variable">gdth</span>, <span class="keyword">norm</span>=<span class="variable">norm</span>, <span class="keyword">cmap</span>=<span class="string">'hot'</span>)
+<span class="variable">cb</span> = <span class="module">plt.colorbar</span>(<span class="variable">pcm</span>, <span class="variable">ax</span>=<span class="variable">ax</span>)
+
+<span class="variable">ticks</span> = [<span class="module">np.log10</span>(<span class="variable">a</span> * <span class="variable">tick</span> + <span class="number">1</span>)/<span class="module">np.log10</span>(<span class="variable">a</span>) <span class="keyword">for</span> <span class="variable">tick</span> <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1</span>]]
+<span class="variable">ticks</span>[-<span class="number">1</span>] = <span class="number">1</span>
+<span class="variable">cb.set_ticks</span>(<span class="variable">ticks</span>)
+<span class="variable">cb.set_ticklabels</span>([<span class="number">0</span>, <span class="string">'$10^{-4}$'</span>, <span class="string">'$10^{-3}$'</span>, <span class="string">'$10^{-2}$'</span>, <span class="string">'$10^{-1}$'</span>, <span class="string">'1'</span>])
+<span class="variable">title</span> = <span class="variable">ax.set_title</span>(<span class="string">r'Ground Truth in log scale, $\text{rlog}(\overline{\boldsymbol{x}})$'</span>, <span class="keyword">y</span>=<span class="number">-0.15</span>)
+        </pre>
+    </div>
+</div>
+            <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/GT_tutorial_Log.png" alt="Image 1">
+            </figure>
+            </div>
+
+            <p>
+                The test measurement file in <b>.mat</b> format associated with the above ground truth can be loaded via the command below.
+            </p>
+        <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="import">from</span> <span class="module">scipy.io</span> <span class="import">import</span> <span class="module">loadmat</span>
+<span class="variable">meas</span> = <span class="module">loadmat</span>(<span class="string">'data/3c353/data_3c353.mat'</span>)
+<span class="import">for</span> <span class="variable">k</span>, <span class="variable">v</span> <span class="import">in</span> <span class="variable">meas.items</span>():
+    <span class="import">if</span> <span class="keyword">not</span> <span class="variable">k.startswith</span>(<span class="string">'_'</span>):
+        <span class="import">if</span> <span class="module">max</span>(<span class="variable">v.shape</span>) == <span class="number">1</span>:
+            <span class="module">print</span>(<span class="string">f"{k}: {v.item():.4e}"</span>)
+        <span class="import">else</span>:
+            <span class="module">print</span>(<span class="string">f"{k}: {v.shape}, {type(v)}"</span>)
+        </pre>
+    </div>
+</div>
+            frequency: 1.0000e+09
+            <br>
+            u: (209840, 1)
+            <br>
+            v: (209840, 1)
+            <br>
+            maxProjBaseline: 1.2216e+05
+            <br>
+            w: (209840, 1)
+            <br>
+            y: (209840, 1)
+            <br>
+            nW: 3.4893e+01
+            <br>
+            nWimag: (209840, 1)
+            <br>
+
+            <p>
+                The expected fields are listed below.
+                <br>
+                <ul>
+                <li> "<b>y</b>", measurement/data vector.</li>
+
+                <li>"<b>u</b>": \(\boldsymbol{u}\) coordinates in units of the observation wavelength.</li>
+
+                <li> "<b>v</b>": \(\boldsymbol{v}\) coordinates in units of the observation wavelength.</li>
+
+                <li> "<b>w</b>": \(\boldsymbol{w}\) coordinates in units of the observation wavelength.</li>
+
+                <li> "<b>nW</b>": noise-whitening vector, known as the natural weights, corresponding to the inverse of
+                the noise standard deviation. During imaging, these weights are applied to the measurements and injected
+                into the measurement operator model.</li>
+
+                <li> "<b>nWimag</b>": imaging weight vector, compensating for the non-uniform Fourier sampling
+                and enhancing the effective resolution of the observations. The vector is <b>optional</b> and can be computed
+                directly in the R2D2 imager.</li>
+
+                <li> "<b>frequency</b>": the observation frequency in Hz.</li>
+
+                <li> "<b>maxProjBaseline</b>":  is the maximum projected baseline in units of the observation wavelength,
+                formally it equals to max \(\max\{\sqrt{\boldsymbol{u}^2 + \boldsymbol{v}^2}\}\). Hence, it represents
+                <b>the spatial bandwidth of the Fourier sampling.</b></li>
+        </ul>
+            </p>
+            <p>
+                The collection of the \((\boldsymbol{u}, \boldsymbol{v})\) points constitutes the 2D Fourier
+                sampling pattern also known as the \(uv\)-coverage.
+            </p>
+
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="import">import</span> <span class="module">matplotlib.pyplot</span> <span class="import">as</span> <span class="variable">plt</span>
+<span class="import">from</span> <span class="module">scipy.io</span> <span class="import">import</span> <span class="function">loadmat</span>
+
+<span class="variable">meas</span> = <span class="function">loadmat</span>(<span class="string">'data/3c353/data_3c353.mat'</span>)
+<span class="variable">u</span> = <span class="variable">meas</span>[<span class="string">'u'</span>]
+<span class="variable">v</span> = <span class="variable">meas</span>[<span class="string">'v'</span>]
+
+<span class="comment"># Create a scatter plot</span>
+<span class="function">plt.figure</span>()
+<span class="function">plt.scatter</span>(<span class="variable">u</span>, <span class="variable">v</span>, <span class="variable">s</span>=<span class="number">0.1</span>)
+
+<span class="comment"># Set axis properties</span>
+<span class="function">plt.axis</span>(<span class="string">'equal'</span>)
+<span class="function">plt.axis</span>(<span class="string">'square'</span>)
+<span class="function">plt.axis</span>(<span class="string">'tight'</span>)
+
+<span class="comment"># Add labels and title</span>
+<span class="function">plt.xlabel</span>(<span class="string">'u'</span>)
+<span class="function">plt.ylabel</span>(<span class="string">'v'</span>)
+<span class="function">plt.title</span>(<span class="string">'uv coverage'</span>)
+
+<span class="comment"># Show the plot</span>
+<span class="function">plt.show</span>()</pre>
+    </div>
+</div>
+            <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/uv_coverage_tutorial.png" alt="Image 1">
+            </figure>
+            </div>
+
+            <p>
+                In the context of narrow-field SII, the effect of the \(\boldsymbol{w}\) coordinates is negligeable,
+                and is therefore not considered in the measurement operator model.
+            </p>
+
+            <p>
+                <b>Scripts to generate <a href="https://github.com/basp-group/RI-measurement-operator/blob/master/example_sim_ri_data.m">
+                synthetic measurement files</a> as well as to convert real <a href="https://github.com/basp-group/AIRI/tree/main/ms2mat">Measurement Sets (MS) to .mat
+                files</a> readable by this repository are available.</b>
+            </p>
+
+
+        <h1 class="fancy-heading">Image Reconstruction</h1>
+            <p>
+                The R2D2 imager can be run by calling the file <code>src/imager.py</code> while specifying the mandatory
+                configuration file <code>yaml_file</code> in <code>.yaml</code> file format.
+            </p>
+
+            <p><strong class="main_title">Arguments</strong></p>
+            <p>
+            The imaging script expects a configuration file in <code>.yaml</code> file format, an example can be found
+            in <code>config/imaging/r2d2.yaml</code>. The required arguments are:
+            </p>
+            <ul>
+            <li> <code>data_file</code>, the file in <code>.mat</code> format containing data <code>y</code>,
+            sampling pattern <code>u</code> and <code>v</code> and the natural weights <code>nW</code>.
+            <li> <code>output_path</code>, the directory at where resulting reconstruction and residual images
+                will be saved.</li>
+            <li> <code>super_resolution</code>, the super resolution factor, default to 1.5.</li>
+            <li> <code>im_dim_x</code>, image width, default to 512.</li>
+            <li> <code>im_dim_y</code>, image height, default to 512.</li>
+            <li> <code>series</code>, R2D2 or R3D3, default to R2D2.</li>
+            <li> <code>num_iter</code>, the number of \(I\) DNNs in the series, default to 15.</li>
+            <li> <code>layers</code>, the number of \(J\) network layers in the DNN architecture, default to 1.</li>
+            <li> <code>ckpt_path</code>, the directory containing the DNN checkpoints.</li>
+            <li> <code>weight_type</code>, types of imaging weights, choose from briggs, uniform and none, default to briggs.</li>
+                </ul>
+               <p>
+                   Note that \(J\) is deteremined before training the DNNs and is consistent for all DNNs in the series,
+                   while \(I\) is set during the training process in which the \((I+1)\)-th DNN shows no improvement in the S/R and logS/R metrics.
+               </p>
+            <p>
+               If <code>weight_type</code> is briggs, additional arguments are:
+            </p>
+            <ul>
+            <li> <code>weight_gridsize</code>, default to 2.</li>
+            <li> <code>weight_robustness</code>, default to 0.</li>
+            </ul>
+            <p>There are also some optional arguments:</p>
+            <ul>
+            <li> <code>gdth_file</code>, the ground truth image file, used for computation of SNR metric.</li>
+            <li> <code>src_name</code>, the name of the source, the output folder will be named as.</li>
+            <li> <code>save_all_outputs</code>, to determine if all intermediate reconstruction and residual images should be saved, default to <code>False</code>.</li>
+            <li> <code>target_dynamic_range</code>, dynamic range of the ground truth image, used for computation of logSNR metric along with <code>gdth_file</code>.</li>
+            <li> <code>meas_op_on_gpu</code>, to determine if the measurement operator would be working on GPU, default to <code>False</code>.</li>
+        </ul>
+
+            <h1 class="fancy-heading">Imaging with R2D2</h1>
+            <p>
+                R2D2 imager is launched via the python file <b>imager.py</b>. This function takes as input a
+                configuration file in <b>.yaml</b> format, where all parameters involved in the imaging process are defined
+                and set to default values where relevant. The readers are directed to the
+                <a href="https://github.com/basp-group-private/R2D2-RI/blob/main/README.md">README</a> for more information
+                on the content of the configuration file.
+                <br><br>
+                In this tutorial, we use the example configuration file <code>./config/imaging/r2d2.yaml</code>. The function <b>run_imager</b>
+                also accepts <b>optional</b> name-argument pairs to overwrite corresponding fields in the configuration file.
+                <br><br>
+                The user <b>must</b> provide as input the <b>target image size</b> and the <b>pixel size in arcsecond</b>, either directly
+                in the configuration file or as input argument parsed to the function <b>run_imager</b>. When the pixel size is
+                not known, the user can instead specify the ratio between the spatial Fourier bandwidth of the
+                target/ground-truth image and the bandwidth of the Fourier sampling pattern. We refer to this ratio as
+                the <b>superresolution factor</b>.  In such case, the pixel size in arcsecond is automatically derived from
+                the superresolution factor as:
+                \[\textrm{imPixelSize} = \frac{180 \times 3600}{\pi} \times \frac{1} {2 \times\textrm{maxProjBaseline} \times {\textrm{superresolution}
+                 }}\]
+
+                For our test dataset, the reconstructed image size is set to  \(N=512 \times 512\) same as the ground
+                truth, and the pixel size is set such that \(\textrm{superresolution}=1.0\) (<i>i.e.</i> the spatial bandwidth of the
+                Fourier sampling equals the Fourier bandwidth of the ground-truth/target image). Natural weighting
+                is considered during imaging by default.
+                <br><br>
+                The R2D2 imager can be run by calling the following command, using the test dataset and configuration
+                file provided in this tutorial:
+                </p>
+                <div class="code-container">
+                <div class="copy-btn" onclick="copyText(this)">
+                <img src="images/copy.png" class="copy_logo">
+            </div>
+            <pre><span class="command">python3</span>  src/imager.py --yaml_file config/imaging/r2d2.yaml</pre></div>
+
+
+            <p>
+            R3D3, as well as R2D2Net and UNet, can be easily run by changing the <code>ckpt_path</code>, <code>series</code> and <code>layers</code> argument.
+            </p>
+            <h1 class="fancy-heading">R2D2 results</h1>
+            <p>
+                R2D2  imager provides as output both the point spread function (just R2D2-Net and R3D3 realization)  and the dirty image saved in <b>.fits</b> format.
+                </p>
+                <ul>
+                 <li> The point spread function (PSF) is defined as
+                \(\boldsymbol{h} = \kappa\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi}\boldsymbol{\delta}\}\)
+                , with \(\boldsymbol{\delta}\) a Dirac delta image (with value 1 at its centre and 0 otherwise), and \(\kappa\)
+                a normalisation factor ensuring its peak value is equal to 1.</li>
+                 <li> The dirty image is defined as \(\boldsymbol{x}_d = \kappa \textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\} \).</li>
+                </ul>
+
+
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">dirty</span> = <span class="module">fits.getdata</span>(<span class="string">'data/3c353/results/R2D2/3c353/dirty_normalised.fits'</span>)
+<span class="variable">fig</span>, <span class="variable">ax</span> = <span class="module">plt.subplots</span>()
+<span class="variable">pcm</span> = <span class="variable">ax.imshow</span>(<span class="variable">dirty</span>, <span class="keyword">cmap</span>=<span class="string">'viridis'</span>)
+<span class="variable">cb</span> = <span class="module">plt.colorbar</span>(<span class="variable">pcm</span>, <span class="variable">ax</span>=<span class="variable">ax</span>)
+<span class="variable">title</span> = <span class="variable">ax.set_title</span>(<span class="string">r'Dirty image, $\boldsymbol{x}_{\text{d}}$'</span>, <span class="keyword">y</span>=<span class="number">-0.15</span>)
+        </pre>
+    </div>
+</div>
+
+            <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/dirty_tutorial.png" alt="Image 1">
+            </figure>
+            </div>
+<div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="import">import</span> <span class="module">matplotlib.pyplot</span> <span class="import">as</span> <span class="variable">plt</span>
+<span class="import">from</span> <span class="module">astropy.io</span> <span class="import">import</span> <span class="function">fits</span>
+
+<span class="comment"># Read the FITS file</span>
+<span class="variable">psf</span> = <span class="function">fits.getdata</span>(<span class="string">"./results/3c353/psf.fits"</span>)
+
+<span class="comment"># Create a figure</span>
+<span class="function">plt.figure</span>()
+
+<span class="comment"># Display the image data</span>
+<span class="function">plt.imshow</span>(<span class="variable">psf</span>, <span class="keyword">cmap</span>=<span class="string">'hot'</span>, <span class="keyword">aspect</span>=<span class="string">'equal'</span>)
+
+<span class="comment"># Set the title</span>
+<span class="function">plt.title</span>(<span class="string">"psf"</span>)
+
+<span class="comment"># Show the plot</span>
+<span class="function">plt.show</span>()</pre>
+    </div>
+</div>
+            <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/psf_tutorial_matlab.png" alt="Image 1">
+            </figure>
+            </div>
+            <p>
+                R2D2  reconstructed images are  saved in <b>.fits</b> format.
+            </p>
+                <ul>
+                <li> The estimated model image \(\boldsymbol{\tilde{x}}\).</li>
+                <li> The associated  residual dirty image (<i>i.e.</i> normalised back-projected data residual)
+                     \(\boldsymbol{\tilde{r}} = \kappa(\textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\}
+                    -\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi} \boldsymbol{\tilde{x}}\}) \).
+                </li>
+                </ul>
+
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="import">from</span> <span class="module">astropy.io</span> <span class="import">import</span> <span class="function">fits</span>
+<span class="import">import</span> <span class="module">numpy</span> <span class="import">as</span> <span class="variable">np</span>
+
+<span class="import">def</span> <span class="function">snr</span>(<span class="variable">true</span>, <span class="variable">y</span>, <span class="variable">e</span>=<span class="number">1e-9</span>):
+    <span class="keyword">return</span> <span class="number">20</span> * <span class="module">np.log10</span>(<span class="module">np.linalg.norm</span>(<span class="variable">true.flatten</span>()) / (<span class="module">np.linalg.norm</span>(<span class="variable">true.flatten</span>() - <span class="variable">y.flatten</span>()) + <span class="variable">e</span>))
+
+<span class="variable">rec</span> = <span class="function">fits.getdata</span>(<span class="string">'data/3c353/results/R2D2/3c353/r2d2_final_model.fits'</span>)
+<span class="variable">gdth</span> = <span class="function">fits.getdata</span>(<span class="string">'data/3c353/3c353_GTfits.fits'</span>)
+<span class="variable">SNR</span> = <span class="function">snr</span>(<span class="variable">gdth</span>, <span class="variable">rec</span>)
+<span class="variable">logSNR</span> = <span class="function">snr</span>(<span class="function">rlog</span>(<span class="variable">gdth</span>), <span class="function">rlog</span>(<span class="variable">rec</span>))
+<span class="function">print</span>(<span class="string">f'R2D2 reconstruction metrics: SNR {SNR} dB; logSNR 28.6 dB'</span>)</pre>
+    </div>
+</div>
+            <p>
+                R2D2 reconstruction metrics: SNR 36.2 dB; logSNR {logSNR} dB
+            </p>
+
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">a</span> = <span class="number">1e5</span>
+
+<span class="variable">norm</span> = <span class="class">rlog</span>(<span class="variable">a</span>)
+
+<span class="variable">fig</span>, <span class="variable">ax</span> = <span class="module">plt.subplots</span>()
+<span class="variable">pcm</span> = <span class="variable">ax.imshow</span>(<span class="variable">rec</span>, <span class="keyword">norm</span>=<span class="variable">norm</span>, <span class="keyword">cmap</span>=<span class="string">'hot'</span>)
+<span class="variable">cb</span> = <span class="module">plt.colorbar</span>(<span class="variable">pcm</span>, <span class="variable">ax</span>=<span class="variable">ax</span>)
+
+<span class="variable">ticks</span> = [<span class="module">np.log10</span>(<span class="variable">a</span> * <span class="variable">tick</span> + <span class="number">1</span>)/<span class="module">np.log10</span>(<span class="variable">a</span>) <span class="keyword">for</span> <span class="variable">tick</span> <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1</span>]]
+<span class="variable">ticks</span>[-<span class="number">1</span>] = <span class="number">1</span>
+<span class="variable">cb.set_ticks</span>(<span class="variable">ticks</span>)
+<span class="variable">cb.set_ticklabels</span>([<span class="number">0</span>, <span class="string">'$10^{-4}$'</span>, <span class="string">'$10^{-3}$'</span>, <span class="string">'$10^{-2}$'</span>, <span class="string">'$10^{-1}$'</span>, <span class="string">'1'</span>])
+<span class="variable">title</span> = <span class="variable">ax.set_title</span>(<span class="string">r'Reconstructed image in log scale, $\text{rlog}(\widetilde{\boldsymbol{x}})$'</span>, <span class="keyword">y</span>=<span class="number">-0.15</span>)
+        </pre>
+    </div>
+</div>
+            <div class="tutorial_container">
+                <figure class="image-3d">
+                    <img src="images/reconstructions/rec_tutorial_log.png" alt="Image 1">
+            </figure>
+            </div>
+
+            <p>
+                The residual dirty image is shown below.
+            </p>
+
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">dirty</span> = <span class="module">fits.getdata</span>(<span class="string">'data/3c353/results/R2D2/3c353/r2d2_final_residual.fits'</span>)
+<span class="variable">fig</span>, <span class="variable">ax</span> = <span class="module">plt.subplots</span>()
+<span class="variable">pcm</span> = <span class="variable">ax.imshow</span>(<span class="variable">dirty</span>, <span class="keyword">cmap</span>=<span class="string">'viridis'</span>)
+<span class="variable">cb</span> = <span class="module">plt.colorbar</span>(<span class="variable">pcm</span>, <span class="variable">ax</span>=<span class="variable">ax</span>)
+<span class="variable">title</span> = <span class="variable">ax.set_title</span>(<span class="string">r'Residual dirty image, $\boldsymbol{r}^{(15)}$'</span>, <span class="keyword">y</span>=<span class="number">-0.15</span>)
+        </pre>
+    </div>
+</div>
+
+
+            <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/res_tutorial.png" alt="Image 1">
+            </figure>
+            </div>
+
+            <h1 class="fancy-heading">Additional Functionalities</h1>
+            <p>The code supports data-weighting schemes during imaging (uniform or Briggs weighting).
+            It provides the functionality to compute the imaging weights if not available in the input data file.
+            </p>
+
+            <h1 class="fancy-heading">R2D2 tutorial in Jupyter notebook</h1>
+            <p>
+                You can download this tutorial in <b>.ipynb</b> format and launch it directly in Jupyter Notebook <a href="//www.dropbox.com/scl/fi/nn4t3lud7javxm1cwqyfj/tutorial_r2d2_python.ipynb?rlkey=ngcxdgw4wprkembw95lx0lqak&dl=1" class="download-link">
+            <img src="images/jupyter.png" class="download-icon">
+        </a>.
+            </p>
+<!--            <div class="sub_algo-container">-->
+
+<!--                <a href="https://www.dropbox.com/scl/fi/nn4t3lud7javxm1cwqyfj/tutorial_r2d2_python.ipynb?rlkey=ngcxdgw4wprkembw95lx0lqak&dl=1" download>-->
+<!--                <div class="link-box">-->
+<!--                    <span>Tutorials</span><br>-->
+<!--                    <span class="white-line"></span><br>-->
+<!--                    <img src="images/jupyter.png"  class="jupyter_logo"> <img src="images/download_icon.png"  class="jupyter_logo">-->
+<!--                </div></a>-->
+<!--            </div>-->
+
+
+
+
+
+
+
+        </div>
+
+        <div class="right-column"></div>
+    </section>
+
+
+    <script src="java/script.js"></script>
+    <script src="java/benchmarking.js"></script>
+</body>
+</html>

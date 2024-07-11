@@ -86,7 +86,8 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline;
-    font-size: 4vw;
+    /*font-size: 4vw;*/
+    font-size: clamp(30px, 4vw, 50px);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -109,7 +110,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline;
-    font-size: 4vw;
+    font-size: clamp(30px, 4vw, 50px);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -127,14 +128,14 @@ body {
 }
 
 p {
-    font-size: 1.4vw;
+    font-size: clamp(14px, 1.4vw, 18px);
     line-height: 1.6;
     color: #555; /* Slightly darker text color */
     margin-bottom: 15px; /* Space between paragraphs */
 }
 
 li {
-    font-size: 1.4vw;
+    font-size: clamp(14px, 1.4vw, 18px);
     line-height: 1.6;
     color: #555; /* Slightly darker text color */
     margin-bottom: 15px; /* Space between paragraphs */
@@ -426,5 +427,20 @@ color: white;text-align: center;
 }
 .middle-title {
     font-size: 1.8vw;
+}
+
+.download-link {
+    text-decoration: none;
+}
+
+.download-icon {
+    width: 2vw; /* Adjust size as needed */
+    height: auto; /* Adjust size as needed */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.download-link:hover .download-icon {
+    transform: scale(1.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
