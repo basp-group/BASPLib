@@ -28,44 +28,31 @@
     grid-gap: 1vw;
     padding: 1vw;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
+    /*box-shadow: 0 4px 8px rgba(0,0,0,0.1);*/
+    /*border-radius: 10px;*/
     margin: 0 auto;
     text-align: center;
     max-width: 100vw;
     width: 30%;
     perspective: 1000px; /* Add perspective to the container */
 }
-.two_image_container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2vw;
-    padding: 1vw;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    margin: 0 auto;
-    text-align: center;
-    max-width: 200vw;
-    width: 90%;
-    perspective: 1000px; /* Add perspective to the container */
-}
 
-.image-3d {
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease-in-out;
-    perspective: inherit;
-}
 
-.image-3d img {
-    width: 100%;
-    border-radius: 0.2vw;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Basic 3D effect with shadow */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    margin-bottom: 1vw;
-    padding: 0.1vw 0.1vw 0.3vw;
-}
+/*.image-3d {*/
+/*    position: relative;*/
+/*    transform-style: preserve-3d;*/
+/*    transition: transform 0.3s ease-in-out;*/
+/*    perspective: inherit;*/
+/*}*/
+
+/*.image-3d img {*/
+/*    width: 100%;*/
+/*    border-radius: 0.2vw;*/
+/*    box-shadow: 0 5px 15px rgba(0,0,0,0.3); !* Basic 3D effect with shadow *!*/
+/*    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;*/
+/*    margin-bottom: 1vw;*/
+/*    padding: 0.1vw 0.1vw 0.3vw;*/
+/*}*/
 
 
 .rec_container,  figure {
