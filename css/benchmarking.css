@@ -62,13 +62,15 @@ pre {
         }
 
 .code-container {
-  position: relative;
-  flex: 4;
+    position: relative;
+    flex: 4;
+    width: 65vw;
+    overflow-x: auto;
 }
 .center-wrapper {
     flex: 4;
     border-radius: 0.8vw;
-
+    overflow: hidden;
 }
 
 .copy-btn {

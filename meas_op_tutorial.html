@@ -34,72 +34,58 @@
                 instructions on how to generate the measurement operator from a given Fourier sampling pattern and how
                 to utilise it to simulate measurements.
                 <br><br>
-                The repository encompasses a lighter version of the NUFFT library available online and proposed by:
-                <br><br>
-                [1] Fessler, J. A., & Sutton, B. P., Nonuniform Fast Fourier Transforms Using Min-Max Interpolation, IEEE Trans. Image Process., 51(2), 560-574, 2003.
+                The repository encompasses a lighter version of the NUFFT library available
+                <a href="http://web.eecs.umich.edu/~fessler/irt/fessler.tgz">online</a> and proposed by:
+                <br>
+                [1] Fessler, J. A., & Sutton, B. P., <a href="https://doi.org/10.1109/TSP.2002.807005/">Nonuniform Fast Fourier Transforms Using Min-Max Interpolation</a>, IEEE Trans. Image Process., 51(2), 560-574, 2003.
                 <br><br>
                 It also provides a w-correction functionality (via w-projection) associated with the following publication:
-                <br><br>
-                [2] Dabbech, A., Wolz, L., Pratley, L., McEwen, J. D., & Wiaux, Y., The w-effect in interferometric imaging: from a fast sparse measurement operator to superresolution, MNRAS, 471(4), 4300-4313, 2017.
-                <br><br>
-                The library is a core dependency of the Faceted-Hyper-SARA  software for wideband SII, associated with the following publications:
-                <br><br>
-                [3] Thouvenin, P.-A., Abdulaziz, A. , Dabbech, A. , Repetti, A., & Wiaux, Y., Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): I. Algorithm and simulations, MNRAS, 521(1), 1–19, 2023.
                 <br>
-                [4] Thouvenin, P.-A., Dabbech, A., Jiang, M., Thiran, J.-P., Jackson, A., & Wiaux, Y., Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): II. Real data proof-of-concept and code, MNRAS, 521(1), 20–34, 2023.
+                [2] Dabbech, A., Wolz, L., Pratley, L., McEwen, J. D., & Wiaux, Y., <a href="http://dx.doi.org/10.1093/mnras/stx1775">
+                The w-effect in interferometric imaging: from a fast sparse measurement operator to superresolution</a>, MNRAS, 471(4), 4300-4313, 2017.
+                <br><br>
+                The library is a core dependency of the <a href="https://basp-group.github.io/Faceted-HyperSARA/">Faceted-HyperSARA</a>  software for wideband SII, associated with the following publications:
+                <br>
+                [3] Thouvenin, P.-A., Abdulaziz, A. , Dabbech, A. , Repetti, A., & Wiaux, Y., <a href="https://academic.oup.com/mnras/article/521/1/1/6823714">
+                Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): I. Algorithm and simulations</a>, MNRAS, 521(1), 1–19, 2023.
+                <br>
+                [4] Thouvenin, P.-A., Dabbech, A., Jiang, M., Thiran, J.-P., Jackson, A., & Wiaux, Y.,
+                <a href="https://academic.oup.com/mnras/article/521/1/20/6823713?searchresult=1">Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): II. Real data proof-of-concept and code</a>
+                , MNRAS, 521(1), 20–34, 2023.
             </p>
             <h1 class="fancy-heading">SII Inverse Problem</h1>
             <p>
-                The  imaging inverse problem in SII can be formulated as:
-                \[
-                {\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}
-                \]
-                where \(\boldsymbol{y} \in \mathbb{C}^M\) is the measurement vector,
-                \(\boldsymbol{\bar{x}} \in \mathbb{R}^N\) is the unknown radio image,
-                \(\boldsymbol{\Phi} \in \mathbb{C}^{N \times M}\) is the measurement operator corresponding to
-                incomplete Fourier sampling, and \(\boldsymbol{n} \in \mathbb{C}^M\) is s a realisation of a random
-                Gaussian noise with standard deviation \(\tau\) and mean 0.
-                <br><br>
-                uSARA aims to recover the unknown \(\boldsymbol{\bar{x}}\) from the measurements \(\boldsymbol{y}\).
-
-
-
+                Assuming a narrow field of view and in absence of direction dependent effects, at a given time instant,
+                each pair of antennas acquires a noisy complex measurement, termed visibility, corresponding to a Fourier
+                component of the sought radio emission. The collection of the sensed Fourier modes accumulated over the
+                total observation period forms the Fourier sampling pattern, describing an incomplete coverage of the 2D
+                Fourier plane.
             </p>
-
-            <h1 class="fancy-heading">uSARA's iteration structure</h1>
             <p>
-                uSARA is underpinned by the forward-backward (FB) algorithmic structure from optimisation theory. The FB iteration structure takes a two-step update: a forward step enforcing data fidelity, followed by a backward denoising step promoting the SARA regularisation.
-                \[
-                \boldsymbol{x}_{i+1} = \text{prox}_{\gamma g} \left(\boldsymbol{x}_i - \delta \boldsymbol{\Phi}^\dagger (\boldsymbol{\Phi} \boldsymbol{x}_i - \boldsymbol{y})\right),
-                \]
-                where \(\boldsymbol{\Phi}^\dagger\) is the adjoint of the measurement operator. The function \(g\) represents the SARA regularisation, and \(\gamma\) the regularization parameter that is a trade-off between the data fidelity term and the regularisation term.
-                \(\delta > 0\) is a step size satisfying \(\delta < \frac{2}{\|\boldsymbol{\Phi}\|_S^2}\) for convergence, with \(\|\cdot\|_S\) standing for the spectral norm of its argument operator (computed using the power method). In our implementation, \(\delta\) is set to \(\delta = \frac{1.98}{\|\boldsymbol{\Phi}\|_S^2}\) (the user is not encouraged to tune this parameter).
-                <br><br>
-                The choice of the regularisation parameter \(\gamma\) is important. When \(\gamma\) is too large, the
-                reconstructed image can be smooth. In the opposite case, it can be grainy and noisy.
-                In [2], we proposed to link the regularisation parameter to the estimated image-domain noise level
-                \(\sigma\), which can be estimated from the measurement operator as: \(\sigma = \frac{\tau}{\sqrt{2\|\boldsymbol{\Phi}\|_S^2}}\). Our heuristic stipulates to set \(\gamma\) such that the soft-thresholding parameter involved in the uSARA denoiser satisfies \(\gamma \delta = \sigma\).
-                <br><br>
-                Generally, this heuristic has shown to be effective both in simulation [2] and on real data [3]. However, in some cases an adjustment of its value - within one order of magnitude - may be necessary for best results. The user is given the handle to tune the adjusting factor (set to 1 by default, <i>i.e.</i> adjustment is disabled) if needed. Readers can refer to this README for more details.
+                Under these considerations, the measurement operator model reduces to a Fourier sampling operator which reads [1]:
+
+                \[\boldsymbol{\Phi} = \mathbf{G}\mathbf{F}\mathbf{Z},\]
+
+                where \(\boldsymbol{\Phi} \in \mathbb{C}^{N \times M}\) is the measurement operator corresponding to
+                the non-uniform Fourier transform (NUFFT), \(M\) is the number of measurements, and \(N\)  is the image dimension (<i>i.e.</i> number of pixels).
+                \(\mathbf{G} \in \mathbb{C}^{M \times P}\) is a sparse interpolation matrix whose rows are convolutional
+                kernels centered at the associated Fourier modes (<i>i.e.</i> \(uv\) points), \(\mathbf{F} \in
+                \mathbb{C}^{P \times P}\) is the 2D Discrete Fourier Transform, and \(\mathbf{Z} \in \mathbb{C}^{P \times N}\) is a zero-padding operator
+                which also incorporates the correction for the convolution performed through the de-gridding matrix \(\mathbf{G}\).
             </p>
 
             <h1 class="fancy-heading">Clone Repository</h1>
             <p>
-                You can clone the repository to the current directory by running the command below.
+                You can clone the repository to the current directory by running the command below in MATLAB:
             </p>
             <div class="code-container">
                 <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
-                <pre><span class="command">!git</span> clone --recurse-submodules https://github.com/basp-group/uSARA.git
-<span class="command">cd</span> ./uSARA</pre></div>
-            <p>
-                The flag "--recurse-submodules"  is required to clone the sub-modules
-                <a href="https://github.com/basp-group/RI-measurement-operator">RI-measurement-operator</a>
-                and <a href="https://github.com/basp-group/SARA-dictionary">SARA-dictionary</a>.
-            </p>
+                <pre><span class="command">!git</span> clone https://github.com/basp-group/RI-measurement-operator.git
+<span class="command">cd</span> ./RI-measurement-operator</pre></div>
 
-            <h1 class="fancy-heading">Dependencies</h1>
+            <h1 class="fancy-heading">Generate SII Measurement Operator</h1>
             <p>
-                The repository requires a MATLAB version higher than R2019b. The script below looks for the required toolboxes.
+                To start with, set up the following paths so that MATLAB can find the required functions and input files.
             </p>
             <div class="center-wrapper">
     <div class="code-container">
@@ -107,27 +93,15 @@
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">list_tb</span> = <span class="module">matlab.addons.installedAddons</span>().<span class="variable">Name</span>;
-<span class="import">if</span> ~<span class="function">ismember</span>(<span class="variable">list_tb</span>, <span class="string">"Parallel Computing Toolbox"</span>)
-    <span class="import">error</span>(<span class="string">"Please install Parallel Computing Toolbox!\n"</span>)
-<span class="import">elseif</span> ~<span class="function">ismember</span>(<span class="variable">list_tb</span>, <span class="string">"Wavelet Toolbox"</span>)
-    <span class="import">error</span>(<span class="string">"Please install Wavelet Toolbox!\n"</span>)
-<span class="import">else</span>
-    <span class="function">fprintf</span>(<span class="string">"All set!\n"</span>)
-<span class="import">end</span></pre></div>
+addpath <span class="command">data</span>;
+addpath <span class="command">nufft</span>;
+addpath <span class="command">lib/operators</span>;
+addpath <span class="command">lib/utils</span>;
+addpath <span class="command">lib/ddes_utils</span>;</pre></div>
 </div>
             <p>
-                Missing toolboxes can be installed from MATLAB directly. Go to the "HOME" tab of MATLAB. Then in "Add-Ons", click "Get Add-Ons" and search for the name of the missing toolbox.
-            </p>
-            <h1 class="fancy-heading">Test Dataset</h1>
-
-            <p>
-                For this tutorial, we provide a test dataset composed of a ground truth in <b>.fits</b> format and its associated measurement file in <b>.mat</b> format.
-                <br>
-                The ground truth \(\boldsymbol{\bar{x}}\) is a post-processed image of the radio galaxy 3c353 of size \(N = 512 \times 512\).
-                The measurements are generated using a simulated Fourier sampling pattern of MeerKAT.
-                <br>
-                First, let us read and visualise the ground truth.
+                We will use a simulated Fourier sampling pattern generated with the VLA, provided in "tests/test.mat". It contains the \(uvw\)
+                coordinates in meters and the observation frequency in Hz. Load the variables of interest.
             </p>
             <div class="center-wrapper">
     <div class="code-container">
@@ -135,7 +109,140 @@
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">img_gdth</span> = <span class="module">fitsread</span>(<span class="function">fullfile</span>(<span class="string">"data"</span>,<span class="string">"3c353_gdth.fits"</span>));
+myuvwdatafile = fullfile(<span class="command">"tests"</span>,<span class="command">"test.mat"</span>);
+frequency = load(myuvwdatafile,<span class="command">'frequency'</span>).frequency;
+u_meter = load(myuvwdatafile,<span class="command">'u'</span>).u;
+v_meter = load(myuvwdatafile,<span class="command">'v'</span>).v;
+w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
+        </pre></div>
+</div>
+            <p>
+                Convert the \(uvw\) coordinates in the unit of the observation wavelength as follows (this is needed for
+                the computation of the pixel size in physical units).
+            </p>
+<div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">speedOfLight</span> = <span class="number">299792458</span>; <span class="comment">% speed of light</span>
+<span class="variable">wavelength</span> = <span class="variable">speedOfLight</span>/<span class="variable">frequency</span>; <span class="comment">% observation wavelength</span>
+<span class="comment">% convert the \(uvw\) coordinates in the units of the wavelength</span>
+<span class="variable">u</span> = <span class="variable">u_meter</span>(<span class="function">:</span>) ./ <span class="variable">wavelength</span>;
+<span class="variable">v</span> = <span class="variable">v_meter</span>(<span class="function">:</span>) ./ <span class="variable">wavelength</span>;
+<span class="variable">w</span> = <span class="variable">w_meter</span>(<span class="function">:</span>) ./ <span class="variable">wavelength</span>;
+        </pre>
+    </div>
+</div>
+            <p>
+                The 2D Fourier sampling pattern is described by the \(uv\) coordinates.
+            </p>
+                <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="comment">% plot the 2D Fourier sampling pattern</span>
+<span class="function">figure</span>;
+<span class="function">scatter</span>(<span class="variable">u</span>, <span class="variable">v</span>, <span class="number">0.1</span>)
+<span class="function">axis</span> <span class="keyword">equal</span>, <span class="function">axis</span> <span class="keyword">square</span>, <span class="function">axis</span> <span class="keyword">tight</span>
+<span class="function">xlabel</span>(<span class="string">'u'</span>)
+<span class="function">ylabel</span>(<span class="string">'v'</span>)
+<span class="function">title</span>(<span class="string">"uv coordinates in the unit of wavelength"</span>)
+        </pre>
+    </div>
+</div>
+            <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/uv_pattern_measop_tutorial.png" alt="Image 1">
+            </figure>
+            </div>
+            <p>
+                To generate the measurement operator, two crucial parameters need to be set:
+            </p>
+            <ul>
+                <li>
+                    the ground-truth/target image dimension \(N\),
+                </li>
+                <li>
+                    the ratio between the spatial bandwidth of the ground-truth/target image and the bandwidth of the
+                    Fourier sampling, to which we refer to as the super-resolution factor \(\textrm{superresolution} \ge 1\).
+                    The bandwidth of the Fourier sampling is given by the maximum projected baseline \(\textrm{maxProjBaseline} = \textrm{max}(\sqrt{\boldsymbol{u}^2+\boldsymbol{v}^2})\).
+                </li>
+            </ul>
+            <p>
+                Note that from the value of  \(\textrm{superresolution}\), one can compute the resulting pixel size of the ground-truth/target image in  \(\boldsymbol{\textrm{arcsec}}\):
+                \[\textrm{imPixelSize} = \frac{180 \times 3600}{\pi} \times \frac{1} {2 \times\textrm{maxProjBaseline} \times {\textrm{superresolution}
+                 }}\]
+
+                Consider a ground-truth/target image \(\boldsymbol{\bar{x}}\) of size \(N=512 \times 512\).
+                For the sake of this demonstration, we consider \(\textrm{superresolution}=1.5\), which means that the spatial
+                bandwidth of the Fourier sampling corresponds to 2/3 the spatial Fourier bandwidth of the ground-truth/target image.
+            </p>
+
+<div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">imSize</span> = [<span class="number">512</span>, <span class="number">512</span>]; <span class="comment">% image size: N = 512x512</span>
+<span class="variable">resolution_param</span>.<span class="variable">superresolution</span> = <span class="number">1.5</span>; <span class="comment">% superresolution factor</span>
+<span class="variable">resolution_param</span>.<span class="variable">pixelSize</span> = []; <span class="comment">% pixel size in arcsec if known; keep empty to use superresolution factor instead</span></pre>
+    </div>
+</div>
+            <p>
+                The measurement operator \(\boldsymbol{\Phi}\) and its adjoint  \(\boldsymbol{\Phi}^\dagger\) can be generated as function handles by calling the function <span class="function">ops_raw_measop.m</span>.
+            </p>
+
+<div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">[measop</span>, <span class="variable">adjoint_measop</span>, <span class="keyword">~</span>] = <span class="function">ops_raw_measop</span>(<span class="variable">u</span>, <span class="variable">v</span>, <span class="variable">w</span>, <span class="variable">imSize</span>,<span class="variable">resolution_param</span>);</pre>
+    </div>
+</div>
+            <p>
+                Note that, the user can input additional parameters to the function
+                <a href="https://github.com/basp-group/RI-measurement-operator/blob/master/lib/operators/ops_raw_measop.m"><span class="function">ops_raw_measop.m</span></a>
+                as shown below. Default values will be used otherwise.
+            </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="comment">% NUFFT parameters</span>
+<span class="variable">nufft_param</span>.<span class="variable">N</span> = <span class="variable">imSize</span>; <span class="comment">% image size</span>
+<span class="variable">nufft_param</span>.<span class="variable">J</span> = [<span class="number">7</span>, <span class="number">7</span>]; <span class="comment">% NUFFT convolutional kernel size</span>
+<span class="variable">nufft_param</span>.<span class="variable">K</span> = <span class="number">2</span> * <span class="variable">imSize</span>; <span class="comment">% Fourier space size, with zero-padding factor 2 in each dimension</span>
+<span class="variable">nufft_param</span>.<span class="variable">nshift</span> = <span class="variable">imSize</span> / <span class="number">2</span>; <span class="comment">% Fourier shift (matlab convention)</span>
+<span class="variable">nufft_param</span>.<span class="variable">ktype</span> = <span class="string">'minmax:kb'</span>; <span class="comment">% NUFFT convolutional kernel type</span>
+<span class="comment">% Compute data weights (e.g., uniform; Briggs)</span>
+<span class="variable">weighting_param</span>.<span class="variable">gen_weights</span> = <span class="keyword">false</span>;
+<span class="comment">% Apply w-correction (not required for narrow fields of view)</span>
+<span class="variable">wproj_param</span>.<span class="variable">enable_wproj</span> = <span class="keyword">false</span>;
+<span class="variable">[measop</span>, <span class="variable">adjoint_measop</span>, <span class="keyword">~</span>] = <span class="function">ops_raw_measop</span>(<span class="variable">u</span>, <span class="variable">v</span>, <span class="variable">w</span>, <span class="variable">imSize</span>, <span class="variable">resolution_param</span>, ...
+     <span class="variable">weighting_param</span>, <span class="variable">nufft_param</span>, <span class="variable">wproj_param</span>);</pre>
+    </div>
+</div>
+           <h1 class="fancy-heading">Simulate SII measurements</h1>
+            <p>
+                To simulate SII measurements, we take a post-processed image of the radio galaxy 3c353 as the ground truth \(\boldsymbol{\bar{x}}\). The image is in  <b>.fits</b>
+                format provided in "tests/3c353_gdth.fits".
+            </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">img_gdth</span> = <span class="module">fitsread</span>(<span class="function">fullfile</span>(<span class="string">"tests"</span>,<span class="string">"3c353_gdth.fits"</span>));<span class="comment"> % read the fits file</span>
 <span class="function">figure</span>
 <span class="function">imagesc</span>(<span class="variable">img_gdth</span>)
 <span class="function">colorbar</span>, <span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
@@ -147,93 +254,106 @@
                     <img src="images/reconstructions/GT_linear_tutorial_matlab.png" alt="Image 1">
             </figure>
             </div>
-        <p>
-            Given the large dynamic range of the ground truth, only bright features are visible in linear scale.
-            For a better visualisation, we map its pixels intensities to the logarithmic scale using the function below:
-            \[\textrm{rlog}(\boldsymbol{\bar{x}}) = \boldsymbol{\bar{x}}_{\textrm{max}}
-            \log_{a}(\frac{a}{\boldsymbol{\bar{x}}_{\textrm{max}}} \boldsymbol{\bar{x}} + \boldsymbol{1}),\]
-
-            where \(a>0\) is  the dynamic range of the ground truth \(\boldsymbol{\bar{x}}\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}\)
-            is the maximum intensity. In the case of the considered ground truth \(a=2500\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\).
-        </p>
-            <div class="center-wrapper">
+<div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">rlog</span> = @(<span class="variable">x</span>, <span class="variable">a</span>) <span class="function">log10</span>(<span class="variable">a</span> .* <span class="variable">x</span> + <span class="number">1</span>) ./ <span class="function">log10</span>(<span class="variable">a</span>); <span class="comment">% logarithmic mapping parameterised by the dynamic range `a`</span>
-<span class="variable">img_gdth_log</span> = <span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="number">2500</span>); <span class="comment">% `a`=2500 in this case</span>
-<span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">img_gdth_log</span>), <span class="function">colormap</span>(<span class="string">'hot'</span>)
-<span class="function">axis image</span>
-<span class="variable">cb</span> = <span class="function">colorbar</span>;
-<span class="variable">ticks</span> = <span class="variable">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="number">2500</span>);
-<span class="variable">ticks</span>(<span class="function">end</span>) = <span class="number">1</span>;
-<span class="variable">cb</span>.<span class="variable">Ticks</span> = <span class="variable">ticks</span>;
-<span class="variable">cb</span>.<span class="variable">TickLabels</span> = {<span class="string">"$10^{-4}$"</span>, <span class="string">"$10^{-3}$"</span>, <span class="string">"$10^{-2}$"</span>, <span class="string">"$10^{-1}$"</span>, <span class="string">"$1$"</span>};
-<span class="variable">cb</span>.<span class="variable">TickLabelInterpreter</span> = <span class="string">'latex'</span>;
-<span class="function">title</span>(<span class="string">"Ground truth in log scale"</span>)</pre>
+<span class="import">figure</span>
+<span class="import">imagesc</span>(<span class="module">log10</span>(<span class="variable">img_gdth</span>),[<span class="number">-4</span> <span class="number">-1</span>]),
+<span class="import">axis</span> <span class="import">image</span>, <span class="import">colorbar</span>, <span class="import">colormap</span>(<span class="string">'hot'</span>)
+<span class="import">title</span>(<span class="string">'Ground truth in log scale'</span>)</pre>
     </div>
 </div>
+
             <div class="tutorial_container">
             <figure class="image-3d">
                     <img src="images/reconstructions/GT_logscale_tutorial_matlab.png" alt="Image 1">
             </figure>
             </div>
-            
             <p>
-                The test measurement file  in <b>.mat</b> format associated with the above ground truth can be loaded via the command below.
+                The <i>clean</i> visibilities are modelled as \(\boldsymbol{y}_{\textrm{clean}} = \boldsymbol{\Phi}\boldsymbol{\bar{x}}\).
             </p>
+
             <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">meas</span> = <span class="function">load</span>(<span class="function">fullfile</span>(<span class="string">"data/3c353_meas_dt_1_seed_0.mat"</span>))</pre>
+y_clean = measop(img_gdth);</pre>
     </div>
 </div>
-            meas = struct with fields:
-    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp frequency: 1.0000e+09
-    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp y: [201600×1 double]
-    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp u: [201600×1 double]
-    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp v: [201600×1 double]
-    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp w: [201600×1 double]
-    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp nW: [201600×1 double]
-    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp nWimag: []
-    <br>maxProjBaseline: 2.5948e+04
+            <p>
+                SII measurements modelled as \({\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}\)
+                are subsequently obtained by adding a realisation of a white Gaussian noise \(\boldsymbol{n}\), with mean 0 and a standard deviation \(\tau\), to the <i>clean</i> visibilities \(\boldsymbol{y}_{\textrm{clean}} \).
+                The value of \(\tau\) can be derived from a user-specfied input signal  to noise ratio. Note that \(\tau\) can also be set to be commensurate with the dynamic range of the
+                ground-truth image. We refer the reader to the script
+                <a href="https://github.com/basp-group/RI-measurement-operator/blob/60ab1ece68cfea42871b6e53f34388c2eaf0df36/example_sim_ri_data.m#L129"><span class="function">example_sim_ri_data.m</span></a> for details.
+            </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">iSNR</span> = <span class="number">40</span>; <span class="comment">% user-specified input SNR</span>
+<span class="variable">M</span> = <span class="function">numel</span>(<span class="variable">y_clean</span>);
+<span class="variable">tau</span> = <span class="number">10</span>^(-<span class="variable">iSNR</span>/<span class="number">20</span>) * <span class="function">norm</span>(<span class="variable">y_clean</span>) / <span class="function">sqrt</span>(<span class="variable">M</span>); <span class="comment">% calculate tau</span>
+<span class="variable">noise</span> = (<span class="function">randn</span>(<span class="variable">M</span>,<span class="number">1</span>) + <span class="number">1</span>i * <span class="function">randn</span>(<span class="variable">M</span>,<span class="number">1</span>)) * <span class="variable">tau</span>./<span class="function">sqrt</span>(<span class="number">2</span>); <span class="comment">% random Gaussian noise with std tau and mean 0</span>
+<span class="variable">y</span> = <span class="variable">y_clean</span> + <span class="variable">noise</span>; <span class="comment">% noisy measurements</span></pre>
+    </div>
+</div>
+            <p>
+                To image the simulated SII measurements, create the associated measurement file in <b>.mat</b>
+                format, that is input to the SII algorithms for small-scale monochromatic intensity imaging provided in <a class="basplib">BASPLib</a> as shown below.
+            </p>
+
+<div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="variable">nW</span> = <span class="module">ones</span>(<span class="function">size</span>(<span class="variable">y</span>)) ./ <span class="variable">tau</span>; <span class="comment">% the inverse of the noise std</span>
+<span class="variable">maxProjBaseline</span> = <span class="function">sqrt</span>(<span class="module">max</span>(<span class="variable">u</span>.<span class="operator">^</span><span class="number">2</span> + <span class="variable">v</span>.<span class="operator">^</span><span class="number">2</span>)); <span class="comment">% bandwidth of the spatial Fourier sampling</span>
+<span class="function">save</span>(<span class="string">"3c353_mysimdata.mat"</span>, <span class="string">'y'</span>,<span class="string">'u'</span>,<span class="string">'v'</span>,<span class="string">'w'</span>,<span class="string">'frequency'</span>,<span class="string">'nW'</span>,<span class="string">'-v7.3'</span>)
+<span class="function">fprintf</span>(<span class="string">'\nMeasurement file saved.\n'</span>)</pre>
+    </div>
+</div>
+
+
+            <h1 class="fancy-heading">Imaging weighting schemes</h1>
+                <p>
+                    During imaging, a common practice is to apply a whitening operation to the measurements via
+                    point-wise multiplication with the inverse of the noise standard deviation. This is known as <b>natural weighting</b>.
+                </p>
+                <p>
+                    The natural weighting vector nW in our example is given by:
+                </p>
+
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+nW = ones(size(y)) ./ tau;</pre>
+    </div>
+</div>
 
             <p>
-                The expected fields are listed below.
-                <br>
-                <ul>
-                <li> "<b>y</b>", measurement/data vector.</li>
-
-                <li>"<b>u</b>": \(\boldsymbol{u}\) coordinates in units of the observation wavelength.</li>
-
-                <li> "<b>v</b>": \(\boldsymbol{v}\) coordinates in units of the observation wavelength.</li>
-
-                <li> "<b>w</b>": \(\boldsymbol{w}\) coordinates in units of the observation wavelength.</li>
-
-                <li> "<b>nW</b>": noise-whitening vector, known as the natural weights, corresponding to the inverse of
-                the noise standard deviation. During imaging, these weights are applied to the measurements and injected
-                into the measurement operator model.</li>
-
-                <li> "<b>nWimag</b>": imaging weight vector, compensating for the non-uniform Fourier sampling
-                and enhancing the effective resolution of the observations. The vector is <b>optional</b> and can be computed
-                directly in the uSARA imager.</li>
-
-                <li> "<b>frequency</b>": the observation frequency in Hz.</li>
-
-                <li> "<b>maxProjBaseline</b>":  is the maximum projected baseline in units of the observation wavelength,
-                formally it equals to max \(\max\{\sqrt{\boldsymbol{u}^2 + \boldsymbol{v}^2}\}\). Hence, it represents
-                <b>the spatial bandwidth of the Fourier sampling.</b></li>
-        </ul>
+                Often, this is done in combination with an additional imaging weighting scheme to compensate for the
+                unbalance of the Fourier sampling such as <b>uniform weighting</b> or <b>Briggs weighting</b> and consequently
+                enhance the effective resolution of the reconstruction.
             </p>
             <p>
-                The collection of the \((\boldsymbol{u}, \boldsymbol{v})\) points constitutes the 2D Fourier
-                sampling pattern also known as the \(uv\)-coverage.
+                The function <span class="function">ops_raw_measop.m</span> enables computing these imaging weighting schemes
+                (see the function <span class="function">util_gen_imaging_weights.m</span> for details). The final weighting vector is the product of the two.
+            </p>
+            <p>
+                In this example, we consider Briggs weighting with robust parameter 0.
             </p>
 
             <div class="center-wrapper">
@@ -242,241 +362,109 @@
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="comment">% plot the 2D Fourier sampling pattern</span>
-<span class="function">figure</span>;
-<span class="function">scatter</span>(<span class="variable">meas.u</span>, <span class="variable">meas.v</span>, <span class="number">0.1</span>)
-<span class="function">axis equal</span>, <span class="function">axis square</span>, <span class="function">axis tight</span>
-<span class="function">xlabel</span>(<span class="string">'u'</span>)
-<span class="function">ylabel</span>(<span class="string">'v'</span>)
-<span class="function">title</span>(<span class="string">"uv coverage"</span>)</pre>
+weighting_param.gen_weights = true;
+weighting_param.weight_type = <span class="command">'briggs'</span>; <span class="comment">% can be chosen from 'briggs' or 'uniform'</span>
+weighting_param.weight_robustness = 0.0; <span class="comment">% associated with Briggs weighting</span>
+
+[~, ~, nWimag] = ops_raw_measop(u, v, w, imSize, resolution_param, weighting_param);</pre>
+    </div>
+</div>
+
+            <p>
+                During imaging, the final weighting vector is applied to the SII measurements and is also included
+                in the associated imaging measurement operator.
+            </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+y_weighted = y .* (nW .* nWimag); <span class="comment">% weighted data </span>
+measop_weighted = @(x) (nW .* nWimag).* measop(x); <span class="comment">% weighted meas. op. for imaging</span>
+adjoint_measop_weighted = @(y) adjoint_measop((nW .* nWimag) .*y); <span class="comment">% the adjoint of the weighted meas. op. for imaging</span></pre>
+    </div>
+</div>
+            <h1 class="fancy-heading">PSF &  Dirty image</h1>
+            <p>
+                The point spread function (PSF) is defined as \(\boldsymbol{h} = \kappa\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}
+                \boldsymbol{\Phi}\boldsymbol{\delta}\}\), with \(\boldsymbol{\delta}\) a Dirac delta image
+                (with value 1 at its center and 0 otherwise), and \(\kappa\) a normalisation factor ensuring that its peak value is equal to 1.
+            </p>
+
+<div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+dirac = sparse(floor(imSize(1)./2)+1, floor(imSize(2)./2)+1, 1, imSize(1), imSize(2));
+psf_0 = real(adjoint_measop(measop(full(dirac))));
+kappa = 1./max(psf_0, [], <span class="command">'all'</span>); <span class="comment">% normalisation factor</span>
+psf = kappa * psf_0; <span class="comment">% normalised psf</span>
+figure
+imagesc(psf)
+axis <span class="command">square</span>, axis <span class="command">off</span>
+colormap(<span class="command">'hot'</span>)
+colorbar
+title(<span class="command">"PSF"</span>)</pre>
+    </div>
+</div>
+            <div class="tutorial_container">
+            <figure class="image-3d">
+                    <img src="images/reconstructions/psf_measOp_tutorial.png" alt="Image 1">
+            </figure>
+            </div>
+
+            <p>
+                The normalised back-projected data also known as the dirty image is defined as
+                \(\boldsymbol{x}_d = \kappa \textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\} \).
+            </p>
+
+<div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+dirty = kappa * real(adjoint_measop_weighted(y_weighted)); % the dirty image
+figure
+imagesc(dirty)
+axis <span class="command">square</span>, axis <span class="command">off</span>
+colormap(<span class="command">'hot'</span>)
+colorbar
+title(<span class="command">"dirty image in linear scale"</span>)</pre>
     </div>
 </div>
 
             <div class="tutorial_container">
             <figure class="image-3d">
-                    <img src="images/reconstructions/uv_coverage_tutorial.png" alt="Image 1">
-            </figure>
-            </div>
-
-            <p>
-                In the context of narrow-field SII, the effect of the \(\boldsymbol{w}\) coordinates is negligeable,
-                and is therefore not considered in the measurement operator model.
-            </p>
-
-            <p>
-                <b>Scripts to generate <a href="https://github.com/basp-group/RI-measurement-operator/blob/master/example_sim_ri_data.m">
-                synthetic measurement files</a> as well as to convert real <a href="https://github.com/basp-group/AIRI/tree/main/ms2mat">Measurement Sets (MS) to .mat
-                files</a> readable by this repository are available.</b>
-            </p>
-
-
-            <h1 class="fancy-heading">Imaging with uSARA</h1>
-
-            <p>
-                uSARA imager is launched via the MATLAB function <b>run_imager</b>. This function takes as input a
-                configuration file in <b>.json</b> format, where all parameters involved in the imaging process are defined
-                and set to default values where relevant. The readers are directed to the
-                <a href="https://github.com/basp-group/uSARA/blob/main/config/README.md">README</a> for more information
-                on the content of the configuration file.
-                <br><br>
-                In this tutorial, we use the example configuration file <code>./config/usara_sim.json</code>. The function <b>run_imager</b>
-                also accepts <b>optional</b> name-argument pairs to overwrite corresponding fields in the configuration file.
-                <br><br>
-                The user <b>must</b> provide as input the <b>target image size</b> and the <b>pixel size in arcsecond</b>, either directly
-                in the configuration file or as input argument parsed to the function <b>run_imager</b>. When the pixel size is
-                not known, the user can instead specify the ratio between the spatial Fourier bandwidth of the
-                target/ground-truth image and the bandwidth of the Fourier sampling pattern. We refer to this ratio as
-                the <b>superresolution factor</b>.  In such case, the pixel size in arcsecond is automatically derived from
-                the superresolution factor as:
-                \[\textrm{imPixelSize} = \frac{180 \times 3600}{\pi} \times \frac{1} {2 \times\textrm{maxProjBaseline} \times {\textrm{superresolution}
-                 }}\]
-
-                For our test dataset, the reconstructed image size is set to  \(N=512 \times 512\) same as the ground
-                truth, and the pixel size is set such that \(\textrm{superresolution}=1.0\) (<i>i.e.</i> the spatial bandwidth of the
-                Fourier sampling equals the Fourier bandwidth of the ground-truth/target image). Natural weighting
-                is considered during imaging by default. Specifically to uSARA regularisation, the regularisation parameter is set at the heuristic value.
-                <br><br>
-                The stopping criteria (<i>e.g.</i> the total number of iterations and the bound on the relative variation of the estimate across the iterations) are set to default. For faster runtime, the user can consider looser values.
-                Under these considerations, uSARA is launched via the imaging command below.
-            </p>
-
-            <div class="center-wrapper">
-    <div class="code-container">
-        <div class="copy-btn" onclick="copyText(this)">
-            <img src="images/copy.png" class="copy_logo">
-        </div>
-        <pre>
-<span class="function">run_imager</span>(<span class="string">"./config/usara_sim.json"</span>, ...                   <span class="comment">path of the configuration file</span>
-    <span class="string">'srcName'</span>, <span class="string">"3c353"</span>, ...                                 <span class="comment">name of the target src used for output filenames</span>
-    <span class="string">'dataFile'</span>, <span class="string">"./data/3c353_meas_dt_1_seed_0.mat"</span>, ...    <span class="comment">path of the measurement file</span>
-    <span class="string">'resultPath'</span>, <span class="string">"./results"</span>, ...                          <span class="comment">path where the result folder will be created</span>
-    <span class="string">'imDimx'</span>, <span class="number">512</span>, ...                                      <span class="comment">horizontal number of pixels in the final reconstructed image</span>
-    <span class="string">'imDimy'</span>, <span class="number">512</span>, ...                                      <span class="comment">vertical number of pixels in the final reconstructed image</span>
-    <span class="string">'superresolution'</span>, <span class="number">1.0</span>, ...                             <span class="comment">used if pixel size not provided</span>
-    <span class="string">'groundtruth'</span>, <span class="string">"./data/3c353_gdth.fits"</span>, ...            <span class="comment">path of the groundtruth image when available, used to calculate SNR at the end</span>
-    <span class="string">'runID'</span>, <span class="number">0</span> ...                                          <span class="comment">identification number of the imaging run used for output filenames</span>
-  )</pre>
-    </div>
-</div>
-
-            <h1 class="fancy-heading">uSARA results</h1>
-
-            <p>
-                uSARA  imager provides as output both the point spread function and the so-called dirty image
-                (<i>i.e.</i> the normalised back-projected data), saved in <b>.fits</b> format.
-            </p>
-                <ul>
-                 <li> The point spread function (PSF) is defined as
-                \(\boldsymbol{h} = \kappa\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi}\boldsymbol{\delta}\}\)
-                , with \(\boldsymbol{\delta}\) a Dirac delta image (with value 1 at its centre and 0 otherwise), and \(\kappa\)
-                a normalisation factor ensuring its peak value is equal to 1.</li>
-                 <li> The dirty image is defined as \(\boldsymbol{x}_d = \kappa \textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\} \).</li>
-                </ul>
-
-            <div class="center-wrapper">
-    <div class="code-container">
-        <div class="copy-btn" onclick="copyText(this)">
-            <img src="images/copy.png" class="copy_logo">
-        </div>
-        <pre>
-<span class="comment">% visualise both psf and dirty image</span>
-<span class="variable">dirty</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/dirty.fits"</span>);
-<span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">dirty</span>), <span class="function">axis square</span>
-<span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"dirty image"</span>)</pre>
-    </div>
-</div>
-
-            <div class="tutorial_container">
-            <figure class="image-3d">
-                    <img src="images/reconstructions/dirty_tutorial_matlab.png" alt="Image 1">
+                    <img src="images/reconstructions/dirty_measOP_tutorial.png" alt="Image 1">
             </figure>
             </div>
 
 
-            <div class="center-wrapper">
+<div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">psf</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/psf.fits"</span>);
-<span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">psf</span>), <span class="function">axis square</span>,
-<span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"psf"</span>)
-        </pre>
+<span class="comment">%% save PSF & dirty image</span>
+<span class="comment">% fitswrite(dirty,'3c353_dirty.fits')</span>
+<span class="comment">% fitswrite(psf,'psf.fits')</span></pre>
     </div>
 </div>
 
-            <div class="tutorial_container">
-            <figure class="image-3d">
-                    <img src="images/reconstructions/psf_tutorial_matlab.png" alt="Image 1">
-            </figure>
-            </div>
 
+
+            <h1 class="fancy-heading">SII measurement operator tutorial in MATLAB</h1>
             <p>
-                uSARA  reconstructed images are  saved in <b>.fits</b> format.
-                <br>
-                <ul>
-                <li> The estimated model image \(\boldsymbol{\tilde{x}}\).</li>
-                <li> The associated  residual dirty image (<i>i.e.</i> normalised back-projected data residual).
-                     \(\boldsymbol{\tilde{r}} = \kappa(\textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\}
-                    -\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi} \boldsymbol{\tilde{x}}\}) \).
-                </li>
-                </ul>
-            </p>
-
-            <div class="center-wrapper">
-    <div class="code-container">
-        <div class="copy-btn" onclick="copyText(this)">
-            <img src="images/copy.png" class="copy_logo">
-        </div>
-        <pre>
-<span class="comment">% read reconstructed images</span>
-<span class="variable">model</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/uSARA_heuRegScale_1_runID_0_model_image.fits"</span>);
-<span class="comment">% reconstruction evaluation metrics</span>
-<span class="variable">snr_rec</span> = @(<span class="variable">xtrue</span>,<span class="variable">xrec</span>) <span class="function">20</span>*<span class="function">log10</span>(<span class="function">norm</span>(<span class="variable">xtrue</span>(:))./<span class="function">norm</span>(<span class="variable">xtrue</span>(:) - <span class="variable">xrec</span>(:)));
-<span class="variable">usara_snr</span> = <span class="variable">snr_rec</span>(<span class="variable">img_gdth</span>, <span class="variable">model</span>);
-<span class="variable">usara_logsnr</span> = <span class="variable">snr_rec</span>(<span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="number">2500</span>),<span class="variable">rlog</span>(<span class="variable">model</span>, <span class="number">2500</span>));
-<span class="function">fprintf</span>(<span class="string">"\nuSARA reconstruction metrics:  SNR %.3f dB; logSNR %.3f dB\n"</span>, <span class="variable">usara_snr</span> , <span class="variable">usara_logsnr</span>)</pre>
-    </div>
-</div>
-
-            <p>
-                uSARA reconstruction metrics:  SNR 23.989 dB; logSNR 21.253 dB
-            </p>
-            <div class="center-wrapper">
-    <div class="code-container">
-        <div class="copy-btn" onclick="copyText(this)">
-            <img src="images/copy.png" class="copy_logo">
-        </div>
-        <pre>
-<span class="comment">% visualise reconstructed images</span>
-<span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="function">rlog</span>(<span class="variable">model</span>, <span class="number">2500</span>)),
-<span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
-<span class="variable">cb</span> = <span class="function">colorbar</span>;
-<span class="variable">ticks</span> = <span class="function">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="number">2500</span>);
-<span class="variable">ticks</span>(<span class="function">end</span>) = <span class="number">1</span>;
-<span class="variable">cb.Ticks</span> = <span class="variable">ticks</span>;
-<span class="variable">cb.TickLabels</span> = {<span class="string">"$10^{-4}$"</span>, <span class="string">"$10^{-3}$"</span>, <span class="string">"$10^{-2}$"</span>, <span class="string">"$10^{-1}$"</span>, <span class="string">"$1$"</span>};
-<span class="variable">cb.TickLabelInterpreter</span> = <span class="string">'latex'</span>;
-<span class="function">title</span>(<span class="string">"uSARA model image in log scale"</span>)
-        </pre>
-    </div>
-</div>
-
-
-            <div class="tutorial_container">
-            <figure class="image-3d">
-                    <img src="images/reconstructions/uSARA_rec_tutorial.png" alt="Image 1">
-            </figure>
-            </div>
-
-
-            <div class="center-wrapper">
-    <div class="code-container">
-        <div class="copy-btn" onclick="copyText(this)">
-            <img src="images/copy.png" class="copy_logo">
-        </div>
-        <pre>
-<span class="variable">residual</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/uSARA_heuRegScale_1_runID_0_normalised_residual_dirty_image.fits"</span>);
-<span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">residual</span>), <span class="function">axis image</span>,
-<span class="function">colorbar</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>),
-<span class="function">title</span>(<span class="string">"uSARA residual dirty image in linear scale"</span>)
-        </pre>
-    </div>
-</div>
-
-
-            <div class="tutorial_container">
-            <figure class="image-3d">
-                    <img src="images/reconstructions/uSARA_residual_tutorial.png" alt="Image 1">
-            </figure>
-            </div>
-
-
-            <h1 class="fancy-heading">Additional Functionalities</h1>
-            <p>The uSARA imager supports data-weighting schemes during imaging (uniform or Briggs weighting).
-            It also provides the functionality to compute the imaging weights if not available in the input data file.
-            </p>
-            <h1 class="fancy-heading">uSARA tutorial in MATLAB</h1>
-            <p>
-                You can download this tutorial in <b>.mlx</b> format and launch it directly in MATLAB <a href="https://github.com/basp-group/uSARA/raw/main/tutorial_usara_matlab.mlx" class="download-link">
+                You can download this tutorial in <b>.mlx</b> format and launch it directly in MATLAB
+                <a href="https://github.com/basp-group/RI-measurement-operator/raw/master/tutorial_ri_meas_op_matlab.mlx" class="download-link">
             <img src="images/maltalb_logo.png" class="download-icon">
         </a>.
             </p>
-<!--            <div class="sub_algo-container">-->
-
-<!--                <a href="https://github.com/basp-group/uSARA/raw/main/tutorial_usara_matlab.mlx" download>-->
-<!--                <div class="link-box">-->
-<!--                    <span>Tutorial</span><br>-->
-<!--                    <span class="white-line"></span><br>-->
-<!--                    <img src="images/maltalb_logo.png"  class="jupyter_logo"> <img src="images/download_icon.png"  class="jupyter_logo">-->
-<!--                </div></a>-->
-<!--            </div>-->
-
 
         </div>
 

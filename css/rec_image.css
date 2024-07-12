@@ -32,8 +32,8 @@
     border-radius: 10px;
     margin: 0 auto;
     text-align: center;
-    max-width: 200vw;
-    width: 50%;
+    max-width: 100vw;
+    width: 30%;
     perspective: 1000px; /* Add perspective to the container */
 }
 .two_image_container {
