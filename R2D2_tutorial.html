@@ -29,11 +29,12 @@
             <h3>Imaging with R2D2</h3>
             <p>
                 The R2D2 algorithm takes a hybrid structure between a Plug-and-Play (PnP) algorithm and a learned
-                version of the well-know "Matching Pursuit" algorithm. Its reconstruction is formed as a series of
+                version of the well known Matching Pursuit algorithm. Its reconstruction is formed as a series of
                 residual images, iteratively estimated as outputs of Deep Neural Networks (DNNs) taking the previous
                 iteration’s image estimate and associated data residual as inputs. R2D2's primary application is to
-                solve large-scale high-resolution high-dynamic range inverse problems in radio astronomy, more
-                specifically 2D planar monochromatic intensity imaging. Please refer to the following papers:
+                solve high-resolution high-dynamic range inverse problems in synthesis imaging by interferometry (<b>SII</b>).
+                The details of R2D2 are discussed in the following papers.
+
                 <br><br>
                 [1] Aghabiglou, A., Chu, C. S., Dabbech, A. & Wiaux, Y., The R2D2 deep neural network series paradigm
                 for fast precision imaging in radio astronomy, ApJS, 273(1):3, 2024,
@@ -63,17 +64,17 @@
             <h1 class="fancy-heading">R2D2's iteration structure</h1>
             <p>
                 R2D2 consists of a series of \(I\) DNNs interleaved with \(I-1\) data fidelity steps. Each DNN
-                \(\boldsymbol{N}_{\widehat{\boldsymbol{\theta}}^{(i)}}\), parametrized by \(\widehat{\boldsymbol{\theta}}\),
+                \(\boldsymbol{N}_{\widehat{\boldsymbol{\theta}}^{(i)}}\), parametrized by \(\widehat{\boldsymbol{\theta}}^{(i)}\),
                 takes the previous iteration's image estimate and associated residual dirty image as input.
-                The residual dirty image is given by:
+                The latter is defined as:
 
-                \[\boldsymbol{r}^{(i-1)} = \kappa \textrm{Re} \{\boldsymbol{\Phi}^\dagger (\boldsymbol{y} - \boldsymbol{\Phi} \boldsymbol{x}^{(i-1)})\}\].
+                \[\boldsymbol{r}^{(i-1)} = \kappa \textrm{Re} \{\boldsymbol{\Phi}^\dagger (\boldsymbol{y} - \boldsymbol{\Phi} \boldsymbol{x}^{(i-1)})\}.\]
 
                 The image estimate and residual dirty image are initialized to \(\boldsymbol{x}^{(0)} = \boldsymbol{0}\)
                 and \(\boldsymbol{r}^{(0)} = \boldsymbol{x}_{\textrm{d}}\), i.e. the dirty image, respectively.
                 At each iteration \(i\), the image estimate is updated as:
 
-                \[\boldsymbol{x}^{(i)} = \boldsymbol{x}^{(i-1)} + \boldsymbol{N}_{\widehat{\boldsymbol{\theta}}^{(i)}}(\boldsymbol{x}^{(i-1)}, \boldsymbol{r}^{(i-1)})\].
+                \[\boldsymbol{x}^{(i)} = \boldsymbol{x}^{(i-1)} + \boldsymbol{N}_{\widehat{\boldsymbol{\theta}}^{(i)}}(\boldsymbol{x}^{(i-1)}, \boldsymbol{r}^{(i-1)}).\]
             </p>
 
             <h1 class="fancy-heading">Clone Repository</h1>
