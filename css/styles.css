@@ -152,21 +152,7 @@ a:hover {
 }
 
 /*xxxxxxxxxxxxxxxxxxxxxxx Subsection styles xxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
-.link-box {
-    text-align: center; /* Align text to center */
-    background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color gradient */
-    color: white; /* Change text color to white */
-    display: inline-block;
-    padding: 1.5vw 1.5vw;
-    font-size: 1.7vw;
-    font-family: 'Segoe UI';
-    border-radius: 2.5vw; /* Add border radius for rounded corners */
-    text-decoration: none; /* Remove underline */
-    position: relative; /* Set position relative for the white line */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin-top: 1vw;
-}
+
 
 .column_box {
     flex: 1;
@@ -176,6 +162,24 @@ a:hover {
     /*justify-content: space-between;*/
     /*padding: 20px;*/
         }
+
+.link-box {
+    text-align: center; /* Align text to center */
+    background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color gradient */
+    color: white; /* Change text color to white */
+    display: inline-block;
+    padding: 1.5vw 1.5vw;
+    font-size: 1.7vw;
+    font-family: 'Segoe UI';
+    width:14vw;
+    height: 8vw;
+    border-radius: 2.5vw; /* Add border radius for rounded corners */
+    text-decoration: none; /* Remove underline */
+    position: relative; /* Set position relative for the white line */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 1vw;
+}
 
 .link-box_main {
     text-align: center; /* Align text to center */
