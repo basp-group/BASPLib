@@ -173,7 +173,7 @@
                 where \(x_{\text{max}}\) indicates the peak pixel value of the image \(\boldsymbol{x}\).
                 Using this mapping, the logSNR metric is defined as:
 
-                \[ \log\text{SNR}(\boldsymbol{x}, \boldsymbol{x}^{\star}) = \text{SNR}(\text{rlog}(\boldsymbol{x}), \text{rlog}(\boldsymbol{x}^{\star})). \]
+                \[ \log\text{SNR}(\boldsymbol{x}^{\star}, \boldsymbol{x}) = \text{SNR}(\text{rlog}(\boldsymbol{x}^{\star}), \text{rlog}(\boldsymbol{x})). \]
              </p>
             <p>
                 <strong class="middle-title">Image-domain data fidelity (σ<sub>res</sub>) </strong>
@@ -612,6 +612,15 @@ end</pre></div>
 <span class="command">unzip</span> -j $r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip R3D3_R2D2Net_6Layers_N6.ckpt -d $r2d2_ckpt_path
 <span class="command">unzip</span> -j $r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip R3D3_R2D2Net_6Layers_N7.ckpt -d $r2d2_ckpt_path
 <span class="command">unzip</span> -j $r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip R3D3_R2D2Net_6Layers_N8.ckpt -d $r2d2_ckpt_path</pre></div>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="command">for</span> <span class="variable">i</span> <span class="keyword">in</span> {1..8}; <span class="keyword">do</span> <span class="command">unzip</span> -j <span class="input">$r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip</span> <span class="string">R3D3_R2D2Net_6Layers_N</span><span class="input">${i}</span>.<span class="string">ckpt</span> -d <span class="input">$r2d2_ckpt_path</span>; <span class="command">done</span></pre>
+    </div>
+</div>
             <h4>Python environment</h4>
             <p>
                 Firstly, create your Python environment using either <code>venv</code> or <code>conda</code>, with Python
@@ -874,7 +883,7 @@ end</pre></div>
     <span class="command">sed</span> -i <span class="string">'s|res_on_gpu:.*|res_on_gpu: True|'</span> <span class="input">$yaml_file</span>
 
     <span class="comment"># Run the Python script with the updated yaml file</span>
-    <span class="command">python3</span> <span class="variable">src/run_series.py</span> --<span class="variable">yaml_file</span> "<span class="input">$yaml_file</span>" 2>&1 | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
+    <span class="command">python3</span> <span class="variable">src/imager.py</span> --<span class="variable">yaml_file</span> "<span class="input">$yaml_file</span>" 2>&1 | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
 <span class="keyword">done</span>
         </pre>
     </div>
