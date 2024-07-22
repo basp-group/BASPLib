@@ -57,11 +57,12 @@ code {
 }
 
 pre {
-            background-color: #f5f5f5;
-            padding: 1vw;
-            border-radius: 0.8vw;
-            overflow-x: auto;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    background-color: #ecebeb;
+    padding: 1.2vw 1vw;
+    border-radius: 0.3vw;
+    overflow-x: auto;
+    border-color: #070707;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
         }
 
 .code-container {
@@ -70,11 +71,7 @@ pre {
     width: 65vw;
     overflow-x: auto;
 }
-/*.center-wrapper {*/
-/*    flex: 4;*/
-/*    border-radius: 0.8vw;*/
-/*    overflow: hidden;*/
-/*}*/
+
 
 .copy-btn {
   position: absolute;
@@ -102,7 +99,7 @@ pre {
 .copy-btn::after {
     content: "Copy";
     position: absolute;
-    top: 2vw; /* Adjust the position as needed */
+    top: 2.3vw; /* Adjust the position as needed */
     right: 0;
     background-color: #afacac;
     color: #fff;
