@@ -61,8 +61,9 @@ pre {
     padding: 1.2vw 1vw;
     border-radius: 0.3vw;
     overflow-x: auto;
-    border-color: #070707;
-    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
+    /*border-color: black;*/
+    border: 1px solid #cfcfcf;
+    /*box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);*/
         }
 
 .code-container {
