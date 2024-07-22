@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Dr. Amir Aghabiglou">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SII Measurement Operator</title>
     <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
@@ -87,7 +88,7 @@
             <p>
                 To start with, set up the following paths so that MATLAB can find the required functions and input files.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -98,12 +99,12 @@ addpath <span class="command">nufft</span>;
 addpath <span class="command">lib/operators</span>;
 addpath <span class="command">lib/utils</span>;
 addpath <span class="command">lib/ddes_utils</span>;</pre></div>
-</div>
+
             <p>
                 We will use a simulated Fourier sampling pattern generated with the VLA, provided in "tests/test.mat". It contains the \(uvw\)
                 coordinates in meters and the observation frequency in Hz. Load the variables of interest.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -113,14 +114,13 @@ myuvwdatafile = fullfile(<span class="command">"tests"</span>,<span class="comma
 frequency = load(myuvwdatafile,<span class="command">'frequency'</span>).frequency;
 u_meter = load(myuvwdatafile,<span class="command">'u'</span>).u;
 v_meter = load(myuvwdatafile,<span class="command">'v'</span>).v;
-w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
-        </pre></div>
-</div>
+w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;</pre></div>
+
             <p>
                 Convert the \(uvw\) coordinates in the unit of the observation wavelength as follows (this is needed for
                 the computation of the pixel size in physical units).
             </p>
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -134,11 +134,11 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
 <span class="variable">w</span> = <span class="variable">w_meter</span>(<span class="function">:</span>) ./ <span class="variable">wavelength</span>;
         </pre>
     </div>
-</div>
+
             <p>
                 The 2D Fourier sampling pattern is described by the \(uv\) coordinates.
             </p>
-                <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -153,7 +153,7 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
 <span class="function">title</span>(<span class="string">"uv coordinates in the unit of wavelength"</span>)
         </pre>
     </div>
-</div>
+
             <div class="tutorial_container">
             <figure class="image-3d">
                     <img src="images/reconstructions/uv_pattern_measop_tutorial.png" alt="Image 1">
@@ -182,7 +182,7 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
                 bandwidth of the Fourier sampling corresponds to 2/3 the spatial Fourier bandwidth of the ground-truth/target image.
             </p>
 
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -192,12 +192,12 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
 <span class="variable">resolution_param</span>.<span class="variable">superresolution</span> = <span class="number">1.5</span>; <span class="comment">% superresolution factor</span>
 <span class="variable">resolution_param</span>.<span class="variable">pixelSize</span> = []; <span class="comment">% pixel size in arcsec if known; keep empty to use superresolution factor instead</span></pre>
     </div>
-</div>
+
             <p>
                 The measurement operator \(\boldsymbol{\Phi}\) and its adjoint  \(\boldsymbol{\Phi}^\dagger\) can be generated as function handles by calling the function <span class="function">ops_raw_measop.m</span>.
             </p>
 
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -205,13 +205,13 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
         <pre>
 <span class="variable">[measop</span>, <span class="variable">adjoint_measop</span>, <span class="keyword">~</span>] = <span class="function">ops_raw_measop</span>(<span class="variable">u</span>, <span class="variable">v</span>, <span class="variable">w</span>, <span class="variable">imSize</span>,<span class="variable">resolution_param</span>);</pre>
     </div>
-</div>
+
             <p>
                 Note that, the user can input additional parameters to the function
                 <a href="https://github.com/basp-group/RI-measurement-operator/blob/master/lib/operators/ops_raw_measop.m"><span class="function">ops_raw_measop.m</span></a>
                 as shown below. Default values will be used otherwise.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -230,13 +230,13 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
 <span class="variable">[measop</span>, <span class="variable">adjoint_measop</span>, <span class="keyword">~</span>] = <span class="function">ops_raw_measop</span>(<span class="variable">u</span>, <span class="variable">v</span>, <span class="variable">w</span>, <span class="variable">imSize</span>, <span class="variable">resolution_param</span>, ...
      <span class="variable">weighting_param</span>, <span class="variable">nufft_param</span>, <span class="variable">wproj_param</span>);</pre>
     </div>
-</div>
+
            <h1 class="fancy-heading">Simulate SII measurements</h1>
             <p>
                 To simulate SII measurements, we take a post-processed image of the radio galaxy 3c353 as the ground truth \(\boldsymbol{\bar{x}}\). The image is in  <b>.fits</b>
                 format provided in "tests/3c353_gdth.fits".
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -248,13 +248,13 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
 <span class="function">colorbar</span>, <span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
 <span class="function">title</span>(<span class="string">"Ground truth image in linear scale"</span>)</pre>
     </div>
-</div>
+
             <div class="tutorial_container">
             <figure class="image-3d">
                     <img src="images/reconstructions/GT_linear_tutorial_matlab.png" alt="Image 1">
             </figure>
             </div>
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -265,7 +265,7 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
 <span class="import">axis</span> <span class="import">image</span>, <span class="import">colorbar</span>, <span class="import">colormap</span>(<span class="string">'hot'</span>)
 <span class="import">title</span>(<span class="string">'Ground truth in log scale'</span>)</pre>
     </div>
-</div>
+
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -276,7 +276,7 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
                 The <i>clean</i> visibilities are modelled as \(\boldsymbol{y}_{\textrm{clean}} = \boldsymbol{\Phi}\boldsymbol{\bar{x}}\).
             </p>
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -284,7 +284,7 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;
         <pre>
 y_clean = measop(img_gdth);</pre>
     </div>
-</div>
+
             <p>
                 SII measurements modelled as \({\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}\)
                 are subsequently obtained by adding a realisation of a white Gaussian noise \(\boldsymbol{n}\), with mean 0 and a standard deviation \(\tau\), to the <i>clean</i> visibilities \(\boldsymbol{y}_{\textrm{clean}} \).
@@ -292,7 +292,7 @@ y_clean = measop(img_gdth);</pre>
                 ground-truth image. We refer the reader to the script
                 <a href="https://github.com/basp-group/RI-measurement-operator/blob/60ab1ece68cfea42871b6e53f34388c2eaf0df36/example_sim_ri_data.m#L129"><span class="function">example_sim_ri_data.m</span></a> for details.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -304,13 +304,13 @@ y_clean = measop(img_gdth);</pre>
 <span class="variable">noise</span> = (<span class="function">randn</span>(<span class="variable">M</span>,<span class="number">1</span>) + <span class="number">1</span>i * <span class="function">randn</span>(<span class="variable">M</span>,<span class="number">1</span>)) * <span class="variable">tau</span>./<span class="function">sqrt</span>(<span class="number">2</span>); <span class="comment">% random Gaussian noise with std tau and mean 0</span>
 <span class="variable">y</span> = <span class="variable">y_clean</span> + <span class="variable">noise</span>; <span class="comment">% noisy measurements</span></pre>
     </div>
-</div>
+
             <p>
                 To image the simulated SII measurements, create the associated measurement file in <b>.mat</b>
                 format, that is input to the SII algorithms for small-scale monochromatic intensity imaging provided in <a class="basplib">BASPLib</a> as shown below.
             </p>
 
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -321,7 +321,7 @@ y_clean = measop(img_gdth);</pre>
 <span class="function">save</span>(<span class="string">"3c353_mysimdata.mat"</span>, <span class="string">'y'</span>,<span class="string">'u'</span>,<span class="string">'v'</span>,<span class="string">'w'</span>,<span class="string">'frequency'</span>,<span class="string">'nW'</span>,<span class="string">'-v7.3'</span>)
 <span class="function">fprintf</span>(<span class="string">'\nMeasurement file saved.\n'</span>)</pre>
     </div>
-</div>
+
 
 
             <h1 class="fancy-heading">Imaging weighting schemes</h1>
@@ -333,7 +333,7 @@ y_clean = measop(img_gdth);</pre>
                     The natural weighting vector nW in our example is given by:
                 </p>
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -341,7 +341,7 @@ y_clean = measop(img_gdth);</pre>
         <pre>
 nW = ones(size(y)) ./ tau;</pre>
     </div>
-</div>
+
 
             <p>
                 Often, this is done in combination with an additional imaging weighting scheme to compensate for the
@@ -356,7 +356,7 @@ nW = ones(size(y)) ./ tau;</pre>
                 In this example, we consider Briggs weighting with robust parameter 0.
             </p>
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -368,13 +368,13 @@ weighting_param.weight_robustness = 0.0; <span class="comment">% associated with
 
 [~, ~, nWimag] = ops_raw_measop(u, v, w, imSize, resolution_param, weighting_param);</pre>
     </div>
-</div>
+
 
             <p>
                 During imaging, the final weighting vector is applied to the SII measurements and is also included
                 in the associated imaging measurement operator.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -384,7 +384,7 @@ y_weighted = y .* (nW .* nWimag); <span class="comment">% weighted data </span>
 measop_weighted = @(x) (nW .* nWimag).* measop(x); <span class="comment">% weighted meas. op. for imaging</span>
 adjoint_measop_weighted = @(y) adjoint_measop((nW .* nWimag) .*y); <span class="comment">% the adjoint of the weighted meas. op. for imaging</span></pre>
     </div>
-</div>
+
             <h1 class="fancy-heading">PSF &  Dirty image</h1>
             <p>
                 The point spread function (PSF) is defined as \(\boldsymbol{h} = \kappa\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}
@@ -392,7 +392,7 @@ adjoint_measop_weighted = @(y) adjoint_measop((nW .* nWimag) .*y); <span class="
                 (with value 1 at its center and 0 otherwise), and \(\kappa\) a normalisation factor ensuring that its peak value is equal to 1.
             </p>
 
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -409,7 +409,7 @@ colormap(<span class="command">'hot'</span>)
 colorbar
 title(<span class="command">"PSF"</span>)</pre>
     </div>
-</div>
+
             <div class="tutorial_container">
             <figure class="image-3d">
                     <img src="images/reconstructions/psf_measOp_tutorial.png" alt="Image 1">
@@ -421,7 +421,7 @@ title(<span class="command">"PSF"</span>)</pre>
                 \(\boldsymbol{x}_d = \kappa \textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\} \).
             </p>
 
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -435,7 +435,7 @@ colormap(<span class="command">'hot'</span>)
 colorbar
 title(<span class="command">"dirty image in linear scale"</span>)</pre>
     </div>
-</div>
+
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -444,7 +444,7 @@ title(<span class="command">"dirty image in linear scale"</span>)</pre>
             </div>
 
 
-<div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -454,7 +454,7 @@ title(<span class="command">"dirty image in linear scale"</span>)</pre>
 <span class="comment">% fitswrite(dirty,'3c353_dirty.fits')</span>
 <span class="comment">% fitswrite(psf,'psf.fits')</span></pre>
     </div>
-</div>
+
 
 
 

@@ -1,3 +1,7 @@
+/**
+ * Author: Dr. Amir Aghabiglou
+ */
+
 let sortDirection = true;
     let currentColumn = -1;
 

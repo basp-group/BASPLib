@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Dr. Amir Aghabiglou">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benchmarking</title>
     <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
@@ -53,7 +54,7 @@
                 The radio-interferometric data model can be expressed in the image domain via a normalised back-projection using the adjoint of the measurement operator  \(\boldsymbol{\Phi}^\dagger \) such that:
 
                 \[\boldsymbol{x}_{\textrm{d}} =\kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{y}\}=
-                \kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{\Phi}\boldsymbol{x}^{\star}\}+ \kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{n}\}\]
+                \kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{\Phi}\boldsymbol{x}^{\star}+ \boldsymbol{\Phi}^\dagger \boldsymbol{n}\}\]
 
                 where \(\boldsymbol{x}_{\textrm{d}} \in \mathbb{R}^N\) stands for the back-projected data, known as the dirty image,
                 and \(\textrm{Re}\{\cdot\}\) stands for the real part of its argument.
@@ -603,7 +604,7 @@ end</pre></div>
                 <b>"error: invalid zip file with overlapped components (possible zip bomb)"</b> while trying to unzip them.
                 To resolve this, please use the command below to unzip each checkpoint individually.</p>
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -611,7 +612,7 @@ end</pre></div>
         <pre>
 <span class="command">for</span> <span class="variable">i</span> <span class="keyword">in</span> {1..8}; <span class="keyword">do</span> <span class="command">unzip</span> -j <span class="input">$r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip</span> <span class="string">R3D3_R2D2Net_6Layers_N</span><span class="input">${i}</span>.<span class="string">ckpt</span> -d <span class="input">$r2d2_ckpt_path</span>; <span class="command">done</span></pre>
     </div>
-</div>
+
             <h4>Python environment</h4>
             <p>
                 Firstly, create your Python environment using either <code>venv</code> or <code>conda</code>, with Python
@@ -679,7 +680,7 @@ end</pre></div>
                 <br>
                 uSARA imager can be run by calling:
             </p>
-    <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -717,10 +718,9 @@ end</pre></div>
 <span class="keyword">done</span>
 
 <span class="comment"># Log the end time</span>
-<span class="command">echo</span> <span class="string">"Script completed at: $(date)" | <span class="command">tee</span> -a <span class="input">"$log_file"</span></span>
-        </pre>
+<span class="command">echo</span> <span class="string">"Script completed at: $(date)" | <span class="command">tee</span> -a <span class="input">"$log_file"</span></span></pre>
     </div>
-</div>
+
 <br>
 
             <h3>AIRI</h3>
@@ -733,7 +733,7 @@ end</pre></div>
                 <br>
                 AIRI imager can be run by calling:
             </p>
-            <div class="center-wrapper">
+
             <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -771,10 +771,9 @@ end</pre></div>
 <span class="keyword">done</span>
 
 <span class="comment"># Log the end time</span>
-<span class="command">echo</span> <span class="string">"Script completed at: $(date)"</span>
-        </pre>
+<span class="command">echo</span> <span class="string">"Script completed at: $(date)"</span></pre>
     </div>
-</div>
+
 <br>
             <h3>R2D2</h3>
             <p>
@@ -783,7 +782,7 @@ end</pre></div>
                 <br>
                 The R2D2 imager can be run by calling:
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -875,19 +874,18 @@ end</pre></div>
 
     <span class="comment"># Run the Python script with the updated yaml file</span>
     <span class="command">python3</span> <span class="variable">src/imager.py</span> --<span class="variable">yaml_file</span> "<span class="input">$yaml_file</span>" 2>&1 | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
-<span class="keyword">done</span>
-        </pre>
+<span class="keyword">done</span></pre>
     </div>
-</div>
+
         <p>
             For running R2D2 imager save above bash script into a bash file like <code>R2D2.sh</code>, and run like:
         </p>
-            <div class="center-wrapper">
+
             <div class="code-container">
     <div class="copy-btn" onclick="copyText(this)">
         <img src="images/copy.png" class="copy_logo">
     </div>
-                <pre><span class="command">bash</span> R2D2.sh </pre></div></div>
+                <pre><span class="command">bash</span> R2D2.sh </pre></div>
             <p>
                 The script will prompt you to enter the algorithm name. For example, you can enter U-Net,
                 R2D2-Net, R2D2, or R3D3. The script will then execute the corresponding configuration for the specified algorithm.</p>
@@ -897,7 +895,7 @@ end</pre></div>
                 For CLEAN, specifically its multi-scale variant all inverse problems were solved with fixed parameters.
                 WSClean imager can be run by calling:
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -939,7 +937,7 @@ end</pre></div>
 <span class="command">echo</span> <span class="string">"Script completed at: <span class="input">$(date)</span>"</span>
         </pre>
     </div>
-</div>
+
             <p><span class="command"><b>Note:</b></span> Additional information on how to convert the data files into a
                 measurement set that is readable by WSClean will be provided soon.
             </p>
@@ -950,7 +948,7 @@ end</pre></div>
                     Python file</a>.
                 To run calculate_metrics.py you can use below bash script:
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -972,7 +970,7 @@ end</pre></div>
 <span class="keyword">python</span> <span class="function">calculate_metrics.py</span> <span class="variable">--data_file</span> <span class="string">"$DATA_FILE"</span> <span class="variable">--excel_save_path</span> <span class="string">"$EXCEL_SAVE_PATH"</span> <span class="variable">--GT_path</span> <span class="string">"$GT_PATH"</span> <span class="variable">--model_outputs</span> <span class="string">"$MODEL_OUTPUTS"</span> <span class="variable">--model</span> <span class="string">"$MODEL"</span>
         </pre>
     </div>
-</div>
+
 
             <h1 class="fancy-heading">References</h1>
             [1] Aghabiglou A, Chu CS, Dabbech A, Wiaux Y.

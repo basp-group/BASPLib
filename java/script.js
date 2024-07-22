@@ -1,3 +1,7 @@
+/**
+ * Author: Dr. Amir Aghabiglou
+ */
+
 // JavaScript to handle search functionality and tooltip
 
 function performSearch() {

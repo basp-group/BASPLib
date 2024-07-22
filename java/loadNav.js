@@ -1,3 +1,6 @@
+/**
+ * Author: Dr. Amir Aghabiglou
+ */
 // loadNav.js
 function loadNav() {
     fetch('nav.html')

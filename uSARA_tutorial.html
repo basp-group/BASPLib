@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Dr. Amir Aghabiglou">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>uSARA Tutorial</title>
     <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
@@ -98,7 +99,7 @@
             <p>
                 The repository requires a MATLAB version higher than R2019b. The script below looks for the required toolboxes.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -112,21 +113,21 @@
 <span class="import">else</span>
     <span class="function">fprintf</span>(<span class="string">"All set!\n"</span>)
 <span class="import">end</span></pre></div>
-</div>
+
             <p>
                 Missing toolboxes can be installed from MATLAB directly. Go to the "HOME" tab of MATLAB. Then in "Add-Ons", click "Get Add-Ons" and search for the name of the missing toolbox.
             </p>
             <h1 class="fancy-heading">Test Dataset</h1>
 
             <p>
-                For this tutorial, we provide a test dataset composed of a ground truth in <b>.fits</b> format and its associated measurement file in <b>.mat</b> format.
+                For this tutorial, we provide a test dataset composed of a ground truth in <a href="https://fits.gsfc.nasa.gov/fits_viewer.html" target="_blank"><b>.fits</b></a> format and its associated measurement file in <b>.mat</b> format.
                 <br>
                 The ground truth \(\boldsymbol{\bar{x}}\) is a post-processed image of the radio galaxy 3c353 of size \(N = 512 \times 512\).
                 The measurements are generated using a simulated Fourier sampling pattern of MeerKAT.
                 <br>
                 First, let us read and visualise the ground truth.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -138,7 +139,7 @@
 <span class="function">colorbar</span>, <span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
 <span class="function">title</span>(<span class="string">"Ground truth image in linear scale"</span>)</pre>
     </div>
-</div>
+
             <div class="tutorial_container">
             <figure class="image-3d">
                     <img src="images/reconstructions/GT_linear_tutorial_matlab.png" alt="Image 1">
@@ -153,7 +154,7 @@
             where \(a>0\) is  the dynamic range of the ground truth \(\boldsymbol{\bar{x}}\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}\)
             is the maximum intensity. In the case of the considered ground truth \(a=2500\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\).
         </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -172,7 +173,7 @@
 <span class="variable">cb</span>.<span class="variable">TickLabelInterpreter</span> = <span class="string">'latex'</span>;
 <span class="function">title</span>(<span class="string">"Ground truth in log scale"</span>)</pre>
     </div>
-</div>
+
             <div class="tutorial_container">
             <figure class="image-3d">
                     <img src="images/reconstructions/GT_logscale_tutorial_matlab.png" alt="Image 1">
@@ -182,7 +183,7 @@
             <p>
                 The test measurement file  in <b>.mat</b> format associated with the above ground truth can be loaded via the command below.
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -190,7 +191,7 @@
         <pre>
 <span class="variable">meas</span> = <span class="function">load</span>(<span class="function">fullfile</span>(<span class="string">"data/3c353_meas_dt_1_seed_0.mat"</span>))</pre>
     </div>
-</div>
+
             meas = struct with fields:
     <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp frequency: 1.0000e+09
     <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp y: [201600×1 double]
@@ -233,7 +234,7 @@
                 sampling pattern also known as the \(uv\)-coverage.
             </p>
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -247,7 +248,7 @@
 <span class="function">ylabel</span>(<span class="string">'v'</span>)
 <span class="function">title</span>(<span class="string">"uv coverage"</span>)</pre>
     </div>
-</div>
+
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -297,7 +298,6 @@
                 Under these considerations, uSARA is launched via the imaging command below.
             </p>
 
-            <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -314,7 +314,7 @@
     <span class="string">'runID'</span>, <span class="number">0</span> ...                                          <span class="comment">identification number of the imaging run used for output filenames</span>
   )</pre>
     </div>
-</div>
+
 
             <h1 class="fancy-heading">uSARA results</h1>
 
@@ -330,7 +330,7 @@
                  <li> The dirty image is defined as \(\boldsymbol{x}_d = \kappa \textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\} \).</li>
                 </ul>
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -342,7 +342,7 @@
 <span class="function">imagesc</span>(<span class="variable">dirty</span>), <span class="function">axis square</span>
 <span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"dirty image"</span>)</pre>
     </div>
-</div>
+
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -351,7 +351,7 @@
             </div>
 
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -363,7 +363,7 @@
 <span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"psf"</span>)
         </pre>
     </div>
-</div>
+
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -383,7 +383,7 @@
                 </ul>
             </p>
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -397,12 +397,12 @@
 <span class="variable">usara_logsnr</span> = <span class="variable">snr_rec</span>(<span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="number">2500</span>),<span class="variable">rlog</span>(<span class="variable">model</span>, <span class="number">2500</span>));
 <span class="function">fprintf</span>(<span class="string">"\nuSARA reconstruction metrics:  SNR %.3f dB; logSNR %.3f dB\n"</span>, <span class="variable">usara_snr</span> , <span class="variable">usara_logsnr</span>)</pre>
     </div>
-</div>
+
 
             <p>
                 uSARA reconstruction metrics:  SNR 23.989 dB; logSNR 21.253 dB
             </p>
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -421,7 +421,7 @@
 <span class="function">title</span>(<span class="string">"uSARA model image in log scale"</span>)
         </pre>
     </div>
-</div>
+
 
 
             <div class="tutorial_container">
@@ -431,7 +431,7 @@
             </div>
 
 
-            <div class="center-wrapper">
+
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
@@ -444,7 +444,7 @@
 <span class="function">title</span>(<span class="string">"uSARA residual dirty image in linear scale"</span>)
         </pre>
     </div>
-</div>
+
 
 
             <div class="tutorial_container">

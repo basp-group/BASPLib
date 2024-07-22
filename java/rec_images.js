@@ -1,3 +1,6 @@
+/**
+ * Author: Dr. Amir Aghabiglou
+ */
 // Get the modal
 var modal = document.getElementById("myModal");
 

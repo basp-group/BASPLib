@@ -1,3 +1,7 @@
+/**
+ * Author: Dr. Amir Aghabiglou
+ */
+
 function onClick(e) {
     e.preventDefault();
     grecaptcha.enterprise.ready(async () => {

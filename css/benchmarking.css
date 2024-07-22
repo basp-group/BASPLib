@@ -1,3 +1,6 @@
+/*
+Author: Dr. Amir Aghabiglou
+*/
 code {
             background-color: #f5f5f5;
             padding: 2px 4px;
@@ -67,26 +70,26 @@ pre {
     width: 65vw;
     overflow-x: auto;
 }
-.center-wrapper {
-    flex: 4;
-    border-radius: 0.8vw;
-    overflow: hidden;
-}
+/*.center-wrapper {*/
+/*    flex: 4;*/
+/*    border-radius: 0.8vw;*/
+/*    overflow: hidden;*/
+/*}*/
 
 .copy-btn {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 1.3vw;
+  right: 0.5vw;
   cursor: pointer;
   background-color: #f5f5f5;
-  padding: 5px 10px;
+  padding: 0.3vw 0.3vw;
   border-radius: 0.2vw;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 .copy_logo {
     vertical-align: middle; /* Align the image vertically */
     align-items: center;
-    width: 1vw;
+    width: 1.4vw;
     height: auto;
 
 }
@@ -96,7 +99,28 @@ pre {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.comment { color: green; }
+.copy-btn::after {
+    content: "Copy";
+    position: absolute;
+    top: 2vw; /* Adjust the position as needed */
+    right: 0;
+    background-color: #afacac;
+    color: #fff;
+    padding: 0.2vw 0.5vw;
+    border-radius: 0.2vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 0.7vw; /* Adjust the font size as needed */
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none; /* Prevent the tooltip from interfering with the hover */
+}
+
+.copy-btn:hover::after {
+    opacity: 1;
+}
+
+.comment { color: #0fccbe; }
+.number { color: forestgreen; }
 .variable { color: black; }
 .string { color: #c80606; }
 .command { color: purple; }
