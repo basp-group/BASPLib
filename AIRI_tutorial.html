@@ -36,16 +36,16 @@
                 handcrafted priors compared to Deep Neural Networks. AIRI is underpinned by the forward-backward
                 iterative scheme. The details of AIRI are discussed in the following papers.
               <br><br>
-              [1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stac2672">Image reconstruction algorithms in radio
+              [1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stac2672" target="_blank">Image reconstruction algorithms in radio
                 interferometry: From handcrafted to learned regularization denoisers.</a> MNRAS, 518(1), 604-622, 2023.
               <br>
-              [2] Wilber, A. G., Dabbech, A., Jackson, A., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stad1351">Scalable precision wide-field imaging in radio
+              [2] Wilber, A. G., Dabbech, A., Jackson, A., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stad1351" target="_blank">Scalable precision wide-field imaging in radio
                 interferometry: I. uSARA validated on ASKAP data.</a> MNRAS, 522(4), 5558-5575, 2023.
               <br>
-              [3] Terris, M., Tang, C., Jackson, A., & Wiaux, Y., <a href="https://arxiv.org/abs/2312.07137v2">Plug-and-play imaging with model uncertainty
+              [3] Terris, M., Tang, C., Jackson, A., & Wiaux, Y., <a href="https://arxiv.org/abs/2312.07137v2" target="_blank">Plug-and-play imaging with model uncertainty
                 quantification in radio astronomy</a>, 2023, preprint arXiv:2312.07137.
               <br><br>
-              In this tutorial, we focus on <a href="https://github.com/basp-group/AIRI">a MATLAB implementation of AIRI</a>
+              In this tutorial, we focus on <a href="https://github.com/basp-group/AIRI" target="_blank">a MATLAB implementation of AIRI</a>
                 for small-scale monochromatic intensity imaging in SII, from the environment setup, to imaging.
             </p>
             <h1 class="fancy-heading">SII Inverse Problem</h1>
@@ -99,7 +99,7 @@
                 DNN denoiser from the shelf has shown to be effective both in simulation [1,3] and on real data [2,3].
                 However, in some cases an adjustment of its value  - within one order of magnitude -  may be necessary
                 for best results. The adjusting factor is by default set to 1 (<i>i.e.</i> adjustement is disabled) and can
-                be fine-tuned if needed. Readers can refer to this <a href="https://github.com/basp-group/AIRI/blob/main/config/README.md">README</a> for more details.
+                be fine-tuned if needed. Readers can refer to this <a href="https://github.com/basp-group/AIRI/blob/main/config/README.md" target="_blank">README</a> for more details.
             </p>
 
             <h1 class="fancy-heading">Clone Repository</h1>
@@ -112,7 +112,7 @@
 <span class="command">cd</span> ./AIRI</pre></div>
             <p>
                 The flag "--recurse-submodules" is required to clone the sub-module
-                <a href="https://github.com/basp-group/RI-measurement-operator">RI-measurement-operator</a>.
+                <a href="https://github.com/basp-group/RI-measurement-operator" target="_blank">RI-measurement-operator</a>.
             </p>
 
             <h1 class="fancy-heading">Dependencies</h1>
@@ -319,7 +319,7 @@
 
             <p>
                 <b>Scripts to generate <a href="https://github.com/basp-group/RI-measurement-operator/blob/master/example_sim_ri_data.m">
-                synthetic measurement files</a> as well as to convert real <a href="https://github.com/basp-group/AIRI/tree/main/ms2mat">Measurement Sets (MS) to .mat
+                synthetic measurement files</a> as well as to convert real <a href="https://github.com/basp-group/AIRI/tree/main/ms2mat" target="_blank">Measurement Sets (MS) to .mat
                 files</a> readable by this repository are available.</b>
             </p>
 
@@ -330,7 +330,7 @@
                 AIRI imager is launched via the MATLAB function <b>run_imager</b>. This function takes as input a
                 configuration file in <b>.json</b> format, where all parameters involved in the imaging process are defined
                 and set to default values where relevant. The readers are directed to the
-                <a href="https://github.com/basp-group/AIRI/blob/main/config/README.md">README</a> for more information
+                <a href="https://github.com/basp-group/AIRI/blob/main/config/README.md" target="_blank">README</a> for more information
                 on the content of the configuration file.
                 <br><br>
                 In this tutorial, we use the example configuration file <code>./config/AIRI_sim.json</code>. The function <b>run_imager</b>
@@ -523,7 +523,7 @@
             It provides the functionality to compute the imaging weights if not available in the input data file.
             <br><br>
             The repository also provides implementations of other imaging algorithms, such as cAIRI [3],
-            uPnP-BM3D and cPnP-BM3D. We direct the readers to the full <a href="https://github.com/basp-group/AIRI">README</a> of this repository for more information.
+            uPnP-BM3D and cPnP-BM3D. We direct the readers to the full <a href="https://github.com/basp-group/AIRI" target="_blank">README</a> of this repository for more information.
             </p>
             <h1 class="fancy-heading">AIRI tutorial in MATLAB</h1>
             <p>
