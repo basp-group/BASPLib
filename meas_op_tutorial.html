@@ -29,29 +29,29 @@
           <h2>SII Measurement Operator Tutorial</h2><br>
 <!--            <h3>SII Measurement Operator</h3>-->
             <p>
-                This tutorial is focused on a <a href="https://github.com/basp-group/RI-measurement-operator">MATLAB
+                This tutorial is focused on a <a href="https://github.com/basp-group/RI-measurement-operator" target="_blank">MATLAB
                 implementation of the measurement operator</a> for small-scale
                 monochromatic intensity imaging in <b>s</b>ynthesis <b>i</b>maging by <b>i</b>nterferometry (SII). It provides detailed
                 instructions on how to generate the measurement operator from a given Fourier sampling pattern and how
                 to utilise it to simulate measurements.
                 <br><br>
                 The repository encompasses a lighter version of the NUFFT library available
-                <a href="http://web.eecs.umich.edu/~fessler/irt/fessler.tgz">online</a> and proposed by:
+                <a href="http://web.eecs.umich.edu/~fessler/irt/fessler.tgz" target="_blank">online</a> and proposed by:
                 <br>
-                [1] Fessler, J. A., & Sutton, B. P., <a href="https://doi.org/10.1109/TSP.2002.807005/">Nonuniform Fast Fourier Transforms Using Min-Max Interpolation</a>, IEEE Trans. Image Process., 51(2), 560-574, 2003.
+                [1] Fessler, J. A., & Sutton, B. P., <a href="https://doi.org/10.1109/TSP.2002.807005/" target="_blank">Nonuniform Fast Fourier Transforms Using Min-Max Interpolation</a>, IEEE Trans. Image Process., 51(2), 560-574, 2003.
                 <br><br>
                 It also provides a w-correction functionality (via w-projection) associated with the following publication:
                 <br>
-                [2] Dabbech, A., Wolz, L., Pratley, L., McEwen, J. D., & Wiaux, Y., <a href="http://dx.doi.org/10.1093/mnras/stx1775">
+                [2] Dabbech, A., Wolz, L., Pratley, L., McEwen, J. D., & Wiaux, Y., <a href="http://dx.doi.org/10.1093/mnras/stx1775" target="_blank">
                 The w-effect in interferometric imaging: from a fast sparse measurement operator to superresolution</a>, MNRAS, 471(4), 4300-4313, 2017.
                 <br><br>
-                The library is a core dependency of the <a href="https://basp-group.github.io/Faceted-HyperSARA/">Faceted-HyperSARA</a>  software for wideband SII, associated with the following publications:
+                The library is a core dependency of the <a href="https://basp-group.github.io/Faceted-HyperSARA/" target="_blank">Faceted-HyperSARA</a>  software for wideband SII, associated with the following publications:
                 <br>
-                [3] Thouvenin, P.-A., Abdulaziz, A. , Dabbech, A. , Repetti, A., & Wiaux, Y., <a href="https://academic.oup.com/mnras/article/521/1/1/6823714">
+                [3] Thouvenin, P.-A., Abdulaziz, A. , Dabbech, A. , Repetti, A., & Wiaux, Y., <a href="https://academic.oup.com/mnras/article/521/1/1/6823714" target="_blank">
                 Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): I. Algorithm and simulations</a>, MNRAS, 521(1), 1–19, 2023.
                 <br>
                 [4] Thouvenin, P.-A., Dabbech, A., Jiang, M., Thiran, J.-P., Jackson, A., & Wiaux, Y.,
-                <a href="https://academic.oup.com/mnras/article/521/1/20/6823713?searchresult=1">Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): II. Real data proof-of-concept and code</a>
+                <a href="https://academic.oup.com/mnras/article/521/1/20/6823713?searchresult=1" target="_blank">Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): II. Real data proof-of-concept and code</a>
                 , MNRAS, 521(1), 20–34, 2023.
             </p>
             <h1 class="fancy-heading">SII Inverse Problem</h1>
@@ -208,7 +208,7 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;</pre></div>
 
             <p>
                 Note that, the user can input additional parameters to the function
-                <a href="https://github.com/basp-group/RI-measurement-operator/blob/master/lib/operators/ops_raw_measop.m"><span class="function">ops_raw_measop.m</span></a>
+                <a href="https://github.com/basp-group/RI-measurement-operator/blob/master/lib/operators/ops_raw_measop.m" target="_blank"><span class="function">ops_raw_measop.m</span></a>
                 as shown below. Default values will be used otherwise.
             </p>
 
@@ -290,7 +290,7 @@ y_clean = measop(img_gdth);</pre>
                 are subsequently obtained by adding a realisation of a white Gaussian noise \(\boldsymbol{n}\), with mean 0 and a standard deviation \(\tau\), to the <i>clean</i> visibilities \(\boldsymbol{y}_{\textrm{clean}} \).
                 The value of \(\tau\) can be derived from a user-specfied input signal  to noise ratio. Note that \(\tau\) can also be set to be commensurate with the dynamic range of the
                 ground-truth image. We refer the reader to the script
-                <a href="https://github.com/basp-group/RI-measurement-operator/blob/60ab1ece68cfea42871b6e53f34388c2eaf0df36/example_sim_ri_data.m#L129"><span class="function">example_sim_ri_data.m</span></a> for details.
+                <a href="https://github.com/basp-group/RI-measurement-operator/blob/60ab1ece68cfea42871b6e53f34388c2eaf0df36/example_sim_ri_data.m#L129" target="_blank"><span class="function">example_sim_ri_data.m</span></a> for details.
             </p>
 
     <div class="code-container">
