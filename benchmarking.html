@@ -169,7 +169,7 @@
                 <br>
                 The logSNR metric emphasises faint structures by applying a logarithmic mapping to the images, parametrised by the target dynamic range \(a\):
 
-                \[ \text{r}\log(\boldsymbol{x}) = x_{\text{max}} \log_{a} \left( \frac{x_{\text{max}}}{a} \cdot \boldsymbol{x} + 1 \right), \]
+                \[ \text{r}\log(\boldsymbol{x}) = x_{\text{max}} \log_{a} \left( \frac{a}{x_{\text{max}}} \cdot \boldsymbol{x} + 1 \right), \]
 
                 where \(x_{\text{max}}\) indicates the peak pixel value of the image \(\boldsymbol{x}\).
                 Using this mapping, the logSNR metric is defined as:
