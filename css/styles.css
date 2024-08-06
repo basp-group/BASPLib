@@ -177,7 +177,7 @@ a:hover {
     font-size: 1.7vw;
     font-family: 'Segoe UI';
     width:14vw;
-    height: 8vw;
+    height: auto;
     border-radius: 2.5vw; /* Add border radius for rounded corners */
     text-decoration: none; /* Remove underline */
     position: relative; /* Set position relative for the white line */
