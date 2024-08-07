@@ -121,17 +121,21 @@
                 First, let us read and visualise the ground truth.
             </p>
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">img_gdth</span> = <span class="module">fitsread</span>(<span class="function">fullfile</span>(<span class="string">"data"</span>,<span class="string">"3c353_gdth.fits"</span>));
+<span class="comment">% Read the ground truth image</span>
+<span class="variable">img_gdth</span> = <span class="function">fitsread</span>(<span class="function">fullfile</span>(<span class="string">"data"</span>,<span class="string">"3c353_gdth.fits"</span>));
 <span class="function">figure</span>
 <span class="function">imagesc</span>(<span class="variable">img_gdth</span>)
-<span class="function">colorbar</span>, <span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">colorbar</span>, <span class="function">axis</span> <span class="function">image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
 <span class="function">title</span>(<span class="string">"Ground truth image in linear scale"</span>)</pre>
     </div>
+</div>
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -140,12 +144,13 @@
             </div>
         <p>
             Given the large dynamic range of the ground truth, only bright features are visible in linear scale.
-            For a better visualisation, we map its pixels intensities to the logarithmic scale using the function below:
-            \[\textrm{rlog}(\boldsymbol{\bar{x}}) = \boldsymbol{\bar{x}}_{\textrm{max}}
-            \log_{a}(\frac{a}{\boldsymbol{\bar{x}}_{\textrm{max}}} \boldsymbol{\bar{x}} + \boldsymbol{1}),\]
+            For a better visualisation, we map its pixels intensities to the logarithmic scale using the equation below [5]:
+            \[\textrm{rlog}(\boldsymbol{{x}}) = \boldsymbol{{x}}_{\textrm{max}}
+            \log_{a}(\frac{a}{\boldsymbol{{x}}_{\textrm{max}}} \boldsymbol{{x}} + \boldsymbol{1}),\]
 
-            where \(a>0\) is  the dynamic range of the ground truth \(\boldsymbol{\bar{x}}\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}\)
-            is the maximum intensity. In the case of the considered ground truth \(a=2500\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\).
+            where \(a>0\) and \(\boldsymbol{{x}}_{\textrm{max}}\) are the dynamic range and the maximum intensity
+            of input image \(\boldsymbol{{x}}\) respectively. For the ground truth image \(\boldsymbol{\bar{x}}\) shown above, the maximum intensity is
+            \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\) and a dynamic range is approximately \(a=10^4\).
         </p>
 
     <div class="code-container">
@@ -365,7 +370,7 @@
             </div>
 
             <p>
-                uSARA  reconstructed images are  saved in <b>.fits</b> format.
+                uSARA reconstructed images are saved in <b>.fits</b> format.</p>
                 <br>
                 <ul>
                 <li> The estimated model image \(\boldsymbol{\tilde{x}}\).</li>
@@ -374,26 +379,64 @@
                     -\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi} \boldsymbol{\tilde{x}}\}) \).
                 </li>
                 </ul>
+            <p>
+                We'll use two metrics to measure the numeric image quality, i.e.
+                <br><br>
+                \[\text{SNR}(\boldsymbol{\bar{x}}, \boldsymbol{\tilde{x}}) =
+                    20\log_{10}\left(\frac{\|\boldsymbol{\bar{x}}\|_{2}}{\|\boldsymbol{\bar{x}} - \boldsymbol{\tilde{x}}\|_{2}} \right), \]
+                <br><br>
+                and
+                <br><br>
+                \[ \log\text{SNR}(\boldsymbol{\bar{x}}, \boldsymbol{\tilde{x}}) = \text{SNR}(\text{rlog}(\boldsymbol{\bar{x}}), \text{rlog}(\boldsymbol{\tilde{x}})). \]
             </p>
-
-
+            <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="comment">% read reconstructed images</span>
+<span class="comment">% Read reconstructed images</span>
 <span class="variable">model</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/uSARA_heuRegScale_1_runID_0_model_image.fits"</span>);
-<span class="comment">% reconstruction evaluation metrics</span>
-<span class="variable">snr_rec</span> = @(<span class="variable">xtrue</span>,<span class="variable">xrec</span>) <span class="function">20</span>*<span class="function">log10</span>(<span class="function">norm</span>(<span class="variable">xtrue</span>(:))./<span class="function">norm</span>(<span class="variable">xtrue</span>(:) - <span class="variable">xrec</span>(:)));
-<span class="variable">usara_snr</span> = <span class="variable">snr_rec</span>(<span class="variable">img_gdth</span>, <span class="variable">model</span>);
-<span class="variable">usara_logsnr</span> = <span class="variable">snr_rec</span>(<span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="number">2500</span>),<span class="variable">rlog</span>(<span class="variable">model</span>, <span class="number">2500</span>));
-<span class="function">fprintf</span>(<span class="string">"\nuSARA reconstruction metrics:  SNR %.3f dB; logSNR %.3f dB\n"</span>, <span class="variable">usara_snr</span> , <span class="variable">usara_logsnr</span>)</pre>
-    </div>
 
+<span class="comment">% Reconstruction evaluation metrics</span>
+<span class="variable">snr_rec</span> = @(<span class="variable">xtrue</span>, <span class="variable">xrec</span>) <span class="number">20</span>*<span class="function">log10</span>(<span class="function">norm</span>(<span class="variable">xtrue</span>(:))./<span class="function">norm</span>(<span class="variable">xtrue</span>(:) - <span class="variable">xrec</span>(:)));
+
+<span class="variable">usara_snr</span> = <span class="variable">snr_rec</span>(<span class="variable">img_gdth</span>, <span class="variable">model</span>);
+<span class="variable">usara_logsnr</span> = <span class="variable">snr_rec</span>(<span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="variable">dynamic_range</span>), <span class="variable">rlog</span>(<span class="variable">model</span>, <span class="variable">dynamic_range</span>));
+
+<span class="function">fprintf</span>(<span class="string">"\nuSARA reconstruction metrics: SNR %.3f dB; logSNR %.3f dB"</span>, <span class="variable">usara_snr</span>, <span class="variable">usara_logsnr</span>);</pre>
+    </div>
+</div>
+            <p>
+                uSARA reconstruction metrics:  SNR 23.989 dB; logSNR 17.514 dB
+            </p>
 
             <p>
-                uSARA reconstruction metrics:  SNR 23.989 dB; logSNR 21.253 dB
+                Note that in [3], we considered a slightly different mapping of the logarithmic scale that is parameterised by the maximum intensity value \(\bar{x}_{\text{max}}\)
+                of the ground truth and the estimate of the target dynamic range defined as \(\hat{a}=\frac{1}{\sigma},\) such that:
+\(\text{r}\log(\boldsymbol{x}) = \bar{x}_{\text{max}} \log_{\hat{a}} \left( \frac{\hat{a}}{\bar{x}_{\text{max}}} \cdot \boldsymbol{x} + 1 \right),\)
+            </p>
+            <p>
+                We report below the value of the resulting logSNR metric, to which we refer to as logSNR2.
+            </p>
+            <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="function">rlog2</span> <span class="operator">=</span> <span class="keyword">@</span>(<span class="param">x, a</span>) <span class="function">log10</span>(<span class="param">a</span> <span class="operator">*</span> <span class="param">x</span> <span class="operator">+</span> <span class="function">1</span>) <span class="operator">./</span> <span class="function">log10</span>(<span class="param">a</span>);
+dynamic_range_est =2500;
+airi_logsnr2 = <span class="function">snr_rec</span>(<span class="function">rlog2</span>(<span class="param">img_gdth</span>, <span class="param">dynamic_range_est</span>), <span class="function">rlog2</span>(<span class="param">model</span>, <span class="param">dynamic_range_est</span>));
+<span class="function">fprintf</span>(<span class="string">"\nReconstruction metrics: logSNR2 %.3f dB"</span>, <span class="param">airi_logsnr2</span>)</pre>
+    </div>
+</div>
+            <p>
+                Reconstruction metrics: logSNR2 23.381 dB
+            </p>
+
+            <p>
+                Next, we'll visualise the reconstructed image.
             </p>
 
     <div class="code-container">
