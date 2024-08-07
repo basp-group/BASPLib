@@ -30,20 +30,11 @@
             <h3>Imaging with AIRI</h3>
             <p>
                 AI for Regularization in Imaging, dubbed AIRI, is a Plug-and-Play (PnP) algorithm solving inverse
-                imaging problems in synthesis imaging by interferometry (<b>SII</b>) [1]. By inserting carefully trained deep
+                imaging problems in synthesis imaging by interferometry (SII) [1]. By inserting carefully trained deep
                 neural network (DNN) as a denoiser  into the proximal splitting algorithms, one waives the computational
                 complexity of optimisation algorithms induced by sophisticated image priors, and the sub-optimality of
-                handcrafted priors compared to Deep Neural Networks. AIRI is underpinned by the forward-backward
-                iterative scheme. The details of AIRI are discussed in the following papers.
-              <br><br>
-              [1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stac2672" target="_blank">Image reconstruction algorithms in radio
-                interferometry: From handcrafted to learned regularization denoisers.</a> MNRAS, 518(1), 604-622, 2023.
-              <br>
-              [2] Wilber, A. G., Dabbech, A., Jackson, A., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stad1351" target="_blank">Scalable precision wide-field imaging in radio
-                interferometry: I. uSARA validated on ASKAP data.</a> MNRAS, 522(4), 5558-5575, 2023.
-              <br>
-              [3] Terris, M., Tang, C., Jackson, A., & Wiaux, Y., <a href="https://arxiv.org/abs/2312.07137v2" target="_blank">Plug-and-play imaging with model uncertainty
-                quantification in radio astronomy</a>, 2023, preprint arXiv:2312.07137.
+                handcrafted priors compared to Deep Neural Networks. AIRI is underpinned by the forward-backward iterative scheme.
+                The details of AIRI are discussed in [1,2,3].
               <br><br>
               In this tutorial, we focus on <a href="https://github.com/basp-group/AIRI" target="_blank">a MATLAB implementation of AIRI</a>
                 for small-scale monochromatic intensity imaging in SII, from the environment setup, to imaging.
@@ -155,8 +146,7 @@
         </div>
         <pre>
 <span class="function">websave</span>(<span class="string">"./airi_denoisers/v1_airi_astro-based_oaid_shelf.zip"</span>, <span class="string">"https://researchportal.hw.ac.uk/files/115109618/v1_airi_astro-based_oaid_shelf.zip"</span>);
-<span class="function">websave</span>(<span class="string">"./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip"</span>, <span class="string">"https://researchportal.hw.ac.uk/files/115109619/v1_airi_mri-based_mrid_shelf.zip"</span>);
-        </pre>
+<span class="function">websave</span>(<span class="string">"./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip"</span>, <span class="string">"https://researchportal.hw.ac.uk/files/115109619/v1_airi_mri-based_mrid_shelf.zip"</span>);</pre>
     </div>
 
             <p>
@@ -184,17 +174,21 @@
                 First, let us read and visualise the ground truth.
             </p>
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">img_gdth</span> = <span class="module">fitsread</span>(<span class="function">fullfile</span>(<span class="string">"data"</span>,<span class="string">"3c353_gdth.fits"</span>));
+<span class="comment">% Read the ground truth image</span>
+<span class="variable">img_gdth</span> = <span class="function">fitsread</span>(<span class="function">fullfile</span>(<span class="string">"data"</span>,<span class="string">"3c353_gdth.fits"</span>));
 <span class="function">figure</span>
 <span class="function">imagesc</span>(<span class="variable">img_gdth</span>)
-<span class="function">colorbar</span>, <span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">colorbar</span>, <span class="function">axis</span> <span class="function">image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
 <span class="function">title</span>(<span class="string">"Ground truth image in linear scale"</span>)</pre>
     </div>
+</div>
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -203,32 +197,38 @@
             </div>
         <p>
             Given the large dynamic range of the ground truth, only bright features are visible in linear scale.
-            For a better visualisation, we map its pixels intensities to the logarithmic scale using the function below:
-            \[\textrm{rlog}(\boldsymbol{\bar{x}}) = \boldsymbol{\bar{x}}_{\textrm{max}}
-            \log_{a}(\frac{a}{\boldsymbol{\bar{x}}_{\textrm{max}}} \boldsymbol{\bar{x}} + \boldsymbol{1}),\]
+            For a better visualisation, we map its pixels intensities to the logarithmic scale using the equation below [4]:
+            \[\textrm{rlog}(\boldsymbol{{x}}) = \boldsymbol{{x}}_{\textrm{max}}
+            \log_{a}(\frac{a}{\boldsymbol{{x}}_{\textrm{max}}} \boldsymbol{{x}} + \boldsymbol{1}),\]
 
-            where \(a>0\) is  the dynamic range of the ground truth \(\boldsymbol{\bar{x}}\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}\)
-            is the maximum intensity. In the case of the considered ground truth \(a=2500\) and \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\).
+            where \(a>0\) and \(\boldsymbol{{x}}_{\textrm{max}}\) are the dynamic range and the maximum intensity
+            of input image \(\boldsymbol{{x}}\) respectively. For the ground truth image \(\boldsymbol{\bar{x}}\) shown above, the maximum intensity is
+            \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\) and a dynamic range is approximately \(a=10^4\).
         </p>
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">rlog</span> = @(<span class="variable">x</span>, <span class="variable">a</span>) <span class="function">log10</span>(<span class="variable">a</span> .* <span class="variable">x</span> + <span class="number">1</span>) ./ <span class="function">log10</span>(<span class="variable">a</span>); <span class="comment">% logarithmic mapping parameterised by the dynamic range `a`</span>
-<span class="variable">img_gdth_log</span> = <span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="number">2500</span>); <span class="comment">% `a`=2500 in this case</span>
+<span class="comment">% Define the logarithmic mapping function</span>
+<span class="variable">rlog</span> = <span class="keyword">@</span>(<span class="variable">x</span>, <span class="variable">a</span>) <span class="variable">max</span>(<span class="variable">x</span>(<span class="keyword">:</span>)) .* <span class="function">log10</span>(<span class="variable">a</span> .* <span class="variable">x</span> ./ <span class="variable">max</span>(<span class="variable">x</span>(<span class="keyword">:</span>)) + <span class="number">1</span>) ./ <span class="function">log10</span>(<span class="variable">a</span>); <span class="comment">% logarithmic mapping parameterised by the dynamic range `a`</span>
+<span class="variable">dynamic_range</span> = <span class="number">1e4</span>;
+<span class="variable">img_gdth_log</span> = <span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="variable">dynamic_range</span>);
 <span class="function">figure</span>
 <span class="function">imagesc</span>(<span class="variable">img_gdth_log</span>), <span class="function">colormap</span>(<span class="string">'hot'</span>)
-<span class="function">axis image</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">axis</span> <span class="function">image</span>
 <span class="variable">cb</span> = <span class="function">colorbar</span>;
-<span class="variable">ticks</span> = <span class="variable">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="number">2500</span>);
+<span class="variable">ticks</span> = <span class="variable">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="variable">dynamic_range</span>);
 <span class="variable">ticks</span>(<span class="function">end</span>) = <span class="number">1</span>;
 <span class="variable">cb</span>.<span class="variable">Ticks</span> = <span class="variable">ticks</span>;
 <span class="variable">cb</span>.<span class="variable">TickLabels</span> = {<span class="string">"$10^{-4}$"</span>, <span class="string">"$10^{-3}$"</span>, <span class="string">"$10^{-2}$"</span>, <span class="string">"$10^{-1}$"</span>, <span class="string">"$1$"</span>};
 <span class="variable">cb</span>.<span class="variable">TickLabelInterpreter</span> = <span class="string">'latex'</span>;
 <span class="function">title</span>(<span class="string">"Ground truth in log scale"</span>)</pre>
     </div>
+</div>
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -390,22 +390,25 @@
                 \(\boldsymbol{h} = \kappa\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi}\boldsymbol{\delta}\}\)
                 , with \(\boldsymbol{\delta}\) a Dirac delta image (with value 1 at its centre and 0 otherwise), and \(\kappa\)
                 a normalisation factor ensuring its peak value is equal to 1.</li>
-                 <li> The dirty image is defined as \(\boldsymbol{x}_d = \kappa \textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\} \).</li>
+                 <li> The dirty image (i.e. the normalised back-projected data) is defined as \(\boldsymbol{x}_d = \kappa \textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\} \).</li>
                 </ul>
 
 
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
 <span class="comment">% visualise both psf and dirty image</span>
-<span class="variable">dirty</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/dirty.fits"</span>);
+<span class="variable">dirty</span> <span class="operator">=</span> <span class="function">fitsread</span>(<span class="string">"./results/3c353/dirty.fits"</span>);
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">dirty</span>), <span class="function">axis square</span>
+<span class="function">imagesc</span>(<span class="variable">dirty</span>), <span class="function">axis</span> <span class="function">square</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
 <span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"dirty image"</span>)</pre>
     </div>
+</div>
 
 
             <div class="tutorial_container">
@@ -416,17 +419,20 @@
 
 
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">psf</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/psf.fits"</span>);
+<span class="variable">psf</span> <span class="operator">=</span> <span class="function">fitsread</span>(<span class="string">"./results/3c353/psf.fits"</span>);
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">psf</span>), <span class="function">axis square</span>,
-<span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"psf"</span>)
-        </pre>
+<span class="function">imagesc</span>(<span class="variable">psf</span>), <span class="function">axis</span> <span class="function">square</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="function">title</span>(<span class="string">"point spread function"</span>)</pre>
     </div>
+</div>
 
 
             <div class="tutorial_container">
@@ -436,7 +442,7 @@
             </div>
 
             <p>
-                AIRI  reconstructed images are  saved in <b>.fits</b> format.
+                AIRI  reconstructed images are saved in <b>.fits</b> format.
             </p>
                 <ul>
                 <li> The estimated model image \(\boldsymbol{\tilde{x}}\).</li>
@@ -445,46 +451,84 @@
                     -\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi} \boldsymbol{\tilde{x}}\}) \).
                 </li>
                 </ul>
-
-
-
+            <p>
+                We'll use two metrics to measure the numeric image quality, i.e.
+                <br><br>
+                \(\text{SNR}(\boldsymbol{\bar{x}}, \boldsymbol{\tilde{x}}) =
+                    20\log_{10}\left(\frac{\|\boldsymbol{\bar{x}}\|_{2}}{\|\boldsymbol{\bar{x}} - \boldsymbol{\tilde{x}}\|_{2}} \right), \)
+                <br><br>
+                and
+                <br><br>
+                \( \log\text{SNR}(\boldsymbol{\bar{x}}, \boldsymbol{\tilde{x}}) = \text{SNR}(\text{rlog}(\boldsymbol{\bar{x}}), \text{rlog}(\boldsymbol{\tilde{x}})). \)
+            </p>
+            <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
 <span class="comment">% read reconstructed images</span>
-<span class="variable">model</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/AIRI_heuRegScale_1_runID_0_model_image.fits"</span>);
+<span class="function">model</span> <span class="operator">=</span> <span class="function">fitsread</span>(<span class="string">"./results/3c353/AIRI_heuScale_1_runID_0_model_image.fits"</span>);
 <span class="comment">% reconstruction evaluation metrics</span>
-<span class="variable">snr_rec</span> = @(<span class="variable">xtrue</span>,<span class="variable">xrec</span>) <span class="function">20</span>*<span class="function">log10</span>(<span class="function">norm</span>(<span class="variable">xtrue</span>(:))./<span class="function">norm</span>(<span class="variable">xtrue</span>(:) - <span class="variable">xrec</span>(:)));
-<span class="variable">airi_snr</span> = <span class="variable">snr_rec</span>(<span class="variable">img_gdth</span>, <span class="variable">model</span>);
-<span class="variable">airi_logsnr</span> = <span class="variable">snr_rec</span>(<span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="number">2500</span>),<span class="variable">rlog</span>(<span class="variable">model</span>, <span class="number">2500</span>));
-<span class="function">fprintf</span>(<span class="string">"\nAIRI reconstruction metrics:  SNR %.3f dB; logSNR %.3f dB\n"</span>, <span class="variable">AIRI_snr</span> , <span class="variable">airi_logsnr</span>)</pre>
+<span class="function">snr_rec</span> <span class="operator">=</span> <span class="keyword">@</span>(<span class="param">xtrue,xrec</span>)<span class="operator"> </span><span class="function">20</span><span class="operator">*</span><span class="function">log10</span>(<span class="function">norm</span>(<span class="param">xtrue(:)</span>).<span class="operator">/</span><span class="function">norm</span>(<span class="param">xtrue(:)</span> <span class="operator">-</span> <span class="param">xrec(:)</span>));
+<span class="function">airi_snr</span> <span class="operator">=</span> <span class="function">snr_rec</span>(<span class="param">img_gdth</span>, <span class="param">model</span>);
+<span class="function">airi_logsnr</span> <span class="operator">=</span> <span class="function">snr_rec</span>(<span class="function">rlog</span>(<span class="param">img_gdth</span>, <span class="param">dynamic_range</span>), <span class="function">rlog</span>(<span class="param">model</span>, <span class="param">dynamic_range</span>));
+<span class="function">fprintf</span>(<span class="string">"\nReconstruction metrics: SNR %.3f dB; logSNR %.3f dB"</span>, <span class="param">airi_snr</span>, <span class="param">airi_logsnr</span>)</pre>
     </div>
-
-
+</div>
             <p>
-                AIRI reconstruction metrics:  SNR 25.265 dB; logSNR 23.381 dB
+                Reconstruction metrics: SNR 25.265 dB; logSNR 21.025 dB
             </p>
 
+            <p>
+                Note that in [4], we considered a slightly different mapping of the logarithmic scale that is parameterised by the maximum intensity value \(\bar{x}_{\text{max}}\)
+                of the ground truth and the estimate of the target dynamic range defined as \(\hat{a}=\frac{1}{\sigma},\) such that:
+\(\text{r}\log(\boldsymbol{x}) = \bar{x}_{\text{max}} \log_{\hat{a}} \left( \frac{\hat{a}}{\bar{x}_{\text{max}}} \cdot \boldsymbol{x} + 1 \right),\)
+            </p>
+            <p>
+                We report below the value of the resulting logSNR metric, to which we refer to as logSNR2.
+            </p>
+            <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="comment">% visualise reconstructed images</span>
+<span class="function">rlog2</span> <span class="operator">=</span> <span class="keyword">@</span>(<span class="param">x, a</span>) <span class="function">log10</span>(<span class="param">a</span> <span class="operator">*</span> <span class="param">x</span> <span class="operator">+</span> <span class="function">1</span>) <span class="operator">./</span> <span class="function">log10</span>(<span class="param">a</span>);
+dynamic_range_est =2500;
+airi_logsnr2 = <span class="function">snr_rec</span>(<span class="function">rlog2</span>(<span class="param">img_gdth</span>, <span class="param">dynamic_range_est</span>), <span class="function">rlog2</span>(<span class="param">model</span>, <span class="param">dynamic_range_est</span>));
+<span class="function">fprintf</span>(<span class="string">"\nReconstruction metrics: logSNR2 %.3f dB"</span>, <span class="param">airi_logsnr2</span>)</pre>
+    </div>
+</div>
+            <p>
+                Reconstruction metrics: logSNR2 23.381 dB
+            </p>
+
+            <p>
+                Next, we'll visualise the reconstructed image.
+            </p>
+
+    <div class="center-wrapper">
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+% visualise reconstructed images
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="function">rlog</span>(<span class="variable">model</span>, <span class="number">2500</span>)),
-<span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
-<span class="variable">cb</span> = <span class="function">colorbar</span>;
-<span class="variable">ticks</span> = <span class="function">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="number">2500</span>);
-<span class="variable">ticks</span>(<span class="function">end</span>) = <span class="number">1</span>;
-<span class="variable">cb.Ticks</span> = <span class="variable">ticks</span>;
-<span class="variable">cb.TickLabels</span> = {<span class="string">"$10^{-4}$"</span>, <span class="string">"$10^{-3}$"</span>, <span class="string">"$10^{-2}$"</span>, <span class="string">"$10^{-1}$"</span>, <span class="string">"$1$"</span>};
-<span class="variable">cb.TickLabelInterpreter</span> = <span class="string">'latex'</span>;
+<span class="function">imagesc</span>(<span class="function">rlog</span>(<span class="variable">model</span>, <span class="variable">dynamic_range</span>))
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">axis</span> <span class="function">image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="variable">cb</span> <span class="operator">=</span> <span class="function">colorbar</span>;
+<span class="variable">ticks</span> <span class="operator">=</span> <span class="function">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="variable">dynamic_range</span>);
+<span class="variable">ticks</span>(<span class="function">end</span>) <span class="operator">=</span> <span class="number">1</span>;
+<span class="variable">cb</span>.<span class="variable">Ticks</span> <span class="operator">=</span> <span class="variable">ticks</span>;
+<span class="variable">cb</span>.<span class="variable">TickLabels</span> <span class="operator">=</span> {<span class="string">"$10^-4$"</span>, <span class="string">"$10^-3$"</span>, <span class="string">"$10^-2$"</span>, <span class="string">"$10^-1$"</span>, <span class="string">"$1$"</span>};
+<span class="variable">cb</span>.<span class="variable">TickLabelInterpreter</span> <span class="operator">=</span> <span class="string">'latex'</span>;
 <span class="function">title</span>(<span class="string">"AIRI model image in log scale"</span>)
         </pre>
     </div>
+</div>
 
 
 
@@ -496,18 +540,21 @@
 
 
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">residual</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/AIRI_heuRegScale_1_runID_0_normalised_residual_dirty_image.fits"</span>);
+<span class="comment">% Load the AIRI residual dirty image</span>
+<span class="variable">residual</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/AIRI_heuScale_1_runID_0_normalised_residual_dirty_image.fits"</span>);
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">residual</span>), <span class="function">axis image</span>,
-<span class="function">colorbar</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>),
-<span class="function">title</span>(<span class="string">"AIRI residual dirty image in linear scale"</span>)
-        </pre>
+<span class="function">imagesc</span>(<span class="variable">residual</span>), <span class="function">axis</span> <span class="function">image</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">colorbar</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="function">title</span>(<span class="string">"AIRI residual dirty in linear scale"</span>)</pre>
     </div>
+</div>
 
 
 
@@ -540,6 +587,20 @@
 <!--                    <img src="images/maltalb_logo.png"  class="jupyter_logo"> <img src="images/download_icon.png"  class="jupyter_logo">-->
 <!--                </div></a>-->
 <!--            </div>-->
+            <h1 class="fancy-heading">Additional Functionalities</h1>
+            <p>
+                [1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stac2672" target="_blank">Image reconstruction algorithms in radio
+                interferometry: From handcrafted to learned regularization denoisers.</a> MNRAS, 518(1), 604-622, 2023.
+              <br>
+                [2] Wilber, A. G., Dabbech, A., Jackson, A., & Wiaux, Y., <a href="https://doi.org/10.1093/mnras/stad1351" target="_blank">Scalable precision wide-field imaging in radio
+                interferometry: I. uSARA validated on ASKAP data.</a> MNRAS, 522(4), 5558-5575, 2023.
+              <br>
+                [3] Terris, M., Tang, C., Jackson, A., & Wiaux, Y., <a href="https://arxiv.org/abs/2312.07137v2" target="_blank">Plug-and-play imaging with model uncertainty
+                quantification in radio astronomy</a>, 2023, preprint arXiv:2312.07137.
+              <br>
+                [4] Aghabiglou, A., San Chu, C., Dabbech, A., & Wiaux, Y., <a href="https://iopscience.iop.org/article/10.3847/1538-4365/ad46f5" target="_blank">
+                The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy.</a> ApJS, 273(1), 3, 2024.
+            </p>
 
 
         </div>
