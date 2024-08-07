@@ -153,24 +153,29 @@
             \(\boldsymbol{\bar{x}}_{\textrm{max}}=1\) and a dynamic range is approximately \(a=10^4\).
         </p>
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">rlog</span> = @(<span class="variable">x</span>, <span class="variable">a</span>) <span class="function">log10</span>(<span class="variable">a</span> .* <span class="variable">x</span> + <span class="number">1</span>) ./ <span class="function">log10</span>(<span class="variable">a</span>); <span class="comment">% logarithmic mapping parameterised by the dynamic range `a`</span>
-<span class="variable">img_gdth_log</span> = <span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="number">2500</span>); <span class="comment">% `a`=2500 in this case</span>
+<span class="comment">% Define the logarithmic mapping function</span>
+<span class="variable">rlog</span> = <span class="keyword">@</span>(<span class="variable">x</span>, <span class="variable">a</span>) <span class="variable">max</span>(<span class="variable">x</span>(<span class="keyword">:</span>)) .* <span class="function">log10</span>(<span class="variable">a</span> .* <span class="variable">x</span> ./ <span class="variable">max</span>(<span class="variable">x</span>(<span class="keyword">:</span>)) + <span class="number">1</span>) ./ <span class="function">log10</span>(<span class="variable">a</span>); <span class="comment">% logarithmic mapping parameterised by the dynamic range `a`</span>
+<span class="variable">dynamic_range</span> = <span class="number">1e4</span>;
+<span class="variable">img_gdth_log</span> = <span class="variable">rlog</span>(<span class="variable">img_gdth</span>, <span class="variable">dynamic_range</span>);
 <span class="function">figure</span>
 <span class="function">imagesc</span>(<span class="variable">img_gdth_log</span>), <span class="function">colormap</span>(<span class="string">'hot'</span>)
-<span class="function">axis image</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">axis</span> <span class="function">image</span>
 <span class="variable">cb</span> = <span class="function">colorbar</span>;
-<span class="variable">ticks</span> = <span class="variable">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="number">2500</span>);
+<span class="variable">ticks</span> = <span class="variable">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="variable">dynamic_range</span>);
 <span class="variable">ticks</span>(<span class="function">end</span>) = <span class="number">1</span>;
 <span class="variable">cb</span>.<span class="variable">Ticks</span> = <span class="variable">ticks</span>;
 <span class="variable">cb</span>.<span class="variable">TickLabels</span> = {<span class="string">"$10^{-4}$"</span>, <span class="string">"$10^{-3}$"</span>, <span class="string">"$10^{-2}$"</span>, <span class="string">"$10^{-1}$"</span>, <span class="string">"$1$"</span>};
 <span class="variable">cb</span>.<span class="variable">TickLabelInterpreter</span> = <span class="string">'latex'</span>;
 <span class="function">title</span>(<span class="string">"Ground truth in log scale"</span>)</pre>
     </div>
+</div>
 
             <div class="tutorial_container">
             <figure class="image-3d">
@@ -329,17 +334,20 @@
                 </ul>
 
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
 <span class="comment">% visualise both psf and dirty image</span>
-<span class="variable">dirty</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/dirty.fits"</span>);
+<span class="variable">dirty</span> <span class="operator">=</span> <span class="function">fitsread</span>(<span class="string">"./results/3c353/dirty.fits"</span>);
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">dirty</span>), <span class="function">axis square</span>
+<span class="function">imagesc</span>(<span class="variable">dirty</span>), <span class="function">axis</span> <span class="function">square</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
 <span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"dirty image"</span>)</pre>
     </div>
+</div>
 
 
             <div class="tutorial_container">
@@ -350,17 +358,20 @@
 
 
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">psf</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/psf.fits"</span>);
+<span class="variable">psf</span> <span class="operator">=</span> <span class="function">fitsread</span>(<span class="string">"./results/3c353/psf.fits"</span>);
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">psf</span>), <span class="function">axis square</span>,
-<span class="function">colormap</span>(<span class="string">'hot'</span>), <span class="function">title</span>(<span class="string">"psf"</span>)
-        </pre>
+<span class="function">imagesc</span>(<span class="variable">psf</span>), <span class="function">axis</span> <span class="function">square</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="function">title</span>(<span class="string">"point spread function"</span>)</pre>
     </div>
+</div>
 
 
             <div class="tutorial_container">
@@ -412,7 +423,7 @@
             </p>
 
             <p>
-                Note that in [3], we considered a slightly different mapping of the logarithmic scale that is parameterised by the maximum intensity value \(\bar{x}_{\text{max}}\)
+                Note that in [4], we considered a slightly different mapping of the logarithmic scale that is parameterised by the maximum intensity value \(\bar{x}_{\text{max}}\)
                 of the ground truth and the estimate of the target dynamic range defined as \(\hat{a}=\frac{1}{\sigma},\) such that:
 \(\text{r}\log(\boldsymbol{x}) = \bar{x}_{\text{max}} \log_{\hat{a}} \left( \frac{\hat{a}}{\bar{x}_{\text{max}}} \cdot \boldsymbol{x} + 1 \right),\)
             </p>
@@ -432,31 +443,33 @@ airi_logsnr2 = <span class="function">snr_rec</span>(<span class="function">rlog
     </div>
 </div>
             <p>
-                Reconstruction metrics: logSNR2 23.381 dB
+                Reconstruction metrics: logSNR2 21.253 dB
             </p>
 
             <p>
                 Next, we'll visualise the reconstructed image.
             </p>
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="comment">% visualise reconstructed images</span>
+% visualise reconstructed images
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="function">rlog</span>(<span class="variable">model</span>, <span class="number">2500</span>)),
-<span class="function">axis image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
-<span class="variable">cb</span> = <span class="function">colorbar</span>;
-<span class="variable">ticks</span> = <span class="function">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="number">2500</span>);
-<span class="variable">ticks</span>(<span class="function">end</span>) = <span class="number">1</span>;
-<span class="variable">cb.Ticks</span> = <span class="variable">ticks</span>;
-<span class="variable">cb.TickLabels</span> = {<span class="string">"$10^{-4}$"</span>, <span class="string">"$10^{-3}$"</span>, <span class="string">"$10^{-2}$"</span>, <span class="string">"$10^{-1}$"</span>, <span class="string">"$1$"</span>};
-<span class="variable">cb.TickLabelInterpreter</span> = <span class="string">'latex'</span>;
-<span class="function">title</span>(<span class="string">"uSARA model image in log scale"</span>)
-        </pre>
+<span class="function">imagesc</span>(<span class="function">rlog</span>(<span class="variable">model</span>, <span class="variable">dynamic_range</span>))
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">axis</span> <span class="function">image</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="variable">cb</span> <span class="operator">=</span> <span class="function">colorbar</span>;
+<span class="variable">ticks</span> <span class="operator">=</span> <span class="function">rlog</span>([<span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>, <span class="number">1.0</span>], <span class="variable">dynamic_range</span>);
+<span class="variable">ticks</span>(<span class="function">end</span>) <span class="operator">=</span> <span class="number">1</span>;
+<span class="variable">cb</span>.<span class="variable">Ticks</span> <span class="operator">=</span> <span class="variable">ticks</span>;
+<span class="variable">cb</span>.<span class="variable">TickLabels</span> <span class="operator">=</span> {<span class="string">"$10^-4$"</span>, <span class="string">"$10^-3$"</span>, <span class="string">"$10^-2$"</span>, <span class="string">"$10^-1$"</span>, <span class="string">"$1$"</span>};
+<span class="variable">cb</span>.<span class="variable">TickLabelInterpreter</span> <span class="operator">=</span> <span class="string">'latex'</span>;
+<span class="function">title</span>(<span class="string">"uSARA model image in log scale"</span>)</pre>
     </div>
+</div>
 
 
 
@@ -468,18 +481,21 @@ airi_logsnr2 = <span class="function">snr_rec</span>(<span class="function">rlog
 
 
 
+    <div class="center-wrapper">
     <div class="code-container">
         <div class="copy-btn" onclick="copyText(this)">
             <img src="images/copy.png" class="copy_logo">
         </div>
         <pre>
-<span class="variable">residual</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/uSARA_heuRegScale_1_runID_0_normalised_residual_dirty_image.fits"</span>);
+<span class="comment">% Load the AIRI residual dirty image</span>
+<span class="variable">residual</span> = <span class="function">fitsread</span>(<span class="string">"./results/3c353/AIRI_heuScale_1_runID_0_normalised_residual_dirty_image.fits"</span>);
 <span class="function">figure</span>
-<span class="function">imagesc</span>(<span class="variable">residual</span>), <span class="function">axis image</span>,
-<span class="function">colorbar</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>),
-<span class="function">title</span>(<span class="string">"uSARA residual dirty image in linear scale"</span>)
-        </pre>
+<span class="function">imagesc</span>(<span class="variable">residual</span>), <span class="function">axis</span> <span class="function">image</span>
+<span class="function">set</span>(<span class="function">gca</span>,<span class="string">'YDir'</span>,<span class="string">'normal'</span>)
+<span class="function">colorbar</span>, <span class="function">colormap</span>(<span class="string">'hot'</span>)
+<span class="function">title</span>(<span class="string">"uSARA residual dirty in linear scale"</span>)</pre>
     </div>
+</div>
 
 
 
