@@ -385,19 +385,18 @@
                 <br>
                 <ul>
                 <li> The estimated model image \(\boldsymbol{\tilde{x}}\).</li>
-                <li> The associated  residual dirty image (<i>i.e.</i> normalised back-projected data residual).
+                <li> The associated  residual dirty image (<i>i.e.</i> normalised back-projected data residual)
                      \(\boldsymbol{\tilde{r}} = \kappa(\textrm{Re} \{\boldsymbol{\Phi}^{\dagger} \boldsymbol{y}\}
                     -\textrm{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi} \boldsymbol{\tilde{x}}\}) \).
                 </li>
                 </ul>
             <p>
-                We'll use two metrics to measure the numeric image quality, i.e.
+                We assess the reconstruction quality using the two metrics below:
                 <br><br>
                 \[\text{SNR}(\boldsymbol{\bar{x}}, \boldsymbol{\tilde{x}}) =
                     20\log_{10}\left(\frac{\|\boldsymbol{\bar{x}}\|_{2}}{\|\boldsymbol{\bar{x}} - \boldsymbol{\tilde{x}}\|_{2}} \right), \]
-                <br><br>
-                and
-                <br><br>
+                <br>
+
                 \[ \log\text{SNR}(\boldsymbol{\bar{x}}, \boldsymbol{\tilde{x}}) = \text{SNR}(\text{rlog}(\boldsymbol{\bar{x}}), \text{rlog}(\boldsymbol{\tilde{x}})). \]
             </p>
             <div class="center-wrapper">
