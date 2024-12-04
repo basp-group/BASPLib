@@ -168,6 +168,27 @@ a:hover {
     /*padding: 20px;*/
         }
 
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.logo {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.4s, box-shadow 0.4s;
+    border-radius: 0.4vw;
+}
+
+.logo:hover {
+    transform: scale(1.7);
+    box-shadow: 0 2vw 2vw rgba(0, 0, 0, 0.3);
+    border-radius: 2.5vw;
+}
 .link-box {
     text-align: center; /* Align text to center */
     background: linear-gradient(90deg, saddlebrown, sandybrown); /* Apply color gradient */
@@ -250,13 +271,13 @@ color: white;text-align: center;
 .Github_logo {
     vertical-align: middle; /* Align the image vertically */
     align-items: center;
-    width: 8vw;
+    width: 6vw;
     height: auto;
 }
 .jupyter_logo {
     vertical-align: middle; /* Align the image vertically */
     align-items: center;
-    width: 2.2vw;
+    width: 2.4vw;
     height: auto;
 }
 .excel_logo{
