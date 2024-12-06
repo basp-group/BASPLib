@@ -191,8 +191,8 @@ a:hover {
 }
 .link-box {
     text-align: center; /* Align text to center */
-    /*background: linear-gradient(90deg, saddlebrown, sandybrown);*/
-    background: linear-gradient(180deg, rgba(139, 69, 19, 1), rgba(244, 164, 96, 0)); /* Apply color gradient */
+    background: linear-gradient(90deg, saddlebrown, sandybrown);
+    /*background: linear-gradient(180deg, rgba(139, 69, 19, 1), rgba(244, 164, 96, 0)); !* Apply color gradient *!*/
     color: white; /* Change text color to white */
     display: inline-block;
     padding: 1.5vw 1.5vw;
