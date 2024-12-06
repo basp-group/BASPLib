@@ -172,12 +172,12 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    margin-top: 10px;
+    gap: 1vw;
+    margin-top: 0.5vw;
 }
 
 .logo {
-    width: 40px;
+    width: 4vw;
     height: auto;
     cursor: pointer;
     transition: transform 0.4s, box-shadow 0.4s;
