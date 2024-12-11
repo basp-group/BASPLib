@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="author" content="Dr. Amir Aghabiglou">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SII Measurement Operator</title>
+    <title>RI Measurement Operator</title>
     <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/navigation_bar.css">
@@ -26,12 +26,12 @@
     <section class="content-section">
         <div class="left-column"></div>
         <div class="middle-column">
-          <h2>SII Measurement Operator Tutorial</h2><br>
-<!--            <h3>SII Measurement Operator</h3>-->
+          <h2>RI Measurement Operator Tutorial</h2><br>
+<!--            <h3>RI Measurement Operator</h3>-->
             <p>
                 This tutorial is focused on a <a href="https://github.com/basp-group/RI-measurement-operator" target="_blank">MATLAB
                 implementation of the measurement operator</a> for small-scale
-                monochromatic intensity imaging in <b>s</b>ynthesis <b>i</b>maging by <b>i</b>nterferometry (SII). It provides detailed
+                monochromatic intensity imaging in <b>r</b>adio <b>i</b>nterferometry (RI). It provides detailed
                 instructions on how to generate the measurement operator from a given Fourier sampling pattern and how
                 to utilise it to simulate measurements.
                 <br><br>
@@ -45,7 +45,7 @@
                 [2] Dabbech, A., Wolz, L., Pratley, L., McEwen, J. D., & Wiaux, Y., <a href="http://dx.doi.org/10.1093/mnras/stx1775" target="_blank">
                 The w-effect in interferometric imaging: from a fast sparse measurement operator to superresolution</a>, MNRAS, 471(4), 4300-4313, 2017.
                 <br><br>
-                The library is a core dependency of the <a href="https://basp-group.github.io/Faceted-HyperSARA/" target="_blank">Faceted-HyperSARA</a>  software for wideband SII, associated with the following publications:
+                The library is a core dependency of the <a href="https://basp-group.github.io/Faceted-HyperSARA/" target="_blank">Faceted-HyperSARA</a>  software for wideband RI, associated with the following publications:
                 <br>
                 [3] Thouvenin, P.-A., Abdulaziz, A. , Dabbech, A. , Repetti, A., & Wiaux, Y., <a href="https://academic.oup.com/mnras/article/521/1/1/6823714" target="_blank">
                 Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): I. Algorithm and simulations</a>, MNRAS, 521(1), 1–19, 2023.
@@ -54,7 +54,7 @@
                 <a href="https://academic.oup.com/mnras/article/521/1/20/6823713?searchresult=1" target="_blank">Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): II. Real data proof-of-concept and code</a>
                 , MNRAS, 521(1), 20–34, 2023.
             </p>
-            <h1 class="fancy-heading">SII Inverse Problem</h1>
+            <h1 class="fancy-heading">RI Inverse Problem</h1>
             <p>
                 Assuming a narrow field of view and in absence of direction dependent effects, at a given time instant,
                 each pair of antennas acquires a noisy complex measurement, termed visibility, corresponding to a Fourier
@@ -84,7 +84,7 @@
                 <pre><span class="command">!git</span> clone https://github.com/basp-group/RI-measurement-operator.git
 <span class="command">cd</span> ./RI-measurement-operator</pre></div>
 
-            <h1 class="fancy-heading">Generate SII Measurement Operator</h1>
+            <h1 class="fancy-heading">Generate RI Measurement Operator</h1>
             <p>
                 To start with, set up the following paths so that MATLAB can find the required functions and input files.
             </p>
@@ -231,9 +231,9 @@ w_meter = load(myuvwdatafile,<span class="command">'w'</span>).w;</pre></div>
      <span class="variable">weighting_param</span>, <span class="variable">nufft_param</span>, <span class="variable">wproj_param</span>);</pre>
     </div>
 
-           <h1 class="fancy-heading">Simulate SII measurements</h1>
+           <h1 class="fancy-heading">Simulate RI measurements</h1>
             <p>
-                To simulate SII measurements, we take a post-processed image of the radio galaxy 3c353 as the ground truth \(\boldsymbol{\bar{x}}\). The image is in  <b>.fits</b>
+                To simulate RI measurements, we take a post-processed image of the radio galaxy 3c353 as the ground truth \(\boldsymbol{\bar{x}}\). The image is in  <b>.fits</b>
                 format provided in "tests/3c353_gdth.fits".
             </p>
 
@@ -286,7 +286,7 @@ y_clean = measop(img_gdth);</pre>
     </div>
 
             <p>
-                SII measurements modelled as \({\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}\)
+                RI measurements modelled as \({\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}\)
                 are subsequently obtained by adding a realisation of a white Gaussian noise \(\boldsymbol{n}\), with mean 0 and a standard deviation \(\tau\), to the <i>clean</i> visibilities \(\boldsymbol{y}_{\textrm{clean}} \).
                 The value of \(\tau\) can be derived from a user-specfied input signal  to noise ratio. Note that \(\tau\) can also be set to be commensurate with the dynamic range of the
                 ground-truth image. We refer the reader to the script
@@ -306,8 +306,8 @@ y_clean = measop(img_gdth);</pre>
     </div>
 
             <p>
-                To image the simulated SII measurements, create the associated measurement file in <b>.mat</b>
-                format, that is input to the SII algorithms for small-scale monochromatic intensity imaging provided in <a class="basplib">BASPLib</a> as shown below.
+                To image the simulated RI measurements, create the associated measurement file in <b>.mat</b>
+                format, that is input to the RI algorithms for small-scale monochromatic intensity imaging provided in <a class="basplib">BASPLib</a> as shown below.
             </p>
 
 
@@ -371,7 +371,7 @@ weighting_param.weight_robustness = 0.0; <span class="comment">% associated with
 
 
             <p>
-                During imaging, the final weighting vector is applied to the SII measurements and is also included
+                During imaging, the final weighting vector is applied to the RI measurements and is also included
                 in the associated imaging measurement operator.
             </p>
 
@@ -458,7 +458,7 @@ title(<span class="command">"dirty image in linear scale"</span>)</pre>
 
 
 
-            <h1 class="fancy-heading">SII measurement operator tutorial in MATLAB</h1>
+            <h1 class="fancy-heading">RI measurement operator tutorial in MATLAB</h1>
             <p>
                 You can download this tutorial in <b>.mlx</b> format and launch it directly in MATLAB
                 <a href="https://github.com/basp-group/RI-measurement-operator/raw/master/tutorial_ri_meas_op_matlab.mlx" class="download-link">

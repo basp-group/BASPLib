@@ -32,7 +32,7 @@
                 the well known Matching Pursuit algorithm. Its reconstruction is formed as a series of residual images,
                 iteratively estimated as outputs of iteration-specific Deep Neural Networks (DNNs) taking the previous
                 iteration’s image estimate and associated data residual as inputs. R2D2's primary application is to solve
-                inverse problems in synthesis imaging by interferometry (SII). The details of R2D2 are discussed in the
+                inverse problems in radio interferometry (RI). The details of R2D2 are discussed in the
                 following papers.
 
                 <br><br>
@@ -45,11 +45,11 @@
             </p>
             <p>
                 In this tutorial, we focus on a <a href="https://github.com/basp-group/R2D2-SII" target="_blank">Python implementation of R2D2</a>
-                for small-scale monochromatic intensity imaging in SII from the environment setup, to imaging.
+                for small-scale monochromatic intensity imaging in RI from the environment setup, to imaging.
             </p>
-            <h1 class="fancy-heading">SII Inverse Problem</h1>
+            <h1 class="fancy-heading">RI Inverse Problem</h1>
             <p>
-                The imaging inverse problem in SII can be formulated as:
+                The imaging inverse problem in RI can be formulated as:
                 \[
                 {\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}
                 \]
@@ -60,7 +60,7 @@
                 Gaussian noise with standard deviation \(\tau\) and mean 0.
             </p>
             <p>
-                The SII inverse problem can be formulated in the image domain via back-projection of the measurements
+                The RI inverse problem can be formulated in the image domain via back-projection of the measurements
                 using the adjoint of the measurement operator \(\boldsymbol{\Phi}^\dagger\). The image-domain data, known as the dirty image, reads:
 
                 \[\boldsymbol{x}_{\textrm{d}} =\kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{y}\}=

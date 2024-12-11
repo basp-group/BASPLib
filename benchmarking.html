@@ -26,21 +26,21 @@
         <div class="left-column"></div>
         <div class="middle-column">
           <h2>Benchmarking</h2><br>
-            <h3>Benchmarking Platform for State-of-the-Art SII Imaging Algorithms</h3>
+            <h3>Benchmarking Platform for State-of-the-Art RI Imaging Algorithms</h3>
             <br><br>
             <p>
-                We present a benchmarking platform for the state-of-the-art algorithms for synthesis imaging by interferometry (SII) provided by <a class="basplib">BASPLib</a>: uSARA, AIRI, and R2D2.
-                We provide access to our simulated comprehensive testbed that is composed of 200 SII inverse problems,
+                We present a benchmarking platform for the state-of-the-art algorithms for synthesis imaging by interferometry (RI) provided by <a class="basplib">BASPLib</a>: uSARA, AIRI, and R2D2.
+                We provide access to our simulated comprehensive testbed that is composed of 200 RI inverse problems,
                 and offer detailed guidelines to reproduce the reconstruction results published in our study [1].
             </p>
-        <h1 class="fancy-heading">SII inverse problem</h1>
+        <h1 class="fancy-heading">RI inverse problem</h1>
             <p>
                 In radio interferometry, each pair of antennas acquires a
                 noisy complex measurement corresponding to a spatial Fourier component of the target radio
                 sky, at a given time instant. The collection of the sensed spatial Fourier modes accumulated over the total observation period forms
                 the Fourier sampling pattern, describing an incomplete coverage of the 2D Fourier plane.
                 Considering the unknown radio image of
-                interest \({\boldsymbol{x}^{\star}} \in \mathbb{R}_{+}^{N},\)  the SII data model reads:
+                interest \({\boldsymbol{x}^{\star}} \in \mathbb{R}_{+}^{N},\)  the RI data model reads:
                 \[
                 {\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{x}^{\star}} + \boldsymbol{n}}
                 \]
@@ -64,7 +64,7 @@
                 \(\kappa \text{Re}\{\boldsymbol{\Phi}^{\dagger}{\boldsymbol{\Phi}}\boldsymbol{\delta}\} \in \mathbb{R}^N\),
                 has a peak value of 1. The Dirac \(\boldsymbol{\delta} \in \mathbb{R}^N\) is the image with value 1 at its center and 0 elsewhere.
             </p>
-        <h1 class="fancy-heading">SII testbed description</h1>
+        <h1 class="fancy-heading">RI testbed description</h1>
              <p> The testbed is composed of ground-truth images (in .fits format) and associated data files (in .mat format).
                 The ground-truth images are derived from four real radio images, which underwent post-processing to eliminate artefacts such as deconvolution errors and noise, and endow them
                 with high dynamic ranges.
@@ -83,7 +83,7 @@
                        the reconstructions, where the Briggs parameter was set to 0. To maintain consistency with the Fourier sampling spatial bandwidth, the pixel size was adjusted to ensure a super-resolution factor of 1.5.
                    </p>
                 <p>
-                   Detailed information on the testbed can be found in [1]. The code utilised to generate a wide variety of sampling patterns and corresponding SII data is part of the <a href="https://basp-group.github.io/BASPLib/UTILS.html">utilities</a> offered by <a class="basplib">BASPLib</a>.
+                   Detailed information on the testbed can be found in [1]. The code utilised to generate a wide variety of sampling patterns and corresponding RI data is part of the <a href="https://basp-group.github.io/BASPLib/UTILS.html">utilities</a> offered by <a class="basplib">BASPLib</a>.
 
             </p>
             <div class="gt_container">
@@ -102,7 +102,7 @@
             </div>
 
 
-        <h1 class="fancy-heading">SII imaging algorithms</h1>
+        <h1 class="fancy-heading">RI imaging algorithms</h1>
             <p>
 
                 The <a href="" class="basplib">BASPLib</a> imaging algorithms used for benchmarking are:
@@ -110,18 +110,18 @@
                     <a href="uSARA.html"><b>uSARA</b></a>: the unconstrained counterpart of the
                     SARA algorithm [5,6]. It promotes a handcrafted sparsity-based regularisation, and is underpinned by the
                     forward-backward algorithmic structure. The MATLAB implementation of uSARA for
-                    small-scale SII imaging is available in <a href="https://github.com/basp-group/uSARA">uSARA repository</a>.
+                    small-scale RI imaging is available in <a href="https://github.com/basp-group/uSARA">uSARA repository</a>.
                 </p>
                 <p>
                     <a href="AIRI.html"><b>AIRI</b></a>: a Plug-and-Play (PnP) algorithm at the intersection of optimisation theory and deep learning.
                         By inserting carefully trained AIRI denoisers into the proximal splitting algorithms,
                         one waives the computational complexity of optimisation algorithms induced by sophisticated
                         image priors. AIRI is the PnP counterpart of uSARA. The MATLAB implementation of
-                        AIRI for small-scale SII imaging is available in <a href="https://github.com/basp-group/AIRI">AIRI repository</a>.
+                        AIRI for small-scale RI imaging is available in <a href="https://github.com/basp-group/AIRI">AIRI repository</a>.
                 </p>
 
                 <p>
-                    <a href="R2D2.html"><b>R2D2:</b></a>  a novel paradigm for SII,
+                    <a href="R2D2.html"><b>R2D2:</b></a>  a novel paradigm for RI,
                     interpreted as a learned version of the well-known Matching Pursuit algorithm [1,7].
                     R2D2 reconstruction is formed as a
                     series of residual images, iteratively estimated as outputs of iteration-specific DNNs, each taking the previous iteration’s image estimate and associated back-projected
@@ -144,7 +144,7 @@
 
                 <p>
                     In addition to <a class="basplib">BASPLib</a> imaging algorithms, the benchmarking results also include the celebrated CLEAN algorithm.
-                    CLEAN, recognised as a standard algorithm for SII imaging, is represented here by its multiscale
+                    CLEAN, recognised as a standard algorithm for RI imaging, is represented here by its multiscale
                     variant implemented in the widely used <a href="https://gitlab.com/aroffringa/wsclean">WSClean</a> software [8].
                  </p>
 
@@ -316,7 +316,7 @@
 
             <h1 class="fancy-heading">Reconstructions & Residual dirty images</h1>
             <p>
-                Reconstruction images obtained by the SII algorithms associated with one inverse problem selected from
+                Reconstruction images obtained by the RI algorithms associated with one inverse problem selected from
                 our testbed (ID:80009) are displayed below. In this case, the ground truth is characterised by a dynamic range of 150,000.
 <!--                The observation setting for this particular inverse problem includes a total observation time of 8 hours,-->
 <!--                three frequencies, and a frequency ratio of 1.28.-->
@@ -416,7 +416,7 @@
                 <br>
                 <b>Setting up the main directory</b>
                 <br>
-                Firstly, set up the main directory, which will comprise the benchmark testbed, SII imaging repositories, and pre-trained DNNs (for AIRI and R2D2). Replace
+                Firstly, set up the main directory, which will comprise the benchmark testbed, RI imaging repositories, and pre-trained DNNs (for AIRI and R2D2). Replace
                 <code>/path/to/your/directory</code> with your local path. Subdirectories will be created accordingly.
             </p>
 
@@ -652,7 +652,7 @@ end</pre></div>
 
             <p><strong class="main_title">Imaging</strong>
                 <br>
-                Instructions to run <a class="basplib">BASPLib</a> SII imaging algorithms and WSClean are outlined.
+                Instructions to run <a class="basplib">BASPLib</a> RI imaging algorithms and WSClean are outlined.
                 We recall the imaging settings are as follows: (i) the target image is of size 512x512 pixels, with
                 (ii) a pixel size corresponding to super-resolution factor of 1.5, and
                 (iii) Briggs weighting with parameter of 0 is applied to the data.

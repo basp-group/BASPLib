@@ -30,18 +30,18 @@
             <h3>Imaging with AIRI</h3>
             <p>
                 AI for Regularization in Imaging, dubbed AIRI, is a Plug-and-Play (PnP) algorithm solving inverse
-                imaging problems in synthesis imaging by interferometry (SII) [1]. By inserting carefully trained deep
+                imaging problems in radio interferometry (RI) [1]. By inserting carefully trained deep
                 neural network (DNN) as a denoiser  into the proximal splitting algorithms, one waives the computational
                 complexity of optimisation algorithms induced by sophisticated image priors, and the sub-optimality of
                 handcrafted priors compared to Deep Neural Networks. AIRI is underpinned by the forward-backward iterative scheme.
                 The details of AIRI are discussed in [1,2,3].
               <br><br>
               In this tutorial, we focus on <a href="https://github.com/basp-group/AIRI" target="_blank">a MATLAB implementation of AIRI</a>
-                for small-scale monochromatic intensity imaging in SII, from the environment setup, to imaging.
+                for small-scale monochromatic intensity imaging in RI, from the environment setup, to imaging.
             </p>
-            <h1 class="fancy-heading">SII Inverse Problem</h1>
+            <h1 class="fancy-heading">RI Inverse Problem</h1>
             <p>
-                The  imaging inverse problem in SII can be formulated as:
+                The  imaging inverse problem in RI can be formulated as:
                 \[
                 {\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{\bar{x}}} + \boldsymbol{n}}
                 \]
@@ -313,7 +313,7 @@
             </div>
 
             <p>
-                In the context of narrow-field SII, the effect of the \(\boldsymbol{w}\) coordinates is negligeable,
+                In the context of narrow-field RI, the effect of the \(\boldsymbol{w}\) coordinates is negligeable,
                 and is therefore not considered in the measurement operator model.
             </p>
 
