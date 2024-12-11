@@ -7516,9 +7516,10 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Imaging-with-uSARA">Imaging with uSARA<a class="anchor-link" href="#Imaging-with-uSARA">¶</a></h1><h2 id="Description">Description<a class="anchor-link" href="#Description">¶</a></h2><p>Unconstrained Sparsity Averaging Reweighted Analysis algorithm, dubbed as <code>uSARA,</code> is the unconstrained counterpart of the <code>SARA</code> algorithm for <strong>s</strong>ynthesis <strong>i</strong>maging by <strong>i</strong>nterferometry (<strong>SII</strong>).  <code>uSARA</code> promotes a handcrafted sparsity regularisation and is underpinned by the forward-backward algorithmic structure from optimisation theory. The details of <code>uSARA</code> are discussed in [1,2,3].</p>
-<p>In this tutorial, we focus on <a href="https://github.com/basp-group/Small-scale-RI-imaging/">a Python implementation of <code>uSARA</code></a> for small-scale monochromatic intensity imaging in SII, from the environment setup to imaging.</p>
-<h2 id="SII-Inverse-Problem">SII Inverse Problem<a class="anchor-link" href="#SII-Inverse-Problem">¶</a></h2><p>The imaging inverse problem in SII can be formulated as:</p>
+<h1 id="uSARA-Tutorial"><strong>uSARA Tutorial</strong><a class="anchor-link" href="#uSARA-Tutorial">¶</a></h1><h1 id="Imaging-with-uSARA-in-Python">Imaging with uSARA in Python<a class="anchor-link" href="#Imaging-with-uSARA-in-Python">¶</a></h1><h2 id="Description">Description<a class="anchor-link" href="#Description">¶</a></h2><p>Unconstrained Sparsity Averaging Reweighted Analysis algorithm, dubbed as <code>uSARA,</code> is the unconstrained counterpart of the <code>SARA</code> algorithm for <strong>r</strong>adio <strong>i</strong>nterferometry (<strong>RI</strong>).  <code>uSARA</code> promotes a handcrafted sparsity regularisation and is underpinned by the forward-backward algorithmic structure from optimisation theory. The details of <code>uSARA</code> are discussed in [1,2,3].</p>
+<p>We focus on <a href="https://github.com/basp-group/Small-scale-RI-imaging/">a Python implementation of <code>uSARA</code></a> for small-scale monochromatic intensity imaging in RI, from the environment setup to imaging.</p>
+<p>This tutorial can be launched directly in Jupyter using the Jupyter Notebook file <a href="https://github.com/basp-group/Small-scale-RI-imaging/blob/main/tutorial_usara_python.ipynb">tutorial_usara_python.ipynb</a>.</p>
+<h2 id="RI-Inverse-Problem">RI Inverse Problem<a class="anchor-link" href="#RI-Inverse-Problem">¶</a></h2><p>The imaging inverse problem in RI can be formulated as:</p>
 <p>$$
 y=\Phi \overline{x} +n,
 $$</p>
@@ -7806,11 +7807,11 @@ maxProjBaseline: 2.5948e+04
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In the context of narrow-field SII, the effect of the $w$ coordinates is negligible, and is therefore not considered in the measurement operator model.</p>
+<p>In the context of narrow-field RI, the effect of the $w$ coordinates is negligible, and is therefore not considered in the measurement operator model.</p>
 <p><strong>Scripts to generate</strong> <a href="https://github.com/basp-group/RI-measurement-operator/blob/python/example_sim_ri_data.py"><strong>synthetic measurement files</strong></a> <strong>as well as to convert real</strong> <a href="https://github.com/basp-group/Small-scale-RI-imaging/blob/main/ms2mat"><strong>Measurement Sets (MS) to .mat files</strong></a> <strong>readable by this repository are available.</strong></p>
 <h2 id="Imaging-with-uSARA">Imaging with uSARA<a class="anchor-link" href="#Imaging-with-uSARA">¶</a></h2><p><code>uSARA</code> imager is launched via the <code>Python</code> script <strong><code>run_imager.py</code></strong>. It takes as input a configuration file in <strong><code>.json</code></strong> format, where all parameters involved in the imaging process are defined and set to default values where relevant. The readers are directed to this <a href="https://github.com/basp-group-private/Small-scale-RI-imaging/blob/main/config/README.md">README</a> for more information on the content of the configuration file.</p>
 <p>For this tutorial, we use the example configuration file <code>./config/example.json</code>. The function <strong><code>run_imager</code></strong> also accepts <strong>optional</strong> name-argument pairs to overwrite corresponding fields in the configuration file.</p>
-<p>The user <strong>must</strong> provide <strong>the target image size</strong> and <strong>the pixel size in arcsecond</strong>, either directly in the configuration file or as input argument parsed to the function <strong><code>run_imager</code></strong>. When the pixel size is not known, the user can instead specify the ratio between the spatial Fourier bandwidth of the target/ground-truth image and the bandwidth of the Fourier sampling pattern. We refer to this ratio as the <strong>superresolution</strong> factor.  In such case, the pixel size in arcsecond is automatically derived from the superresolution factor as:</p>
+<p>The user <strong>must</strong> provide <strong>the target image size</strong> and <strong>the pixel size in arcsecond</strong>, either directly in the configuration file or as input argument parsed to the function <strong><code>run_imager</code></strong>. When the pixel size is not known, the user can instead specify the ratio between the spatial Fourier bandwidth of the target/ground-truth image and the bandwidth of the Fourier sampling pattern. We refer to this ratio as the <strong>superresolution</strong> factor.  In such case, the pixel size in <strong>arcsecond</strong> is automatically derived from the superresolution factor as:</p>
 <p>$$
 imPixelSize=\frac{180\times 3600}{\pi }\times \frac{1}{2\times maxProjBaseline\times superresolution}.
 $$</p>
@@ -7925,11 +7926,10 @@ $$</p>
 <li>The estimated model image $\overset{～}{x}$.</li>
 <li>The associated  residual dirty image (i.e. normalised back-projected data residual) $\overset{～}{r} =\kappa \left({\mathrm{R}\mathrm{e}}\left\lbrace {{\Phi }}^{\dagger} y\right\rbrace -{\mathrm{R}\mathrm{e}}\left\lbrace {{\Phi }}^{\dagger} {\Phi }\overset{～}{x} \right\rbrace \right)$.</li>
 </ul>
-<p>We'll use two metrics to measure the numeric image quality, <em>i.e</em>.</p>
+<p>We use the two metrics below for a quantitative evaluation of the algorithm's performance:</p>
 <p>$$
 {\mathrm{S}\mathrm{N}\mathrm{R}}({{\overline{x} }},{{\overset{～}{x} }})=20{{\mathrm{l}\mathrm{o}\mathrm{g}}}_{10} \left(\frac{\|{{\overline{x} }}{\|}_2 }{\|{{\overline{x} }}-{{\overset{～}{x} }}{\|}_2 }\right),
 $$</p>
-<p>and</p>
 <p>$$
 {\mathrm{l}\mathrm{o}\mathrm{g}\mathrm{S}\mathrm{N}\mathrm{R}}\left({{\overline{x} }},{{\overset{～}{x} }}\right)={\mathrm{S}\mathrm{N}\mathrm{R}}\left({\mathrm{r}\mathrm{l}\mathrm{o}\mathrm{g}}({{\overline{x} }}),{\mathrm{r}\mathrm{l}\mathrm{o}\mathrm{g}}({{\overset{～}{x} }})\right).
 $$</p>

@@ -7516,9 +7516,10 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Imaging-with-AIRI">Imaging with AIRI<a class="anchor-link" href="#Imaging-with-AIRI">¶</a></h1><h2 id="Description">Description<a class="anchor-link" href="#Description">¶</a></h2><p>AI for Regularization in Imaging, dubbed <code>AIRI</code>, is a Plug-and-Play (PnP) algorithm solving inverse imaging problems in <strong>s</strong>ynthesis <strong>i</strong>maging by <strong>i</strong>nterferometry (<strong>SII</strong>) [1]. By inserting carefully trained deep neural network (DNN) as a denoiser  into the proximal splitting algorithms, one waives the computational complexity of optimisation algorithms induced by sophisticated image priors, and the sub-optimality of handcrafted priors compared to Deep Neural Networks. <code>AIRI</code> is underpinned by the forward-backward iterative scheme. The details of <code>AIRI</code> are discussed in [1,2,3].</p>
-<p>In this tutorial, we focus on <a href="https://github.com/basp-group/Small-scale-RI-imaging/">a Python implementation of <code>AIRI</code></a> for small-scale monochromatic intensity imaging in SII, from the environment setup to imaging.</p>
-<h2 id="SII-Inverse-Problem">SII Inverse Problem<a class="anchor-link" href="#SII-Inverse-Problem">¶</a></h2><p>The imaging inverse problem in SII can be formulated as:</p>
+<h1 id="AIRI-Tutorial"><strong>AIRI Tutorial</strong><a class="anchor-link" href="#AIRI-Tutorial">¶</a></h1><h1 id="Imaging-with-AIRI-in-Python">Imaging with AIRI in Python<a class="anchor-link" href="#Imaging-with-AIRI-in-Python">¶</a></h1><h2 id="Description">Description<a class="anchor-link" href="#Description">¶</a></h2><p>AI for Regularization in Imaging, dubbed <code>AIRI</code>, is a Plug-and-Play (PnP) algorithm solving inverse imaging problems in <strong>s</strong>ynthesis <strong>i</strong>maging by <strong>i</strong>nterferometry (<strong>SII</strong>) [1]. By inserting carefully trained deep neural network (DNN) as a denoiser  into the proximal splitting algorithms, one waives the computational complexity of optimisation algorithms induced by sophisticated image priors, and the sub-optimality of handcrafted priors compared to Deep Neural Networks. <code>AIRI</code> is underpinned by the forward-backward iterative scheme. The details of <code>AIRI</code> are discussed in [1,2,3].</p>
+<p>We focus on <a href="https://github.com/basp-group/Small-scale-RI-imaging/">a Python implementation of <code>AIRI</code></a> for small-scale monochromatic intensity imaging in RI, from the environment setup to imaging.</p>
+<p>This tutorial can be launched directly in Jupyter using the Jupyter Notebook file <a href="https://github.com/basp-group/Small-scale-RI-imaging/blob/main/tutorial_airi_python.ipynb">tutorial_airi_python.ipynb</a>.</p>
+<h2 id="RI-Inverse-Problem">RI Inverse Problem<a class="anchor-link" href="#RI-Inverse-Problem">¶</a></h2><p>The imaging inverse problem in RI can be formulated as:</p>
 <p>$$
 y=\Phi \overline{x} +n,
 $$</p>
@@ -7856,7 +7857,7 @@ maxProjBaseline: 2.5948e+04
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In the context of narrow-field SII, the effect of the $w$ coordinates is negligible, and is therefore not considered in the measurement operator model.</p>
+<p>In the context of narrow-field RI, the effect of the $w$ coordinates is negligible, and is therefore not considered in the measurement operator model.</p>
 <p><strong>Scripts to generate</strong> <a href="https://github.com/basp-group/RI-measurement-operator/blob/python/example_sim_ri_data.py"><strong>synthetic measurement files</strong></a> <strong>as well as to convert real</strong> <a href="https://github.com/basp-group/Small-scale-RI-imaging/blob/main/ms2mat"><strong>Measurement Sets (MS) to .mat files</strong></a> <strong>readable by this repository are available.</strong></p>
 <h2 id="Imaging-with-AIRI">Imaging with AIRI<a class="anchor-link" href="#Imaging-with-AIRI">¶</a></h2><p><code>AIRI</code> imager is launched via the <code>Python</code> script <strong><code>run_imager.py</code></strong>. It takes as input a configuration file in <strong><code>.json</code></strong> format, where all parameters involved in the imaging process are defined and set to default values where relevant. The readers are directed to this <a href="https://github.com/basp-group/Small-scale-RI-imaging/blob/main/config/README.md">README</a> for more information on the content of the configuration file.</p>
 <p>For this tutorial, we use the example configuration file <code>./config/example.json</code>. The function <strong><code>run_imager</code></strong> also accepts <strong>optional</strong> name-argument pairs to overwrite corresponding fields in the configuration file.</p>
@@ -7975,11 +7976,10 @@ $$</p>
 <li>The estimated model image $\overset{～}{x}$.</li>
 <li>The associated  residual dirty image (i.e. normalised back-projected data residual) $\overset{～}{r} =\kappa \left({\mathrm{R}\mathrm{e}}\left\lbrace {{\Phi }}^{\dagger} y\right\rbrace -{\mathrm{R}\mathrm{e}}\left\lbrace {{\Phi }}^{\dagger} {\Phi }\overset{～}{x} \right\rbrace \right)$.</li>
 </ul>
-<p>We'll use two metrics to measure the numeric image quality, <em>i.e</em>.</p>
+<p>We use the two metrics below for a quantitative evaluation of the algorithm's performance:</p>
 <p>$$
 {\mathrm{S}\mathrm{N}\mathrm{R}}({{\overline{x} }},{{\overset{～}{x} }})=20{{\mathrm{l}\mathrm{o}\mathrm{g}}}_{10} \left(\frac{\|{{\overline{x} }}{\|}_2 }{\|{{\overline{x} }}-{{\overset{～}{x} }}{\|}_2 }\right),
 $$</p>
-<p>and</p>
 <p>$$
 {\mathrm{l}\mathrm{o}\mathrm{g}\mathrm{S}\mathrm{N}\mathrm{R}}\left({{\overline{x} }},{{\overset{～}{x} }}\right)={\mathrm{S}\mathrm{N}\mathrm{R}}\left({\mathrm{r}\mathrm{l}\mathrm{o}\mathrm{g}}({{\overline{x} }}),{\mathrm{r}\mathrm{l}\mathrm{o}\mathrm{g}}({{\overset{～}{x} }})\right).
 $$</p>
