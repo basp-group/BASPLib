@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>tutorial_ri_measurement_operator_python(1).ipynb</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>tutorial_ri_measurement_operator_python</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7516,7 +7516,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="RI-Measurement-Operator">RI Measurement Operator<a class="anchor-link" href="#RI-Measurement-Operator">¶</a></h1><h2 id="Description">Description<a class="anchor-link" href="#Description">¶</a></h2><p>This tutorial is focused on a <a href="https://github.com/basp-group/RI-measurement-operator/tree/python">Python implementation of the measurement operator</a> for small-scale monochromatic intensity imaging in synthesis imaging by interferometry (SII). It provides detailed instructions on how to generate the measurement operator from a given Fourier sampling pattern and how to utilise it to simulate measurements.</p>
+<h1 id="RI-Measurement-Operator-Tutorial"><strong>RI Measurement Operator Tutorial</strong><a class="anchor-link" href="#RI-Measurement-Operator-Tutorial">¶</a></h1><h2 id="Description">Description<a class="anchor-link" href="#Description">¶</a></h2><p>This tutorial is focused on a <a href="https://github.com/basp-group/RI-measurement-operator/tree/python">Python implementation of the measurement operator</a> for small-scale monochromatic intensity imaging in <strong>r</strong>adio <strong>i</strong>nterferometry (RI). It provides detailed instructions on how to generate the measurement operator from a given Fourier sampling pattern and how to utilise it to simulate measurements. It can be launched directly in Jupyter using the Jupyter Notebook file <a href="https://github.com/basp-group/RI-measurement-operator/blob/python/tutorial_ri_measurement_operator_python.ipynb">tutorial_ri_measurement_operator_python.ipynb</a>.</p>
 <p>By default, the repository utilises the <a href="https://flatironinstitute.github.io/pytorch-finufft/">pytorch-finufft</a> NUFFT library proposed by:</p>
 <blockquote>
 <p>A. H. Barnett, J. Magland, and L. af Klinteberg, A parallel nonuniform fast Fourier transform library based on an “exponential of semicircle" kernel, <em>SIAM Journal on Scientific Computing</em>, 41(5), C479-C504, 2019.</p>
@@ -7525,17 +7525,7 @@ a.anchor-link {
 <blockquote>
 <p>J. A. Fessler and B. P. Sutton, Nonuniform Fast Fourier Transforms Using Min-Max Interpolation, <em>IEEE Trans. Image Process.</em>, 51(2), 560-574, 2003.</p>
 </blockquote>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="SII-Measurement-Operator-Model-(NUFFT)">SII Measurement Operator Model (NUFFT)<a class="anchor-link" href="#SII-Measurement-Operator-Model-(NUFFT)">¶</a></h1><p>Assuming a narrow field of view and in absence of direction dependent effects, at a given time instant, each pair of antennas acquires a noisy complex measurement, termed visibility, corresponding to a Fourier component of the sought radio emission. The collection of the sensed Fourier modes accumulated over the total observation period forms the Fourier sampling pattern, describing an incomplete coverage of the 2D Fourier plane.</p>
+<h1 id="RI-Measurement-Operator-Model-(NUFFT)">RI Measurement Operator Model (NUFFT)<a class="anchor-link" href="#RI-Measurement-Operator-Model-(NUFFT)">¶</a></h1><p>Assuming a narrow field of view and in absence of direction dependent effects, at a given time instant, each pair of antennas acquires a noisy complex measurement, termed visibility, corresponding to a Fourier component of the sought radio emission. The collection of the sensed Fourier modes accumulated over the total observation period forms the Fourier sampling pattern, describing an incomplete coverage of the 2D Fourier plane.</p>
 <p>Under these considerations, the measurement operator model reduces to a Fourier sampling operator which reads:</p>
 <p>\begin{equation}
 \boldsymbol{\Phi} = \boldsymbol{GFZ},
@@ -7593,7 +7583,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Generate-SII-Measurement-Operator">Generate SII Measurement Operator<a class="anchor-link" href="#Generate-SII-Measurement-Operator">¶</a></h1><p>We first import all the required Python packages.</p>
+<h1 id="Generate-RI-Measurement-Operator">Generate RI Measurement Operator<a class="anchor-link" href="#Generate-RI-Measurement-Operator">¶</a></h1><p>We first import all the required Python packages.</p>
 </div>
 </div>
 </div>
@@ -7899,7 +7889,7 @@ INFO: weight_robustness 0.0
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Simulate-SII-Measurements">Simulate SII Measurements<a class="anchor-link" href="#Simulate-SII-Measurements">¶</a></h1><p>To simulate SII measurements, we take a post-processed image of the radio galaxy 3c353 as the ground truth $\bar{\boldsymbol{x}}$. The image is in <strong>.fits</strong> format provided in "data/3c353_gdth.fits". Read and visualise the image.</p>
+<h1 id="Simulate-RI-Measurements">Simulate RI Measurements<a class="anchor-link" href="#Simulate-RI-Measurements">¶</a></h1><p>To simulate RI measurements, we take a post-processed image of the radio galaxy 3c353 as the ground truth $\bar{\boldsymbol{x}}$. The image is in <strong>.fits</strong> format provided in "data/3c353_gdth.fits". Read and visualise the image.</p>
 </div>
 </div>
 </div>
@@ -8033,7 +8023,7 @@ INFO: weight_robustness 0.0
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>SII measurements modelled as $\boldsymbol{y} = \boldsymbol{\Phi} \bar{\boldsymbol{x}} + \boldsymbol{n}$ are obtained by adding a realisation of a white Gaussian noise $\boldsymbol{n}$, with mean 0 and standard deviation $\tau$. The value of $\tau$ can be derived from a user-specfied input signal to noise ratio. Note that $\tau$ can also be set to be commensurate with the dynamic range of the ground-truth image. We refer the reader to the script <a href="example_sim_ri_data.py">example_sim_ri_data.py</a> for details.</p>
+<p>RI measurements modelled as $\boldsymbol{y} = \boldsymbol{\Phi} \bar{\boldsymbol{x}} + \boldsymbol{n}$ are obtained by adding a realisation of a white Gaussian noise $\boldsymbol{n}$, with mean 0 and standard deviation $\tau$. The value of $\tau$ can be derived from a user-specfied input signal to noise ratio. Note that $\tau$ can also be set to be commensurate with the dynamic range of the ground-truth image. We refer the reader to the script <a href="example_sim_ri_data.py">example_sim_ri_data.py</a> for details.</p>
 </div>
 </div>
 </div>
@@ -8062,7 +8052,7 @@ INFO: weight_robustness 0.0
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>To image the simulated SII measurements, create the associated measurement file in <strong>.mat</strong> format, that is input to the SII algorithms for small-scale monochromatic intensity imaging provided in <a href="https://basp-group.github.io/BASPLib/index.html"><strong>BASPLib</strong></a> as shown below.</p>
+<p>To image the simulated RI measurements, create the associated measurement file in <strong>.mat</strong> format, that is input to the RI algorithms for small-scale monochromatic intensity imaging provided in <a href="https://basp-group.github.io/BASPLib/index.html"><strong>BASPLib</strong></a> as shown below.</p>
 </div>
 </div>
 </div>
@@ -8170,7 +8160,7 @@ INFO: weight_robustness 0.0
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>During imaging, the final weighting vector <code>nW * nWimag</code> is applied to the SII measurements and is also included in the associated imaging measurement operator.</p>
+<p>During imaging, the final weighting vector <code>nW * nWimag</code> is applied to the RI measurements and is also included in the associated imaging measurement operator.</p>
 </div>
 </div>
 </div>
