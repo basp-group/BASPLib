@@ -6,7 +6,7 @@ table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            font-size: 1em;
+            font-size: 1.1vw;
             font-family: Arial, sans-serif;
         }
 table, th, td {
@@ -23,7 +23,7 @@ th:first-child {
     width: 6vw; /* Adjust the width percentage as needed */
   }
 td:first-child {
-    font-size: 1vw; /* Adjust the font size as needed */
+    font-size: 1.1vw; /* Adjust the font size as needed */
   }
 tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -43,8 +43,8 @@ thead th:hover {
         }
 
         thead th .sort-arrow {
-            font-size: 20px;
-            margin-left: 10px;
+            font-size: 5vw;
+            margin-left: 2vw;
         }
         tbody tr {
             border-bottom: 1px solid #dddddd;
