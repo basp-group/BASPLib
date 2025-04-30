@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Dr. Amir Aghabiglou">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking</title>
+    <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navigation_bar.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/rec_image.css">
+    <link rel="stylesheet" href="css/benchmarking.css">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body onload="loadNav()">
+
+    <!-- Navigation Bar -->
+    <div id="nav-placeholder"></div>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="left-column"></div>
+        <div class="middle-column">
+          <h2>Benchmarking</h2><br>
+            <h3>Benchmarking Platform for State-of-the-Art RI Imaging Algorithms</h3>
+            <br><br>
+            <p>
+                We present a benchmarking platform for the state-of-the-art algorithms for synthesis imaging by interferometry (RI) provided by <a class="basplib">BASPLib</a>: uSARA, AIRI, and R2D2.
+                We provide access to our simulated comprehensive testbed that is composed of 200 RI inverse problems,
+                and offer detailed guidelines to reproduce the reconstruction results published in our study [1].
+            </p>
+        <h1 class="fancy-heading">RI inverse problem</h1>
+            <p>
+                In radio interferometry, each pair of antennas acquires a
+                noisy complex measurement corresponding to a spatial Fourier component of the target radio
+                sky, at a given time instant. The collection of the sensed spatial Fourier modes accumulated over the total observation period forms
+                the Fourier sampling pattern, describing an incomplete coverage of the 2D Fourier plane.
+                Considering the unknown radio image of
+                interest \({\boldsymbol{x}^{\star}} \in \mathbb{R}_{+}^{N},\)  the RI data model reads:
+                \[
+                {\boldsymbol{y}} = {\boldsymbol{\Phi} {\boldsymbol{x}^{\star}} + \boldsymbol{n}}
+                \]
+                where \({\boldsymbol{y}} \in \mathbb{C}^M\) denotes the data vector, \({\boldsymbol{n}} \in \mathbb{C}^M\) represents a complex Gaussian random noise with a standard deviation \(\tau>0\)
+                and mean 0. The linear operator \({\boldsymbol{\Phi}}\colon \mathbb{R}^N \to \mathbb{C}^M\) is the measurement operator
+                (i.e., describing the acquisition process), consisting in a nonuniform Fourier sampling. The operator
+                 \({\boldsymbol{\Phi}}\) can also include a data-weighting scheme to improve the observation's effective
+                resolution.
+            </p>
+<p>
+                The radio-interferometric data model can be expressed in the image domain via a normalised back-projection using the adjoint of the measurement operator  \(\boldsymbol{\Phi}^\dagger \) such that:
+
+                \[\boldsymbol{x}_{\textrm{d}} =\kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{y}\}=
+                \kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{\Phi}\boldsymbol{x}^{\star}+ \boldsymbol{\Phi}^\dagger \boldsymbol{n}\}\]
+
+                where \(\boldsymbol{x}_{\textrm{d}} \in \mathbb{R}^N\) stands for the back-projected data, known as the dirty image,
+                and \(\textrm{Re}\{\cdot\}\) stands for the real part of its argument.
+                In this equation, the normalization factor \(\kappa>0\) is equal to
+                \(1/\max(\text{Re}\{{\boldsymbol{\Phi}}^{\dagger}{\boldsymbol{\Phi}}\boldsymbol{\delta}\})\),
+                ensuring that the point spread function (PSF), defined as
+                \(\kappa \text{Re}\{\boldsymbol{\Phi}^{\dagger}{\boldsymbol{\Phi}}\boldsymbol{\delta}\} \in \mathbb{R}^N\),
+                has a peak value of 1. The Dirac \(\boldsymbol{\delta} \in \mathbb{R}^N\) is the image with value 1 at its center and 0 elsewhere.
+            </p>
+        <h1 class="fancy-heading">RI testbed description</h1>
+             <p> The testbed is composed of ground-truth images (in .fits format) and associated data files (in .mat format).
+                The ground-truth images are derived from four real radio images, which underwent post-processing to eliminate artefacts such as deconvolution errors and noise, and endow them
+                with high dynamic ranges.
+               </p>
+               <p> The considered raw radio images are the giant radio galaxies 3C353 and M106, and the radio galaxy clusters A2034 and PSZ2G165.68+44.01, sourced from NRAO Archives and LOFAR surveys [2,3,4].
+                   From each radio image, 50 curated ground-truth images of size 512\(\times\)512 were generated, characterised with large dynamic ranges varying in [10<sup>3</sup>, 5\(\times\)10<sup>5</sup>].
+                Simulated radio interferometric data associated with the ground-truth images are obtained from sampling patterns of the Very Large Array (VLA), generated under a wide
+                variety of the observation settings, including total observation time, pointing direction, etc. Sampling patterns
+                combining both VLA configurations A and C were considered for a balanced Fourier coverage. The total number of points in the resulting Fourier sampling patterns ranges from 0.2M to 2M. The data are corrupted with additive Gaussian noise with mean 0 and a standard deviation commensurate of the dynamic range of the corresponding ground truth images.
+                  </p>
+                   <p>
+                       The simulated data are such that the spatial bandwidth of the Fourier sampling is fixed to 2/3 of
+                       the spatial Fourier bandwidth of the ground-truth images. Under these considerations, the
+                       testbed comprises 200 unique inverse problems. During imaging, the Briggs weighting scheme was applied to the
+                       data  (also injected into the measurement operator) to enhance the effective resolution of
+                       the reconstructions, where the Briggs parameter was set to 0. To maintain consistency with the Fourier sampling spatial bandwidth, the pixel size was adjusted to ensure a super-resolution factor of 1.5.
+                   </p>
+                <p>
+                   Detailed information on the testbed can be found in [1]. The code utilised to generate a wide variety of sampling patterns and corresponding RI data is part of the <a href="https://basp-group.github.io/BASPLib/UTILS.html">utilities</a> offered by <a class="basplib">BASPLib</a>.
+
+            </p>
+            <div class="gt_container">
+                <figure class="image-3d">
+                    <img src="images/GT/M106_GT.png" alt="Image 1">
+                    <figcaption>Ground truth image derived from M106 - Dynamic range:387,203</figcaption>
+                </figure>
+                <figure class="image-3d">
+                    <img src="images/GT/uv_id_80297.png" alt="Image 2">
+                    <figcaption>VLA sampling pattern</figcaption>
+                </figure>
+                <figure class="image-3d">
+                    <img src="images/GT/M106_dirty.png" alt="Image 3">
+                    <figcaption>Dirty image \(\boldsymbol{x}_{\textrm{d}}\)</figcaption>
+                </figure>
+            </div>
+
+
+        <h1 class="fancy-heading">RI imaging algorithms</h1>
+            <p>
+
+                The <a href="" class="basplib">BASPLib</a> imaging algorithms used for benchmarking are:
+                <p>
+                    <a href="uSARA.html"><b>uSARA</b></a>: the unconstrained counterpart of the
+                    SARA algorithm [5,6]. It promotes a handcrafted sparsity-based regularisation, and is underpinned by the
+                    forward-backward algorithmic structure. The MATLAB implementation of uSARA for
+                    small-scale RI imaging is available in <a href="https://github.com/basp-group/uSARA">uSARA repository</a>.
+                </p>
+                <p>
+                    <a href="AIRI.html"><b>AIRI</b></a>: a Plug-and-Play (PnP) algorithm at the intersection of optimisation theory and deep learning.
+                        By inserting carefully trained AIRI denoisers into the proximal splitting algorithms,
+                        one waives the computational complexity of optimisation algorithms induced by sophisticated
+                        image priors. AIRI is the PnP counterpart of uSARA. The MATLAB implementation of
+                        AIRI for small-scale RI imaging is available in <a href="https://github.com/basp-group/AIRI">AIRI repository</a>.
+                </p>
+
+                <p>
+                    <a href="R2D2.html"><b>R2D2:</b></a>  a novel paradigm for RI,
+                    interpreted as a learned version of the well-known Matching Pursuit algorithm [1,7].
+                    R2D2 reconstruction is formed as a
+                    series of residual images, iteratively estimated as outputs of iteration-specific DNNs, each taking the previous iteration’s image estimate and associated back-projected
+                    data residual as inputs. The R2D2 algorithm comes in two incarnations. The first, dubbed <b>R2D2</b> for simplicity, uses the well-known
+                    U-Net architecture for its DNNs. The second uses a more advanced
+                    architecture dubbed <b>R2D2-Net</b>, obtained by unrolling the R2D2 algorithm itself. In reference to its
+                    nesting structure, this second incarnation is referred to as <b>R3D3</b>. The Python implementation of both R2D2 and R3D3 are
+                    available in <a href="https://github.com/basp-group/R2D2-SII">R2D2 repository</a>.
+                </p>
+
+                <p>
+                    <a href="https://github.com/basp-group/R2D2-SII"><b>U-Net</b></a>:
+                      an end-to-end DNN, which also corresponds to the first term of the R2D2 DNN series.
+                </p>
+                <p>
+                    <a href="https://github.com/basp-group/R2D2-SII"><b>R2D2-Net</b></a>:
+                    an unrolled end-to-end DNN which unrolls the R2D2 algorithm itself. It also corresponds to the
+                    first term of the R3D3 DNN series.
+                </p>
+
+                <p>
+                    In addition to <a class="basplib">BASPLib</a> imaging algorithms, the benchmarking results also include the celebrated CLEAN algorithm.
+                    CLEAN, recognised as a standard algorithm for RI imaging, is represented here by its multiscale
+                    variant implemented in the widely used <a href="https://gitlab.com/aroffringa/wsclean">WSClean</a> software [8].
+                 </p>
+
+
+        <h1 class="fancy-heading">Evaluation metrics</h1>
+            <p>
+                To assess the performance of the reconstruction algorithms, we use quantitative metrics described below.
+            </p>
+
+                <p>
+                    <strong class="middle-title">Ground truth fidelity (SNR,logSNR)</strong>
+                    <br>
+                    The Signal-to-Noise Ratio (SNR) metric is defined as:
+                    \[\text{SNR}(\boldsymbol{x}^{\star}, \boldsymbol{x}) =
+                    20\log_{10}\left(\frac{\|\boldsymbol{x}^{\star}\|_{2}}{\|\boldsymbol{x}^{\star} - \boldsymbol{x}\|_{2}} \right), \]
+
+                where \(\boldsymbol{x}^{\star}\) stands for the ground truth, and \(\boldsymbol{x}\) denotes the reconstructed image.
+                </p>
+
+             <p>
+<!--                 <strong class="middle-title">Logarithmic Signal-to-Noise Ratio (logSNR)</strong>-->
+                <br>
+                The logSNR metric emphasises faint structures by applying a logarithmic mapping to the images, parametrised by the target dynamic range \(a\):
+
+                \[ \text{r}\log(\boldsymbol{x}) = x_{\text{max}} \log_{a} \left( \frac{a}{x_{\text{max}}} \cdot \boldsymbol{x} + 1 \right), \]
+
+                where \(x_{\text{max}}\) indicates the peak pixel value of the image \(\boldsymbol{x}\).
+                Using this mapping, the logSNR metric is defined as:
+
+                \[ \log\text{SNR}(\boldsymbol{x}^{\star}, \boldsymbol{x}) = \text{SNR}(\text{rlog}(\boldsymbol{x}^{\star}), \text{rlog}(\boldsymbol{x})). \]
+             </p>
+            <p>
+                <strong class="middle-title">Image-domain data fidelity (σ<sub>res</sub>) </strong>
+            <br>
+                Image-domain data fidelity is assessed using the estimated residual dirty image defined as
+                \(\mathbf{r}\)=\(\boldsymbol{x}_d - \kappa \text{Re}\{\boldsymbol{\Phi}^\dagger \boldsymbol{\Phi}\boldsymbol{x}\}\).  The σ<sub>res</sub> metric is defined as:
+
+                \[ \sigma_{\text{res}}(\mathbf{r}, {\boldsymbol{x}_d}) = \frac{\|\mathbf{r}\|_{2}}{\|\boldsymbol{x}_d\|_{2}} \]
+            </p>
+        <h1 class="fancy-heading">Table of Results</h1>
+            <p>The numerical reconstruction results obtained by state-of-the-art imaging algorithms are reported in the table below.
+                The reconstruction quality is assessed using metrics such as SNR,
+                logSNR, and σ<sub>res</sub>.
+                Computational performance is detailed in terms of the total number of iterations (I), the total
+                reconstruction time (t<sub>tot</sub>), and the computational resources utilised, including the number of
+                GPUs (n<sub>gpu</sub>) and CPU cores (n<sub>cpu</sub>). The reported values represent averages
+                calculated over 200 inverse problems of the testbed.
+                Information about the programming languages used in the implementation of the algorithms is also provided. Please note that reported timings depend on the machine used and are provided for reference only. 
+            </p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>SNR <br>± std (dB)</th>
+                  <th>logSNR <br>± std (dB)</th>
+                  <th>σ<sub>res. <br> ± std (×1e-4)</sub></th>
+                  <th>I</th>
+                  <th>t<sub>tot.</sub></th>
+                  <th>n<sub>cpu</sub></th>
+                  <th>n<sub>gpu</sub></th>
+                  <th>Programming language</th>
+                </tr>
+              </thead>
+              <tbody>
+                    <tr>
+                  <td>CLEAN</td>
+                  <td>13.6±3.6</td>
+                  <td>10.3±3.5</td>
+                  <td>5.1±5.2</td>
+                  <td>9±1</td>
+                  <td>65.9±18.8</td>
+                  <td>1</td>
+                  <td>-</td>
+                  <td>C++</td>
+                </tr>
+                <tr>
+                  <td>uSARA</td>
+                  <td>30.8±1.9</td>
+                  <td>21.9±3.3</td>
+                  <td>6.5±8.2</td>
+                  <td>1103±373</td>
+                  <td>4184.2±1548.9</td>
+                  <td>1</td>
+                  <td>-</td>
+                  <td>MATLAB</td>
+                </tr>
+                <tr>
+                  <td>AIRI</td>
+                  <td>31.3±2.3</td>
+                  <td>21.9±4.4</td>
+                  <td>6.4±8.0</td>
+                  <td>5000±0.0</td>
+                  <td>3478.8±1531.4</td>
+                  <td>1</td>
+                  <td>1</td>
+                  <td>MATLAB</td>
+                </tr>
+
+                <tr>
+                  <td>U-Net</td>
+                  <td>20.5±2.7</td>
+                  <td>6.6±3.3</td>
+                  <td>777.6±467.4</td>
+                  <td>1</td>
+                  <td>1.1±0.1</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Python</td>
+                </tr>
+
+                <tr>
+                  <td>R2D2-Net</td>
+                  <td>33.7±1.7</td>
+                  <td>24.0±4.7</td>
+                  <td>9.3±7.0</td>
+                  <td>1</td>
+                  <td>1.1±0.1</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Python</td>
+                </tr>
+
+                <tr>
+                  <td>R2D2</td>
+                  <td>33.7±1.5</td>
+                  <td>25.0±4.9</td>
+                  <td>13.5±46.9</td>
+                  <td>15</td>
+                  <td>2.9±0.3</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Python</td>
+                </tr>
+
+                <tr>
+                  <td>R3D3</td>
+                  <td>34.0±1.6</td>
+                  <td>25.3±4.7</td>
+                  <td>7.9±7.8</td>
+                  <td>8</td>
+                  <td>2.2±0.3</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>Python</td>
+                </tr>
+              </tbody>
+            </table>
+
+<!--                  <div class="horizontal-line"></div>-->
+
+            <br><br>
+
+            <h1 class="fancy-heading">Reconstructions & Residual dirty images</h1>
+            <p>
+                Reconstruction images obtained by the RI algorithms associated with one inverse problem selected from
+                our testbed (ID:80009) are displayed below. In this case, the ground truth is characterised by a dynamic range of 150,000.
+<!--                The observation setting for this particular inverse problem includes a total observation time of 8 hours,-->
+<!--                three frequencies, and a frequency ratio of 1.28.-->
+            </p>
+            <p>
+                <strong>
+                    Estimated model images:
+                </strong>
+            </p>
+        <div class="rec_container">
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_gdth.png" alt="Image 1">
+                <figcaption>Ground truth (derived from 3c353)</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_clean.png" alt="Image 2">
+                <figcaption>CLEAN (SNR:14.43 - logSNR:16.88) dB</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_uSARA.png" alt="Image 3">
+                <figcaption>uSARA (SNR:30.64 - logSNR:27.47) dB</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_AIRI.png" alt="Image 4">
+                <figcaption>AIRI (SNR:35.96 - logSNR:31.48) dB</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_G1.png" alt="Image 9">
+                <figcaption>U-Net (SNR:21.90 - logSNR:6.62) dB</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_G1_r2d2_net.png" alt="Image 10">
+                <figcaption>R2D2-Net (SNR:37.59 - logSNR:32.56) dB</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_G11.png" alt="Image 11">
+                <figcaption>R2D2 (SNR:36.50 - logSNR:35.13) dB</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_G8_R3D3.png" alt="Image 12">
+                <figcaption>R3D3 (SNR:38.05 - logSNR:34.98) dB</figcaption>
+            </figure>
+    </div>
+
+            <p>
+                <br>
+                <strong>
+                    Residual dirty images:
+                </strong>
+            </p>
+    <div class="rec_container">
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_dirty.png" alt="Image 5">
+                <figcaption>Dirty image</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_res_CLEAN.png" alt="Image 6">
+                <figcaption>CLEAN (σ<sub>res.</sub>: 2.6e-4)</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_res_uSARA.png" alt="Image 7">
+                <figcaption>uSARA (σ<sub>res.</sub>: 2.8e-4)</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_res_AIRI.png" alt="Image 8">
+                <figcaption>AIRI (σ<sub>res.</sub>: 3.2e-4)</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_res1.png" alt="Image 13">
+                <figcaption>U-Net (σ<sub>res.</sub>: 6.2e-2)</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_res1_R3D3.png" alt="Image 14">
+                <figcaption>R2D2-Net (σ<sub>res.</sub>: 9.1e-4)</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_res11.png" alt="Image 15">
+                <figcaption>R2D2 (σ<sub>res.</sub>: 7.1e-4)</figcaption>
+            </figure>
+            <figure>
+                <img src="images/reconstructions/3c353_id_80009_res8.png" alt="Image 16">
+                <figcaption>R3D3 (σ<sub>res.</sub>: 3.3e-4)</figcaption>
+            </figure>
+    </div>
+    <div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+    </div>
+            <br><br>
+
+            <h1 class="fancy-heading">How to Use the Benchmarking Platform</h1>
+            <p>
+                In what follows, we provide instructions to reproduce the results summarised in the above table.
+                <br>
+                <strong class="main_title">Setup</strong>
+                <br>
+                <b>Setting up the main directory</b>
+                <br>
+                Firstly, set up the main directory, which will comprise the benchmark testbed, RI imaging repositories, and pre-trained DNNs (for AIRI and R2D2). Replace
+                <code>/path/to/your/directory</code> with your local path. Subdirectories will be created accordingly.
+            </p>
+
+
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre>main_dir=/path/to/your/directory
+<span class="command">cd</span> $main_dir
+<span class="command">mkdir</span> -p $main_dir/data   # subdirectory for testbed
+    </pre>
+</div>
+            <br>
+            <p>
+            <b>Downloading testbed</b>
+                <br>
+            Secondly, download the testbed zip files. These correspond to compressed ground truth files in .fits and data files in .mat format.
+             </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre><span class="comment"># ground truth images</span>
+<span class="command">wget</span> -O "$main_dir/data/gdth.tar.gz" \
+                "https://www.dropbox.com/scl/fi/85cvbvixc791nnrnxtmbm/gdth.tar.gz?rlkey=dvcp8fqn7y5b8l92yxpkamovp&dl=0"
+<span class="comment"># measurement data</span>
+<span class="command">wget</span> -O $main_dir/data/data.tar.gz \
+                "https://www.dropbox.com/scl/fi/99k57j0ciflcowmds6jqh/data.tar.gz?rlkey=2b087pqoyijiulb3dl3nmeblt&dl=0" \
+
+</pre></div>
+            <p>
+                Thirdly, extract the compressed files in the dedicated subdirectory.
+            </p>
+
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre><span class="command">tar</span> -xzf $main_dir/data/gdth.tar.gz -C $main_dir/data/
+<span class="command">tar</span> -xzf $main_dir/data/data.tar.gz -C $main_dir/data/
+</pre></div>
+            <p>
+                You can access each inverse problem details via this Excel
+                <a href="https://www.dropbox.com/scl/fi/2gfdm9jhwg0o1a7q6czdm/data_detail.xlsx?rlkey=acaqgsu0br41ylj7embpaamqr&dl=0"><img src="images/excelfile.png" class="excel_logo"></a> file.
+            </p>
+
+            <p>
+            <b>Setting up imaging algorithms repositories</b>
+            <br>
+            </p>
+                <h3>uSARA</h3>
+            <p>
+                Clone the repository to the current directory by running the command below.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre><span class="command">git</span> clone --recurse-submodules https://github.com/basp-group/uSARA.git
+<span class="command">cd</span> ./uSARA</pre></div>
+            <br>
+            <p>
+                The --recurse-submodules flag is required so that the required sub-modules RI-measurement-operator will be cloned at the same time.
+            </p>
+            <h4>Dependencies</h4>
+                <p>
+                    To run this repository, your MATLAB version should be higher than R2019b. The code below will check
+                    whether the required toolboxes have been installed.
+                </p>
+
+
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre>list_tb = matlab.addons.installedAddons().Name;
+<span class="command">if</span> ~ismember(list_tb, <span class="string">"Parallel Computing Toolbox"</span>)
+    error(<span class="string">"Please install Parallel Computing Toolbox!\n"</span>)
+<span class="command">elseif</span> ~ismember(list_tb, <span class="string">"Wavelet Toolbox"</span>)
+    error(<span class="string">"Please install Wavelet Toolbox!\n"</span>)
+<span class="command">else</span>
+    <span class="variable">fprintf</span>(<span class="string">"All set!\n"</span>)
+end</pre></div>
+            <p>
+                If you need to install corresponding toolboxes, you can go to the "HOME" tab of MATLAB.
+                Then in "Add-Ons", click "Get Add-Ons".
+            </p>
+            <h3>AIRI</h3>
+            <p>
+                Clone the repository to the current directory by running the command below.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre><span class="command">git</span> clone --recurse-submodules https://github.com/basp-group/AIRI.git
+<span class="command">cd</span> ./AIRI
+        </pre></div>
+            <p>
+                The --recurse-submodules flag is required so that the required sub-modules RI-measurement-operator will be cloned at the same time.
+            </p>
+            <h4>Dependencies</h4>
+                <p>
+                    To run this repository, your MATLAB version should be higher than R2019b. The scripts below will check
+                whether the required toolboxes have been installed or not.
+                </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre>list_tb = matlab.addons.installedAddons().Name;
+<span class="command">if</span> ~ismember(list_tb, <span class="string">"Parallel Computing Toolbox"</span>)
+    error(<span class="string">"Please install Parallel Computing Toolbox!\n"</span>)
+<span class="command">elif</span> ~ismember(list_tb, <span class="string">"Deep Learning Toolbox"</span>)
+    error(<span class="string">"Please install Deep Learning Toolbox!\n"</span>)
+<span class="command">elif</span> ~ismember(list_tb, <span class="string">"Deep Learning Toolbox Converter for ONNX Model Format"</span>)
+    error(<span class="string">"Please install Deep Learning Toolbox Converter for ONNX Model Format\n"</span>)
+<span class="command">else</span>
+    <span class="variable">fprintf</span>(<span class="string">"All set!\n"</span>)
+end</pre></div>
+            <p>
+                If you need to install corresponding toolboxes, you can go to the "HOME" tab of MATLAB.
+                Then in "Add-Ons", click "Get Add-Ons".
+            </p>
+           <h4>Pre-trained AIRI denoisers</h4>
+            <p>
+                Pre-trained AIRI denoisers are in .onnx format. From main AIRI directory run commands below to download the denoiser shelf compressed in a .tar.gz file,
+                and extract the DNNs in the appropriate subdirectory.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre><span class="command">wget</span> -O ./airi_denoisers/airi_mix_denoisers.tar.gz \
+"https://www.dropbox.com/scl/fi/4grlzujhpyovzbn4hm3nd/airi_mix_denoisers.tar.gz?rlkey=ej1k48faisni14fs04tgbddyi&dl=0"
+<span class="comment"># extract the files</span>
+<span class="command">tar</span> -xzf ./airi_denoisers/airi_mix_denoisers.tar.gz -C ./airi_denoisers/
+<span class="comment"># Remove the zip file</span>
+<span class="command">rm</span> ./airi_denoisers/airi_mix_denoisers.tar.gz</pre></div>
+            <p>
+                Two additional collections of pre-trained AIRI denoisers are available [9].
+                While they are not required for this benchmarking, they can be utilized if needed.
+            </p>
+
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre><span class="command">wget</span> -O ./airi_denoisers/v1_airi_astro-based_oaid_shelf.zip \
+"https://researchportal.hw.ac.uk/files/115109618/v1_airi_astro-based_oaid_shelf.zip"
+<span class="command">wget</span> -O ./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip \
+"https://researchportal.hw.ac.uk/files/115109619/v1_airi_mri-based_mrid_shelf.zip"
+<span class="comment"># extract the files</span>
+<span class="command">unzip</span> "./airi_denoisers/v1_airi_astro-based_oaid_shelf.zip" -d "./airi_denoisers/"
+<span class="command">unzip</span> "./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip" -d "./airi_denoisers"
+<span class="comment"># Remove the zip file</span>
+<span class="command">rm</span> ./airi_denoisers/v1_airi_astro-based_oaid_shelf.zip
+<span class="command">rm</span> ./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip
+               </pre></div>
+            <br>
+
+                <h3>R2D2</h3>
+            <p>
+                The R2D2 repository encompasses the R2D2 variants: R2D2, R3D3, and R2D2-Net, and U-Net. The algorithm of choice is selected from the input parameters of the imager.
+                The currently available R2D2 models are trained specifically for the imaging settings considered in [1].
+                Deviating from these settings may result in sub-optimal results.
+                <br>
+                First clone the repository.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+                <pre><span class="command">git</span> clone https://github.com/basp-group/R2D2-SII
+<span class="command">cd</span> ./R2D2-SII</pre></div>
+            <p>
+                Download the pretrained R2D2 models.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre>r2d2_ckpt_path=./ckpt/R2D2/
+<span class="command">mkdir</span> -p $r2d2_ckpt_path
+<span class="command">wget</span> https://researchportal.hw.ac.uk/files/110702953/v1_R2D2_15UNets.zip -P $r2d2_ckpt_path <span class="comment"># pre-trained model for R2D2</span>
+<span class="comment"># Extract the files</span>
+<span class="command">unzip</span> $r2d2_ckpt_path/v1_R2D2_15UNets.zip -d $r2d2_ckpt_path
+<span class="comment"># Remove the zip file</span>
+<span class="command">rm</span> $r2d2_ckpt_path/v1_R2D2_15UNets.zip
+</pre></div>
+            <p>
+                Download the pretrained R3D3 models.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre>r2d2_ckpt_path=./ckpt/R3D3/
+<span class="command">mkdir</span> -p $r2d2_ckpt_path
+<span class="comment"># pre-trained model for R3D3 6 layers</span>
+<span class="command">wget</span> https://researchportal.hw.ac.uk/files/107306212/R3D3_8R2D2Nets_6UNetLayers.zip -P $r2d2_ckpt_path
+<span class="comment"># Extract the files</span>
+<span class="command">unzip</span> $r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip -d $r2d2_ckpt_path
+<span class="comment"># Remove the zip file</span>
+<span class="command">rm</span> $r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip
+</pre></div>
+            <p><span class="command"><b>Note:</b></span> Due to the large size of the R3D3 checkpoints, you may encounter the following error:
+                <b>"error: invalid zip file with overlapped components (possible zip bomb)"</b> while trying to unzip them.
+                To resolve this, please use the command below to unzip each checkpoint individually.</p>
+
+
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="command">for</span> <span class="variable">i</span> <span class="keyword">in</span> {1..8}; <span class="keyword">do</span> <span class="command">unzip</span> -j <span class="input">$r2d2_ckpt_path/R3D3_8R2D2Nets_6UNetLayers.zip</span> <span class="string">R3D3_R2D2Net_6Layers_N</span><span class="input">${i}</span>.<span class="string">ckpt</span> -d <span class="input">$r2d2_ckpt_path</span>; <span class="command">done</span></pre>
+    </div>
+
+            <h4>Python environment</h4>
+            <p>
+                Firstly, create your Python environment using either <code>venv</code> or <code>conda</code>, with Python
+                version &gt;= 3.10.0. In this tutorial, we will be using <code>venv</code> and <code>pip</code>.
+            </p>
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+                <pre><span class="command">python3</span> -m venv $main_dir/basplib
+            </pre></div>
+            <p>
+                Secondly, activate this new environment.
+            </p>
+
+            <div class="code-container">
+            <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
+            <pre><span class="command">source</span> $main_dir/basplib/bin/activate
+            </pre></div>
+            <p>
+                The R2D2 repository is Pytorch-based for accelerated computation on GPU. To ensure
+                compatibility of your CUDA driver version, follow <a href="https://pytorch.org/get-started/locally/">PyTorch instruction</a>.
+                If your CUDA version is older than what is displayed, please refer to
+                <a href="https://pytorch.org/get-started/locally/">here</a> for the newest PyTorch version compatible for your GPU.
+            <br><br>
+            Thirdly, once PyTorch is installed, install the remaining dependencies.
+            </p>
+            <div class="code-container">
+    <div class="copy-btn" onclick="copyText(this)">
+        <img src="images/copy.png" class="copy_logo">
+    </div>
+    <pre><span class="command">pip</span> install -r $main_dir/R2D2-SII/requirements.txt
+    </pre></div>
+            <br>
+             <h3>CLEAN</h3>
+            <p> We use the multi-scale variant of CLEAN in WSClean. Please refer  to
+                <a href="https://wsclean.readthedocs.io/">WSClean official website</a> for full instructions on how to install the software.
+            </p>
+
+            <p><strong class="main_title">Imaging</strong>
+                <br>
+                Instructions to run <a class="basplib">BASPLib</a> RI imaging algorithms and WSClean are outlined.
+                We recall the imaging settings are as follows: (i) the target image is of size 512x512 pixels, with
+                (ii) a pixel size corresponding to super-resolution factor of 1.5, and
+                (iii) Briggs weighting with parameter of 0 is applied to the data.
+                All algorithms take as input a configuration file in either JSON (for uSARA and AIRI)
+                or YAML format (for U-Net and R2D2 variants: R2D2, R3D3, and R2D2-Net).
+                Below are example Bash scripts designed to image all inverse problems at once.
+                Users are encouraged to customize these scripts to suit the specifications of their local machines as needed.
+            </p>
+<!--            Here, we outline the commands needed to run <a class="basplib">BASPLib</a> imaging algorithms. The provided images are processed-->
+<!--            at a resolution of 512x512 pixels with a super-resolution factor of 1.5 and a Briggs weighting parameter of 0.-->
+<!--            uSARA_he2 and AIRI are implemented in MATLAB, whereas R2D2 is implemented in Python.-->
+<!--            All algorithms accept configuration files in either JSON or YAML format. These files allow for the-->
+<!--            specification of default input parameters. Critical parameters can be explicitly overridden within these-->
+<!--            configuration files, as demonstrated in the examples below.-->
+<!--            Various configurations of the R2D2 imager can be specified using parameters: <code>series</code>, <code>num_iter</code>, and <code>layers</code>.-->
+<!--            The <code>series</code> parameter should be chosen between R2D2 or R3D3. The available models are pretrained-->
+<!--            for the specific imaging settings mentioned above. Deviating from these settings is likely to result in-->
+<!--            suboptimal performance and poor results.-->
+
+            <h3>uSARA</h3>
+            <p>
+                For uSARA imaging algorithm, all inverse problems were solved with fixed parameters.
+                For best results, specifically the regularisation parameter was set to two times its heuristic value.
+                You can access sample config file for uSARA in <a href="https://www.dropbox.com/scl/fi/rjny3tycp2rnu4zi2ebah/usara_sim.json?rlkey=t3osp7zb0fs3e717w9xn8jgai&dl=0">usara_sim.json</a>.
+                <br>
+                uSARA imager can be run by calling:
+            </p>
+
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre><span class="keyword">#!/bin/bash</span>
+
+<span class="comment"># Define variables</span>
+<span class="variable">data_files</span>=<span class="input"><span class="string">"/path/to/data/folder"</span></span>
+<span class="variable">output_path</span>=<span class="input"><span class="string">"/path/to/save/outputs/"</span></span>
+<span class="variable">config_path</span>=<span class="input"><span class="string">"/path/to/airi/config/file/usara_sim.json"</span></span>
+<span class="variable">imDimx</span>=<span class="input"><span class="string">512</span></span>
+<span class="variable">imDimy</span>=<span class="input"><span class="string">512</span></span>
+<span class="variable">runID</span>=<span class="input"><span class="string">0</span></span>
+<span class="variable">log_file</span>=<span class="string">"/path/to/save/log/file/"</span>
+
+<span class="comment"># Log the start time</span>
+<span class="command">echo</span> <span class="string">"Script started at: $(date)"</span>
+
+<span class="comment"># Loop through each .mat file in the directory</span>
+<span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_files</span>"/*.mat; <span class="keyword">do</span>
+  <span class="comment"># Extract the file name without extension for srcName and groundtruth</span>
+  <span class="variable">baseName</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)
+  <span class="variable">srcName</span>=<span class="input"><span class="string">"$baseName"</span></span>
+  <span class="variable">groundtruth</span>=<span class="input"><span class="string">"/path/to/Ground/truth/folder/${baseName}_gdth.fits"</span></span>
+
+  <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>" | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
+
+  <span class="comment"># Run the MATLAB command for each .mat file</span>
+  <span class="command">matlab</span> -batch <span class="string">"run_imager('<span class="input">$config_path</span>', 'srcName', '<span class="input">$srcName</span>', 'dataFile', '<span class="input">$data_file</span>', \
+  'resultPath', '<span class="input">$output_path</span>', 'imDimx', <span class="input">$imDimx</span>, 'imDimy', <span class="input">$imDimy</span>, \
+  'groundtruth', '<span class="input">$groundtruth</span>', 'runID', <span class="input">$runID</span>); exit" 2>&1 | <span class="input">tee</span> -a <span class="input">"$log_file"</span></span>
+
+  <span class="comment"># Log the completion of each file</span>
+  <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>" | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
+<span class="keyword">done</span>
+
+<span class="comment"># Log the end time</span>
+<span class="command">echo</span> <span class="string">"Script completed at: $(date)" | <span class="command">tee</span> -a <span class="input">"$log_file"</span></span></pre>
+    </div>
+
+<br>
+
+            <h3>AIRI</h3>
+            <p>
+                The AIRI parameter was fixed to the heuristic value for all RI data, except for those simulated from the
+                radio image of 3C353, where 3 times the heuristic value was used.
+                You can access sample config files for AIRI in
+                <a href="https://www.dropbox.com/scl/fi/vrib67epb5yeylxhxktra/airi_sim.json?rlkey=wux744w1yzex9umcu0atyhyvz&dl=0">airi_sim.json</a> and
+                <a href="https://www.dropbox.com/scl/fi/6vz4kd5zuy2v2cdoblu10/airi_sim_3c353.json?rlkey=denbjjebc5b6xkb52oo4uvimz&dl=0">airi_sim_3c353.json</a>.
+                <br>
+                AIRI imager can be run by calling:
+            </p>
+
+            <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre><span class="keyword">#!/bin/bash</span>
+
+<span class="comment"># Define variables</span>
+<span class="variable">data_files</span>=<span class="input"><span class="string">"/path/to/data/folder"</span></span>
+<span class="variable">output_path</span>=<span class="input"><span class="string">"/path/to/save/outputs/"</span></span>
+<span class="variable">config_path</span>=<span class="input"><span class="string">"/path/to/airi/config/file/airi_sim.json"</span></span>
+<span class="variable">imDimx</span>=<span class="input"><span class="string">512</span></span>
+<span class="variable">imDimy</span>=<span class="input"><span class="string">512</span></span>
+<span class="variable">runID</span>=<span class="input"><span class="string">0</span></span>
+<span class="variable">dnn_shelf_path</span>=<span class="input"><span class="string">"/path/to/shelf.csv"</span></span>
+
+<span class="comment"># Log the start time</span>
+<span class="command">echo</span> <span class="string">"Script started at: $(date)"</span>
+
+<span class="comment"># Loop through each .mat file in the directory</span>
+<span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_files</span>"/*.mat; <span class="keyword">do</span>
+  <span class="comment"># Extract the file name without extension for srcName and groundtruth</span>
+  <span class="variable">baseName</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)
+  <span class="variable">srcName</span>=<span class="input"><span class="string">"$baseName"</span></span>
+  <span class="variable">groundtruth</span>=<span class="input"><span class="string">"/path/to/Ground/truth/folder/${baseName}_gdth.fits"</span></span>
+
+  <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>
+
+  <span class="comment"># Run the MATLAB command for each .mat file</span>
+  <span class="command">matlab</span> -batch <span class="string">"run_imager('<span class="input">$config_path</span>', 'srcName', '<span class="input">$srcName</span>', 'dataFile', '<span class="input">$data_file</span>', \
+  'resultPath', '<span class="input">$output_path</span>', 'imDimx', <span class="input">$imDimx</span>, 'imDimy', <span class="input">$imDimy</span>, 'dnnShelfPath', <span class="input">'$dnn_shelf_path'</span>, \
+  'groundtruth', '<span class="input">$groundtruth</span>', 'runID', <span class="input">$runID</span>); exit"</span>
+
+  <span class="comment"># Log the completion of each file</span>
+  <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>"</span>
+<span class="keyword">done</span>
+
+<span class="comment"># Log the end time</span>
+<span class="command">echo</span> <span class="string">"Script completed at: $(date)"</span></pre>
+    </div>
+
+<br>
+            <h3>R2D2</h3>
+            <p>
+                You can access sample config file for R2D2 in <a href="https://github.com/basp-group/R2D2-SII/blob/main/config/reconstruction/R2D2.yaml">R2D2.yaml</a>
+                and <a href="https://github.com/basp-group/R2D2-SII/blob/main/config/reconstruction/R3D3_6L.yaml">R3D3_6L.yaml</a>.
+                <br>
+                The R2D2 imager can be run by calling:
+            </p>
+
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre><span class="keyword">#!/bin/bash</span>
+
+<span class="comment"># Define common variables</span>
+<span class="variable">output_path</span>=<span class="string">"/path/to/save/outputs/"</span>
+<span class="variable">data_folder</span>=<span class="string">"/path/to/data/folder"</span>
+<span class="variable">groundtruth</span>=<span class="string">"/path/to/GT/images"</span>
+<span class="variable">ckpt_path</span>=<span class="string">""</span>
+<span class="variable">yaml_file</span>=<span class="string">""</span>
+<span class="variable">num_iter</span>=<span class="string">""</span>
+<span class="variable">series</span>=<span class="string">""</span>
+<span class="variable">layers</span>=<span class="string">""</span>
+<span class="variable">log_file</span>=<span class="string">"/path/to/save/log/file/"</span>
+<span class="command">source</span> <span class="input">$main_dir/basplib/bin/activate</span>
+
+<span class="comment"># Function to set parameters based on the series</span>
+<span class="keyword">set_parameters</span>() {
+    <span class="keyword">case</span> <span class="input">$1</span> <span class="keyword">in</span>
+        <span class="string">U-Net</span>)
+            <span class="variable">yaml_file</span>=<span class="string">"/path/to/r2d2.yaml"</span>
+            <span class="variable">ckpt_path</span>=<span class="string">"/path/to/r2D2/checkpoints"</span>
+            <span class="variable">num_iter</span>=<span class="number">1</span>
+            <span class="variable">series</span>=<span class="string">"R2D2"</span>
+            <span class="variable">layers</span>=<span class="number">1</span>
+            ;;
+        <span class="string">R2D2-Net</span>)
+            <span class="variable">yaml_file</span>=<span class="string">"/path/to/R3D3_6L.yaml"</span>
+            <span class="variable">ckpt_path</span>=<span class="string">"/path/to/R3D3/checkpoints"</span>
+            <span class="variable">num_iter</span>=<span class="number">1</span>
+            <span class="variable">series</span>=<span class="string">"R3D3"</span>
+            <span class="variable">layers</span>=<span class="number">6</span>
+            ;;
+        <span class="string">R2D2</span>)
+            <span class="variable">yaml_file</span>=<span class="string">"/path/to/r2d2.yaml"</span>
+            <span class="variable">ckpt_path</span>=<span class="string">"/path/to/R2D2/checkpoints"</span>
+            <span class="variable">num_iter</span>=<span class="number">15</span>
+            <span class="variable">series</span>=<span class="string">"R2D2"</span>
+            <span class="variable">layers</span>=<span class="number">1</span>
+            ;;
+        <span class="string">R3D3</span>)
+            <span class="variable">yaml_file</span>=<span class="string">"/path/to/R3D3_6L.yaml"</span>
+            <span class="variable">ckpt_path</span>=<span class="string">"/path/to/R3D3/checkpoints"</span>
+            <span class="variable">num_iter</span>=<span class="number">8</span>
+            <span class="variable">series</span>=<span class="string">"R3D3"</span>
+            <span class="variable">layers</span>=<span class="number">6</span>
+            ;;
+        <span class="keyword">*</span>)
+            <span class="command">echo</span> <span class="string">"Unknown algorithm: <span class="input">$1</span>" | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
+            <span class="keyword">exit</span> <span class="number">1</span>
+            ;;
+    <span class="keyword">esac</span>
+}
+
+<span class="comment"># Prompt the user for the algorithm name</span>
+<span class="command">echo</span> <span class="string">"Please enter the algorithm name (U-Net, R2D2-Net, R2D2, R3D3):"</span>
+<span class="command">read</span> <span class="input">algo_name</span>
+
+<span class="comment"># Validate the input</span>
+<span class="keyword">if</span> [[ -<span class="keyword">z</span> "<span class="input">$algo_name</span>" ]]; <span class="keyword">then</span>
+    <span class="command">echo</span> <span class="string">"No algorithm name provided. Exiting." | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
+    <span class="keyword">exit</span> <span class="number">1</span>
+<span class="keyword">fi</span>
+
+<span class="comment"># Set parameters based on the user input</span>
+<span class="keyword">set_parameters</span> <span class="input">$algo_name</span>
+
+<span class="comment"># Iterate over all .mat files in the specified directory</span>
+<span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_folder</span>"/*.mat; <span class="keyword">do</span>
+    <span class="comment"># Extract the base name of the data file without the extension</span>
+    <span class="input">base_name</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)
+    <span class="input">specific_output_path</span>=<span class="string">"<span class="input">$output_path</span>/<span class="input">$base_name</span>"</span>
+    <span class="command">mkdir</span> -p "<span class="input">$specific_output_path</span>"
+
+    <span class="comment"># The corresponding ground truth images path (optional)</span>
+    <span class="input">gdth_file</span>=<span class="string">"<span class="input">$groundtruth</span>/<span class="input">${base_name}</span>_gdth.fits"</span>
+
+    <span class="comment"># Update the yaml file with the current file paths and parameters</span>
+    <span class="command">sed</span> -i <span class="string">'s|ckpt_path:.*|ckpt_path: '<span class="input">$ckpt_path</span>'|'</span> <span class="input">$yaml_file</span>
+    <span class="command">sed</span> -i <span class="string">'s|data_file:.*|data_file: '<span class="input">$data_file</span>'|'</span> <span class="input">$yaml_file</span>
+    <span class="command">sed</span> -i <span class="string">'s|gdth_file:.*|gdth_file: '<span class="input">$gdth_file</span>'|'</span> <span class="input">$yaml_file</span>
+    <span class="command">sed</span> -i <span class="string">'s|series:.*|series: '<span class="input">$series</span>'|'</span> <span class="input">$yaml_file</span>
+    <span class="command">sed</span> -i <span class="string">'s|num_iter:.*|num_iter: '<span class="input">$num_iter</span>'|'</span> <span class="input">$yaml_file</span>
+    <span class="command">sed</span> -i <span class="string">'s|layers:.*|layers: '<span class="input">$layers</span>'|'</span> <span class="input">$yaml_file</span>
+    <span class="command">sed</span> -i <span class="string">'s|output_path:.*|output_path: '<span class="input">$specific_output_path</span>'|'</span> <span class="input">$yaml_file</span>
+    <span class="command">sed</span> -i <span class="string">'s|res_on_gpu:.*|res_on_gpu: True|'</span> <span class="input">$yaml_file</span>
+
+    <span class="comment"># Run the Python script with the updated yaml file</span>
+    <span class="command">python3</span> <span class="variable">src/imager.py</span> --<span class="variable">yaml_file</span> "<span class="input">$yaml_file</span>" 2>&1 | <span class="command">tee</span> -a <span class="input">"$log_file"</span>
+<span class="keyword">done</span></pre>
+    </div>
+
+        <p>
+            For running R2D2 imager save above bash script into a bash file like <code>R2D2.sh</code>, and run like:
+        </p>
+
+            <div class="code-container">
+    <div class="copy-btn" onclick="copyText(this)">
+        <img src="images/copy.png" class="copy_logo">
+    </div>
+                <pre><span class="command">bash</span> R2D2.sh </pre></div>
+            <p>
+                The script will prompt you to enter the algorithm name. For example, you can enter U-Net,
+                R2D2-Net, R2D2, or R3D3. The script will then execute the corresponding configuration for the specified algorithm.</p>
+            <br>
+            <h3>CLEAN</h3>
+            <p>
+                For CLEAN, specifically its multi-scale variant all inverse problems were solved with fixed parameters.
+                WSClean imager can be run by calling:
+            </p>
+
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre><span class="keyword">#!/bin/bash</span>
+<span class="comment"># Define variables</span>
+<span class="variable">data_files</span>=<span class="string">"/path/to/ms_files/folder"</span>
+<span class="variable">output_path</span>=<span class="string">"/path/to/save/outputs/"</span>
+<span class="variable">msFile_detail_path</span>=<span class="string">"/path/to/meas_convert.csv"</span>
+<span class="variable">niter</span>=<span class="input">2000000</span>
+<span class="variable">briggs_factor</span>=<span class="input">0</span>
+
+<span class="comment"># Log the start time</span>
+<span class="command">echo</span> <span class="string">"Script started at: $(date)"</span>
+
+<span class="comment"># Loop through each .mat file in the directory</span>
+<span class="keyword">for</span> <span class="variable">data_file</span> <span class="keyword">in</span> "<span class="input">$data_files</span>"/*.mat; <span class="keyword">do</span>
+  <span class="input">base_name</span>=$(<span class="command">basename</span> "<span class="input">$data_file</span>" .mat)
+  <span class="command">echo</span> <span class="string">"Processing file: <span class="input">$data_file</span>"</span>
+
+  <span class="comment"># Read cell_size from the CSV file based on the base_name</span>
+  cellsize=<span class="input">$(awk -F, -v filename="$base_name" 'NR > 1 && $1 == filename {print $3}' "$msFile_detail_path")</span>
+
+  <span class="comment"># Check if cellsize is found</span>
+  <span class="command">if</span> [ -z "<span class="input">$cellsize</span>" ]; then
+    echo <span class="string">"Error: No matching cell size found for</span> <span class="input">$base_name</span> <span class="string">in</span> <span class="input">$msFile_detail_path"</span>
+    continue
+  <span class="command">fi</span>
+  <span class="comment"># Run the MATLAB command for each .mat file</span>
+  <span class="command">wsclean</span> -size 512  512  -scale <span class="string">"</span><span class="input">$cellsize</span><span class="string">"</span>asec -data-column DATA -padding 2 -weight briggs <span class="string">"</span><span class="input">$briggs_factor</span><span class="string">"</span>  \
+    -niter <span class="string">"</span><span class="input">$niter</span><span class="string">"</span> -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
+      -auto-threshold  0.5  -name <span class="string">"</span><span class="input">$output_path</span><span class="string">"</span>/wsclean-briggs<span class="string">"</span><span class="input">$briggs_factor</span><span class="string">"</span>- <span class="string">"</span><span class="input">$data_file</span><span class="string">"</span>
+
+  <span class="comment"># Log the completion of each file</span>
+  <span class="command">echo</span> <span class="string">"Finished processing file: <span class="input">$data_file</span>"</span>
+<span class="keyword">done</span>
+
+<span class="comment"># Log the end time</span>
+<span class="command">echo</span> <span class="string">"Script completed at: <span class="input">$(date)</span>"</span>
+        </pre>
+    </div>
+
+            <p><span class="command"><b>Note:</b></span> Additional information on how to convert the data files into a
+                measurement set that is readable by WSClean will be provided soon.
+            </p>
+            <h1 class="fancy-heading">Evaluation metrics calculation</h1>
+            <p>
+                The evaluation metrics can be calculated using this
+                <a href="https://www.dropbox.com/scl/fi/q2uyd9tykxe45ghwjfzfe/calculate_metrics.py?rlkey=94h62bohwwdz7qnvv04kiu8vv&dl=1">
+                    Python file</a>.
+                To run calculate_metrics.py you can use below bash script:
+            </p>
+
+    <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)">
+            <img src="images/copy.png" class="copy_logo">
+        </div>
+        <pre>
+<span class="comment">#!/bin/bash</span>
+
+<span class="comment"># Define variables</span>
+<span class="variable">DATA_FILE</span>=<span class="string">"/path/to/data/folder"</span>
+<span class="variable">EXCEL_SAVE_PATH</span>=<span class="string">"/path/to/save/metrics/AIRI.xlsx"</span>
+<span class="variable">GT_PATH</span>=<span class="string">"/path/to/ground/truth/images/folder"</span>
+<span class="variable">MODEL_OUTPUTS</span>=<span class="string">"/path/to/model/outputs/folder/"</span>
+<span class="variable">MODEL</span>=<span class="string">"R2D2"</span> <span class="comment"># or "R3D3" or "AIRI" or "uSARA"</span>
+
+<span class="comment"># Activate your virtual environment if needed</span>
+<span class="keyword">source</span> <span class="variable">/path/to/your/virtualenv/bin/activate</span>
+
+<span class="comment"># Run the Python script</span>
+<span class="keyword">python</span> <span class="function">calculate_metrics.py</span> <span class="variable">--data_file</span> <span class="string">"$DATA_FILE"</span> <span class="variable">--excel_save_path</span> <span class="string">"$EXCEL_SAVE_PATH"</span> <span class="variable">--GT_path</span> <span class="string">"$GT_PATH"</span> <span class="variable">--model_outputs</span> <span class="string">"$MODEL_OUTPUTS"</span> <span class="variable">--model</span> <span class="string">"$MODEL"</span>
+        </pre>
+    </div>
+
+
+            <h1 class="fancy-heading">References</h1>
+            [1] Aghabiglou A, Chu CS, Dabbech A, Wiaux Y.
+            The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy.
+            ApJS, 273(1):3, 2024, | <a href="https://arxiv.org/abs/2403.05452">arXiv:2403.05452</a> | <a href="https://doi.org/10.3847/1538-4365/ad46f5">DOI:10.3847/1538-4365/ad46f5</a>
+            <br><br>
+            [2] Edler HW, de Gasperin F, Shimwell TW, Hardcastle MJ, Boselli A, Heesen V, McCall H, Bomans DJ, Brüggen
+            M, Bulbul E, Chyży KT. ViCTORIA project: The LOFAR HBA Virgo Cluster Survey. Astronomy & Astrophysics. 2023 Aug 1;676:A24.
+            | <a href="https://doi.org/10.1051/0004-6361/202346458">DOI:10.1051/0004-6361/202346458</a>
+            <br><br>
+            [3] Shimwell TW, Hardcastle MJ, Tasse C, Best PN, Röttgering HJ, Williams WL, Botteon A, Drabent A,
+            Mechev A, Shulevski A, van Weeren RJ. The LOFAR two-metre sky survey-V. Second data release.
+            Astronomy & astrophysics. 2022 Mar 1;659:A1. | <a href="https://doi.org/10.1051/0004-6361/202142484">DOI:10.1051/0004-6361/202142484</a>
+            <br><br>
+            [4] Botteon A, Shimwell TW, Cassano R, Cuciti V, Zhang X, Bruno L, Camillini L, Natale R, Jones A,
+            Gastaldello F, Simionescu A. The Planck clusters in the LOFAR sky-I. LoTSS-DR2:
+            new detections and sample overview. Astronomy & Astrophysics. 2022 Apr 1;660:A78. |
+            <a href="https://doi.org/10.1051/0004-6361/202143020">DOI:10.1051/0004-6361/202143020</a>
+            <br><br>
+<!--            [5] Briggs DS. High fidelity interferometric imaging: robust weighting and NNLS-->
+<!--            deconvolution. InAmerican Astronomical Society Meeting Abstracts 1995 Dec <a href="https://ui.adsabs.harvard.edu/abs/1995AAS...18711202B/abstract">(Vol. 187, pp. 112-02)</a>.-->
+<!--            <br><br>-->
+<!--            [6] Cornwell TJ. Multiscale CLEAN deconvolution of radio synthesis images. IEEE Journal of selected topics in signal processing. 2008 Oct;2(5):793-801. |-->
+<!--            <a href="https://doi.org/10.1109/JSTSP.2008.2006388">DOI:10.1109/JSTSP.2008.2006388</a>-->
+<!--            <br><br>-->
+            [5]Carrillo RE, McEwen JD, Wiaux Y. Sparsity Averaging Reweighted Analysis (SARA): a novel algorithm for
+            radio-interferometric imaging. Monthly Notices of the Royal Astronomical Society. 2012 Oct 21;426(2):1223-34. |
+            <a href="https://doi.org/10.1111/j.1365-2966.2012.21605.x">DOI:10.1111/j.1365-2966.2012.21605.x</a>
+            <br><br>
+            [6] Onose A, Dabbech A, Wiaux Y. An accelerated splitting algorithm for radio-interferometric imaging:
+            when natural and uniform weighting meet. Monthly Notices of the Royal Astronomical Society. 2017 Jul;469(1):938-49. |
+            <a href="https://doi.org/10.1093/mnras/stx755">DOI:10.1093/mnras/stx755</a>
+            <br><br>
+            [7] Dabbech A, Aghabiglou A, San Chu C, Wiaux Y. CLEANing Cygnus A deep and fast with R2D2.
+            The Astrophysical Journal Letters. 2024 May 7;966(2):L34. | <a href="https://arxiv.org/abs/2309.03291">ArXiv:2309.03291</a> | <a href="https://doi.org/10.3847/2041-8213/ad41df">DOI:10.3847/2041-8213/ad41df</a>
+            <br><br>
+<!--            [8] Offringa AR, McKinley B, Hurley-Walker N, Briggs FH, Wayth RB, Kaplan DL, Bell ME, Feng L, Neben AR, Hughes-->
+<!--            JD, Rhee J. WSCLEAN: an implementation of a fast, generic wide-field imager for radio astronomy.-->
+<!--            Monthly Notices of the Royal Astronomical Society. 2014 Oct 11;444(1):606-19. |-->
+<!--            <a href="https://doi.org/10.1093/mnras/stu1368">DOI:10.1093/mnras/stu1368</a>-->
+<!--            <br><br>-->
+            [8] Offringa AR, Smirnov O. An optimized algorithm for multiscale wideband deconvolution of radio
+            astronomical images. Monthly Notices of the Royal Astronomical Society. 2017 Oct;471(1):301-16. |
+            <a href="https://doi.org/10.1093/mnras/stx1547">DOI:10.1093/mnras/stx1547</a>
+            <br><br>
+            [9] Terris M, Tang C, Jackson A, Wiaux Y. Plug-and-play imaging with model uncertainty quantification in
+            radio astronomy. arXiv preprint <a href="https://arxiv.org/abs/2312.07137">arXiv:2312.07137.</a> 2023 Dec 12.
+
+    <h1 class="fancy-heading">Support</h1>
+            <p>
+                If you need assistance with setting up the <a class="basplib">BASPLib</a> imaging algorithms or encounter any issues during
+                installation, please don’t hesitate to contact our <a href="support_formspree.html">support team</a>.
+            </p>
+
+    </div>
+
+
+
+        <div class="right-column"></div>
+    </section>
+
+
+    <script src="java/script.js"></script>
+    <script src="java/rec_images.js"></script>
+    <script src="java/benchmarking.js"></script>
+    <script src="java/loadNav.js"></script>
+</body>
+</html>
