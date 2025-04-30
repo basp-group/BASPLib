@@ -58,7 +58,7 @@
 
                 where \(\boldsymbol{x}_{\textrm{d}} \in \mathbb{R}^N\) stands for the back-projected data, known as the dirty image,
                 and \(\textrm{Re}\{\cdot\}\) stands for the real part of its argument.
-                In this equation, the normalization factor \(\kappa>0\) is equal to
+                In this equation, the normalisation factor \(\kappa>0\) is equal to
                 \((\max(\text{Re}\{{\boldsymbol{\Phi}}^{\dagger}{\boldsymbol{\Phi}}\boldsymbol{\delta}\}))^{-1}\),
                 ensuring that the point spread function (PSF), defined as
                 \(\kappa \text{Re}\{\boldsymbol{\Phi}^{\dagger}{\boldsymbol{\Phi}}\boldsymbol{\delta}\} \in \mathbb{R}^N\),
@@ -80,7 +80,10 @@
                        the spatial Fourier bandwidth of the ground-truth images. Under these considerations, the
                        testbed comprises 200 unique inverse problems. During imaging, the Briggs weighting scheme was applied to the
                        data  (also injected into the measurement operator) to enhance the effective resolution of
-                       the reconstructions, where the Briggs parameter was set to 0. To maintain consistency with the Fourier sampling spatial bandwidth, the pixel size was adjusted to ensure a super-resolution factor of 1.5.
+                       the reconstructions, where the Briggs parameter was uniformly randomised between \(-1\) and \(1\),
+                       with lower values approaching uniform weighting, and higher values approaching natural weighting.
+                       The pixel resolution of the dirty images was also randomly chosen to reflect a super-resolution factor
+                       during imaging in the range \([1.5, 2.5]\).
                    </p>
                 <p>
                    Detailed information on the testbed can be found in [1]. The code utilised to generate a wide variety of sampling patterns and corresponding RI data is part of the <a href="https://basp-group.github.io/BASPLib/UTILS.html">utilities</a> offered by <a class="basplib">BASPLib</a>.
@@ -128,21 +131,23 @@
                     data residual as inputs.
                     We incorporate two distinct DNN architectures as the core components of R2D2:
                     <br>
+                    <br>
                     <b>R2D2\(_{\mathcal{A}_1}\):</b>This configuration employs the widely-used U-Net architecture for its DNNs.
                     <br>
                     <br>
                     <b>R2D2\(_{\mathcal{A}_2}\):</b>This variant leverages a more advanced architecture, U-WDSR, which enhances performance.
                     <br>
+                    <br>
                     The Python implementation of both R2D2\(_{\mathcal{A}_1}\) and R2D2\(_{\mathcal{A}_2}\) are
-                    available in <a href="https://github.com/basp-group/R2D2-SII">R2D2 repository</a>.
+                    available in <a href="https://github.com/basp-group/R2D2-RI">R2D2 repository</a>.
                 </p>
 
                 <p>
-                    <a href="https://github.com/basp-group/R2D2-SII"><b>U-Net / U-WDSR</b></a>:
+                    <a href="R2D2.html"><b>U-Net / U-WDSR</b></a>:
                       an end-to-end DNN, which also corresponds to the first term of the R2D2 DNN series.
                 </p>
 <!--                <p>-->
-<!--                    <a href="https://github.com/basp-group/R2D2-SII"><b>R2D2-Net</b></a>:-->
+<!--                    <a href="https://github.com/basp-group/R2D2-RI"><b>R2D2-Net</b></a>:-->
 <!--                    an unrolled end-to-end DNN which unrolls the R2D2 algorithm itself. It also corresponds to the-->
 <!--                    first term of the R3D3 DNN series.-->
 <!--                </p>-->
@@ -516,9 +521,13 @@
 
             <div class="code-container">
             <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
-            <pre><span class="command">tar</span> -xzf $main_dir/data/gdth.tar.gz -C $main_dir/data/
-<span class="command">tar</span> -xzf $main_dir/data/data.tar.gz -C $main_dir/data/
-</pre></div>
+            <pre><span class="command">tar</span> -xf $main_dir/data/gdth.tar.gz --strip-components=7 -C $main_dir/data/
+<span class="command">tar</span> -xf $main_dir/data/data.tar.gz --strip-components=7 -C $main_dir/data/
+
+<span class="command">rm</span> -r $main_dir/data/data.tar.gz
+<span class="command">rm</span> -r $main_dir/data/gdth.tar.gz
+                </pre></div>
+
             <p>
                 You can access each inverse problem details via this Excel
                 <a href="https://www.dropbox.com/scl/fi/73gj34n5th37fz6eaezy4/data_detail.xlsx?rlkey=tocsrydc73e9glyfcof5dpjxx&st=d91g1lil&dl=1" target="_blank"><img src="images/excelfile.png" class="excel_logo"></a> file.
@@ -552,12 +561,15 @@
                 <a href="https://pytorch.org/get-started/locally/">here</a> for the newest PyTorch version compatible for your GPU.
             <br><br>
             Thirdly, once PyTorch is installed, install the remaining dependencies.
+
             </p>
             <div class="code-container">
     <div class="copy-btn" onclick="copyText(this)">
         <img src="images/copy.png" class="copy_logo">
     </div>
-    <pre><span class="command">pip</span> install -r $main_dir/requirements.txt
+    <pre>
+<span class="command">wget</span> -P "$main_dir" <a href="https://raw.githubusercontent.com/basp-group/R2D2-RI/main/requirements.txt">https://raw.githubusercontent.com/basp-group/R2D2-RI/main/requirements.txt</a>
+<span class="command">pip</span> install -r $main_dir/requirements.txt
     </pre></div>
             <br>
                 <h3>uSARA & AIRI </h3>
@@ -587,7 +599,7 @@
 <span class="command">rm</span> ./airi_denoisers/airi_mix_denoisers.tar.gz</pre></div>
             <p>
                 Two additional collections of pre-trained AIRI denoisers are available [9].
-                While they are not required for this benchmarking, they can be utilized if needed.
+                While they are not required for this benchmarking, they can be utilisd if needed.
             </p>
 
             <div class="code-container">
@@ -607,8 +619,8 @@
 
                 <h3>R2D2</h3>
             <p>
-                The R2D2 repository encompasses the end-to-end DNNs U-Net, U-WDSR, R2D2 variants: R2D2<sub>\(\mathcal{A}_1,\mathcal{T}_2\)</sub>,
-                and R2D2<sub>\(\mathcal{A}_2,\mathcal{T}_2\)</sub>. The algorithm of choice is selected from the input parameters of the imager.
+                The R2D2 repository encompasses the end-to-end DNNs U-Net, U-WDSR, R2D2 variants: R2D2<sub>\(\mathcal{A}_1\)</sub>,
+                and R2D2<sub>\(\mathcal{A}_2\)</sub>. The algorithm of choice is selected from the input parameters of the imager.
                 The currently available R2D2 models are trained specifically for the imaging settings considered in [1].
                 Deviating from these settings may result in sub-optimal results.
                 <br>
@@ -616,34 +628,34 @@
             </p>
             <div class="code-container">
             <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
-                <pre><span class="command">git</span> clone https://github.com/basp-group/R2D2-SII
-<span class="command">cd</span> ./R2D2-SII</pre></div>
+                <pre><span class="command">git</span> clone --recurse-submodules https://github.com/basp-group/R2D2-RI
+<span class="command">cd</span> ./R2D2-RI</pre></div>
             <p>
-                Download the pretrained R2D2<sub>\(\mathcal{A}_1,\mathcal{T}_2\)</sub> model.
+                Download the pretrained R2D2<sub>\(\mathcal{A}_1\)</sub> model.
             </p>
             <div class="code-container">
             <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
-            <pre>r2d2_ckpt_path=./ckpt/R2D2_A1_T2/
+            <pre>r2d2_ckpt_path=./ckpt/R2D2_A1
 <span class="command">mkdir</span> -p $r2d2_ckpt_path
-<span class="command">wget</span> https://researchportal.hw.ac.uk/files/146289536/R2D2_A1_T2_Realisation1.zip -P $r2d2_ckpt_path
+<span class="command">curl -L -o</span> $r2d2_ckpt_path/R2D2_A1.zip -H "User-Agent: Mozilla/5.0" -e <a href="https://researchportal.hw.ac.uk/" target="_blank">https://researchportal.hw.ac.uk/</a> <a href="https://researchportal.hw.ac.uk/files/146289536/R2D2_A1_T2_Realisation1.zip" target="_blank">https://researchportal.hw.ac.uk/files/146289536/R2D2_A1_T2_Realisation1.zip</a>
 <span class="comment"># Extract the files</span>
-<span class="command">unzip -j</span> $r2d2_ckpt_path/R2D2_A1_T2_Realisation1.zip -d $r2d2_ckpt_path
+<span class="command">unzip -j</span> $r2d2_ckpt_path/R2D2_A1.zip -d $r2d2_ckpt_path
 <span class="comment"># Remove the zip file</span>
-<span class="command">rm</span> $r2d2_ckpt_path/R2D2_A1_T2_Realisation1.zip
+<span class="command">rm</span> $r2d2_ckpt_path/R2D2_A1.zip
 </pre></div>
 
             <p>
-                Download the pretrained R2D2<sub>\(\mathcal{A}_2,\mathcal{T}_2\)</sub> model.
+                Download the pretrained R2D2<sub>\(\mathcal{A}_2\)</sub> model.
             </p>
             <div class="code-container">
             <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
-            <pre>r2d2_ckpt_path=./ckpt/R2D2_A2_T2/
+            <pre>r2d2_ckpt_path=./ckpt/R2D2_A2
 <span class="command">mkdir</span> -p $r2d2_ckpt_path
-<span class="command">wget</span> https://researchportal.hw.ac.uk/files/146314175/R2D2_A2_T2_Realisation1.zip -P $r2d2_ckpt_path
+<span class="command">curl -L -o</span> $r2d2_ckpt_path/R2D2_A2.zip -H "User-Agent: Mozilla/5.0" -e <a href="https://researchportal.hw.ac.uk/" target="_blank">https://researchportal.hw.ac.uk/</a> <a href="https://researchportal.hw.ac.uk/files/146314175/R2D2_A2_T2_Realisation1.zip" target="_blank">https://researchportal.hw.ac.uk/files/146314175/R2D2_A2_T2_Realisation1.zip</a>
 <span class="comment"># Extract the files</span>
-<span class="command">unzip -j</span> $r2d2_ckpt_path/R2D2_A2_T2_Realisation1.zip -d $r2d2_ckpt_path
+<span class="command">unzip -j</span> $r2d2_ckpt_path/R2D2_A2.zip -d $r2d2_ckpt_path
 <span class="comment"># Remove the zip file</span>
-<span class="command">rm</span> $r2d2_ckpt_path/R2D2_A2_T2_Realisation1.zip
+<span class="command">rm</span> $r2d2_ckpt_path/R2D2_A2.zip
 </pre></div>
 
 
@@ -660,9 +672,9 @@
                 (ii) a random pixel size corresponding to super-resolution factor between [1.5, 2.5], and
                 (iii) random Briggs weighting with parameter with range between [-1, 1] is applied to the data.
                 All algorithms take as input a configuration file in either JSON (for uSARA and AIRI)
-                or YAML format (for U-Net, U-WDSR and R2D2 variants: R2D2<sub>\(\mathcal{A}_1,\mathcal{T}_2\)</sub>, and R2D2<sub>\(\mathcal{A}_2,\mathcal{T}_2\)</sub>).
+                or YAML format (for U-Net, U-WDSR and R2D2 variants: R2D2<sub>\(\mathcal{A}_1\)</sub>, and R2D2<sub>\(\mathcal{A}_2\)</sub>).
                 Below are example Bash scripts designed to image all inverse problems at once.
-                Users are encouraged to customize these scripts to suit the specifications of their local machines as needed.
+                Users are encouraged to customise these scripts to suit the specifications of their local machines as needed.
             </p>
 
 
@@ -680,12 +692,12 @@
 <pre><span class="comment">#!/bin/bash</span>
 
 <span class="comment"># Configuration paths</span>
-<span class="variable">config_path</span>=<span class="string">"/path/to/config.json"</span>
+<span class="variable">config_path</span>=<span class="string">"./config/example.json"</span>
 <span class="variable">data_file_base</span>=<span class="string">"/path/to/data/"</span>
-<span class="variable">log_file</span>=<span class="string">"/path/to/save/log/file/"</span>
+<span class="variable">log_file</span>=<span class="string">"./log/"</span>
 
 <span class="comment"># Values to update</span>
-<span class="variable">result_path</span>=<span class="string">"/path/to/save/outputs/"</span>
+<span class="variable">result_path</span>=<span class="string">"./outputs/"</span>
 <span class="variable">algorithm</span>=<span class="string">"usara"</span>
 <span class="variable">nufft_package</span>=<span class="string">"finufft"</span>
 <span class="variable">heu_reg_param_scale</span>=<span class="number">2.0</span>
@@ -707,13 +719,13 @@
   <span class="command">cp</span> "<span class="variable">$config_path</span>" "<span class="variable">$temp_config</span>"
 
   <span class="comment"># Modify the temporary JSON file</span>
-  <span class="command">sed</span> -i <span class="string">"s|\"algorithm\": \[\]|\"algorithm\": \"<span class="variable">$algorithm</span>\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"result_path\": \[\]|\"result_path\": \"<span class="variable">$result_path</span>/\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"data_file\": \[\]|\"data_file\": \"<span class="variable">$data</span>\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"nufft_package\": \[\]|\"nufft_package\": \"<span class="variable">$nufft_package</span>\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"weight_load\": true|\"weight_load\": false|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s/\"heu_noise_scale\": \[\]/\"heu_noise_scale\": <span class="variable">$heu_noise_scale</span>/"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s/\"heu_reg_param_scale\": [0-9.]+/\"heu_reg_param_scale\": <span class="variable">$heu_reg_param_scale</span>/"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;algorithm&quot;: \).*|\1&quot;<span class="variable">$algorithm</span>&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;result_path&quot;: \).*|\1&quot;<span class="variable">$result_path</span>/&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;data_file&quot;: \).*|\1&quot;<span class="variable">$data</span>&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;nufft_package&quot;: \).*|\1&quot;<span class="variable">$nufft_package</span>&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;weight_load&quot;: \).*|\1false,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;heu_reg_param_scale&quot;: \).*|\1<span class="variable">$heu_reg_param_scale</span>,|"</span> "<span class="variable">$temp_config</span>"
+
 
   <span class="comment"># Run the Python script with the temporary config</span>
   <span class="command">python3</span> run_imager.py -c "<span class="variable">$temp_config</span>" --data_file "<span class="variable">$data</span>"
@@ -739,15 +751,17 @@
             </p>
 
             <div class="code-container">
+                <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
 <pre><span class="comment">#!/bin/bash</span>
 
 <span class="comment"># Configuration paths</span>
-<span class="variable">config_path</span>=<span class="string">"/path/to/config.json"</span>
+<span class="variable">config_path</span>=<span class="string">"./config/example.json"</span>
 <span class="variable">data_file_base</span>=<span class="string">"/path/to/data/"</span>
-<span class="variable">log_file</span>=<span class="string">"/path/to/save/fPre-trained AIRI denoiserlog/file/"</span>
+<span class="variable">log_file</span>=<span class="string">"./log/"</span>
+<span class="variable">dnn_shelf_path</span>=<span class="string">"./airi_denoisers/airi_mix_denoisers/shelf.csv/"</span>
 
 <span class="comment"># Values to update</span>
-<span class="variable">result_path</span>=<span class="string">"/path/to/save/outputs/"</span>
+<span class="variable">result_path</span>=<span class="string">"./outputs/"</span>
 <span class="variable">algorithm</span>=<span class="string">"airi"</span>
 <span class="variable">nufft_package</span>=<span class="string">"finufft"</span>
 
@@ -775,13 +789,14 @@
   <span class="command">cp</span> "<span class="variable">$config_path</span>" "<span class="variable">$temp_config</span>"
 
   <span class="comment"># Modify the temporary JSON file</span>
-  <span class="command">sed</span> -i <span class="string">"s|\"algorithm\": \[\]|\"algorithm\": \"<span class="variable">$algorithm</span>\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"result_path\": \[\]|\"result_path\": \"<span class="variable">$result_path</span>/\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"data_file\": \[\]|\"data_file\": \"<span class="variable">$data</span>\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"nufft_package\": \[\]|\"nufft_package\": \"<span class="variable">$nufft_package</span>\"|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s|\"weight_load\": true|\"weight_load\": false|"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s/\"heu_noise_scale\": \[\]/\"heu_noise_scale\": <span class="variable">$heu_noise_scale</span>/"</span> "<span class="variable">$temp_config</span>"
-  <span class="command">sed</span> -i <span class="string">"s/\"heu_reg_param_scale\": [0-9.]+/\"heu_reg_param_scale\": <span class="variable">$heu_reg_param_scale</span>/"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;algorithm&quot;: \).*|\1&quot;<span class="variable">$algorithm</span>&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;result_path&quot;: \).*|\1&quot;<span class="variable">$result_path</span>/&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;data_file&quot;: \).*|\1&quot;<span class="variable">$data</span>&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;nufft_package&quot;: \).*|\1&quot;<span class="variable">$nufft_package</span>&quot;,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;weight_load&quot;: \).*|\1false,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;heu_noise_scale&quot;: \).*|\1<span class="variable">$heu_noise_scale</span>,|"</span> "<span class="variable">$temp_config</span>"
+  <span class="command">sed</span> -i <span class="string">"s|\(&quot;dnn_shelf_path&quot;: \).*|\1&quot;<span class="variable">$dnn_shelf_path</span>&quot;,|"</span> "<span class="variable">$temp_config</span>"
+
 
   <span class="comment"># Run the Python script with the temporary config</span>
   <span class="command">python3</span> run_imager.py -c "<span class="variable">$temp_config</span>" --data_file "<span class="variable">$data</span>"
@@ -798,13 +813,14 @@
 <br>
             <h3>R2D2</h3>
             <p>
-                You can access sample config file for R2D2 in <a href="https://github.com/basp-group/R2D2-SII/blob/main/config/reconstruction/R2D2.yaml">R2D2.yaml</a>.
+                You can access sample config file for R2D2 in <a href="https://github.com/basp-group/R2D2-RI/blob/main/config/inference/R2D2.yaml">R2D2.yaml</a>.
 
                 <br>
                 The R2D2 imager can be run by calling:
             </p>
 
     <div class="code-container">
+        <div class="copy-btn" onclick="copyText(this)"><img src="images/copy.png" class="copy_logo"></div>
 <pre><span class="comment">#!/bin/bash</span>
 
 <span class="comment"># Activate the environment</span>
@@ -813,14 +829,22 @@
 <span class="comment"># Prompt user for input</span>
 <span class="command">read</span> -p <span class="string">"Enter architecture (U-Net or U-WDSR DNN): "</span> <span class="variable">architecture</span>
 <span class="command">read</span> -p <span class="string">"Enter number of iterations (25 available): "</span> <span class="variable">num_iter</span>
-<span class="command">read</span> -p <span class="string">"Enter number of channels (64 for unet, 32 for uwdsr DNN): "</span> <span class="variable">num_chans</span>
 <span class="command">read</span> -p <span class="string">"Enter NUFFT package (tkbn/finufft/pynufft/psf): "</span> <span class="variable">nufft_pkg</span>
 
 <span class="comment"># Set paths</span>
+<span class="command">if</span> [ <span class="string">"<span class="variable">$architecture</span>" = "U-Net"</span> ]; <span class="command">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">ckpt_path</span>=<span class="string">"./ckpt/R2D2_A1/"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">num_chans</span>=<span class="string">64</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">output_path</span>=<span class="string">"./outputs/R2D2_A1/"</span><br>
+<span class="command">elif</span> [ <span class="string">"<span class="variable">$architecture</span>" = "U-WDSR"</span> ]; <span class="command">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">ckpt_path</span>=<span class="string">"./ckpt/R2D2_A2/"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">num_chans</span>=<span class="string">32</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">output_path</span>=<span class="string">"./outputs/R2D2_A2/"</span><br>
+<span class="command">fi</span>
+
+
 <span class="variable">data_file_base</span>=<span class="string">"/path/to/data/"</span>
-<span class="variable">yaml_template</span>=<span class="string">"/path/to/r2d2.yaml"</span>
-<span class="variable">ckpt_path</span>=<span class="string">"/path/to/R2D2/checkpoints/"</span>
-<span class="variable">output_path</span>=<span class="string">"/path/to/save/outputs/"</span>
+<span class="variable">yaml_template</span>=<span class="string">"./config/inference/R2D2.yaml"</span>
 <span class="variable">save_all_outputs</span>=<span class="string">True</span>
 <span class="variable">prune</span>=<span class="string">True</span>
 <span class="variable">sigma_res_tol</span>=<span class="number">1e-3</span>
@@ -843,18 +867,15 @@
     <span class="command">sed</span> -i <span class="string">"s|ckpt_path:.*|ckpt_path: <span class="variable">$ckpt_path</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|data_file:.*|data_file: <span class="variable">$data_file</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|gdth_file:.*|gdth_file: <span class="variable">$gdth_file</span>|"</span> "<span class="variable">$yaml_file</span>"
-    <span class="command">sed</span> -i <span class="string">"s|series:.*|series: <span class="variable">$series</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|num_iter:.*|num_iter: <span class="variable">$num_iter</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|num_chans:.*|num_chans: <span class="variable">$num_chans</span>|"</span> "<span class="variable">$yaml_file</span>"
-    <span class="command">sed</span> -i <span class="string">"s|layers:.*|layers: <span class="variable">$layers</span>|"</span> "<span class="variable">$yaml_file</span>"
+    <span class="command">sed</span> -i <span class="string">"s|ckpt_realisations:.*|ckpt_realisations: <span class="variable">$ckpt_realisations</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|die_calib:.*|die_calib: <span class="variable">$die_calib</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|architecture:.*|architecture: <span class="variable">$architecture</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|save_all_outputs:.*|save_all_outputs: <span class="variable">$save_all_outputs</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|prune:.*|prune: <span class="variable">$prune</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|sigma_res_tol:.*|sigma_res_tol: <span class="variable">$sigma_res_tol</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|nufft_pkg:.*|nufft_pkg: <span class="variable">$nufft_pkg</span>|"</span> "<span class="variable">$yaml_file</span>"
-
-    <span class="comment"># GPU residual, table interpolation</span>
     <span class="command">sed</span> -i <span class="string">"s|output_path:.*|output_path: <span class="variable">$specific_output_path</span>|"</span> "<span class="variable">$yaml_file</span>"
     <span class="command">sed</span> -i <span class="string">"s|res_on_gpu:.*|res_on_gpu: True|"</span> "<span class="variable">$yaml_file</span>"
 
@@ -862,7 +883,7 @@
     <span class="command">mkdir</span> -p "<span class="variable">$output_path</span>"
 
     <span class="comment"># Run the Python script with the updated YAML file</span>
-    <span class="command">python3</span> src/imager_BR_ch2.py --config "<span class="variable">$yaml_file</span>"
+    <span class="command">python3</span> src/imager.py --config "<span class="variable">$yaml_file</span>"
 
     <span class="comment"># Optionally, remove the temporary YAML file after the run</span>
     <span class="command">rm</span> "<span class="variable">$yaml_file</span>"
@@ -945,7 +966,7 @@
             <h1 class="fancy-heading">Evaluation metrics calculation</h1>
             <p>
                 The evaluation metrics can be calculated using this
-                <a href="https://www.dropbox.com/scl/fi/q2uyd9tykxe45ghwjfzfe/calculate_metrics.py?rlkey=94h62bohwwdz7qnvv04kiu8vv&dl=1">
+                <a href="https://www.dropbox.com/scl/fi/h4pfum0ujeud58drf8xn5/calculate_metrics.py?rlkey=9njfmpyba4apfu3e5fcwc4ony&e=1&st=aqaovl56&dl=1">
                     Python file</a>.
                 To run calculate_metrics.py you can use below bash script:
             </p>
@@ -958,17 +979,28 @@
 <span class="comment">#!/bin/bash</span>
 
 <span class="comment"># Define variables</span>
-<span class="variable">DATA_FILE</span>=<span class="string">"/path/to/data/folder"</span>
-<span class="variable">EXCEL_SAVE_PATH</span>=<span class="string">"/path/to/save/metrics/AIRI.xlsx"</span>
-<span class="variable">GT_PATH</span>=<span class="string">"/path/to/ground/truth/images/folder"</span>
-<span class="variable">MODEL_OUTPUTS</span>=<span class="string">"/path/to/model/outputs/folder/"</span>
-<span class="variable">MODEL</span>=<span class="string">"R2D2"</span> <span class="comment"># or "R3D3" or "AIRI" or "uSARA"</span>
+<span class="variable">MODEL</span>=<span class="string">"R2D2_A1"</span> <span class="comment">#  or "R2D2_A2" or "uSARA" or "AIRI"</span>
+<span class="variable">DATA_FILE</span>=<span class="string">"/path/to/data/"</span>
 
-<span class="comment"># Activate your virtual environment if needed</span>
-<span class="keyword">source</span> <span class="variable">/path/to/your/virtualenv/bin/activate</span>
+<span class="variable">EXCEL_SAVE_PATH</span>=<span class="string">"/path/to/save/reslt_excel_file/$MODEL.xlsx"</span>
+
+<span class="variable">GT_PATH</span>=<span class="string">"/path/to/GT/images/"</span>
+
+<span class="variable">MODEL_OUTPUTS</span>=<span class="string">"./outputs/$MODEL"</span>
+
+<span class="comment"># Activate your virtual environment</span>
+<span class="keyword">source</span> <span class="string">/work/ec110/ec110/aa2201/environment/R2D2_venv/bin/activate</span>
 
 <span class="comment"># Run the Python script</span>
-<span class="keyword">python</span> <span class="function">calculate_metrics.py</span> <span class="variable">--data_file</span> <span class="string">"$DATA_FILE"</span> <span class="variable">--excel_save_path</span> <span class="string">"$EXCEL_SAVE_PATH"</span> <span class="variable">--GT_path</span> <span class="string">"$GT_PATH"</span> <span class="variable">--model_outputs</span> <span class="string">"$MODEL_OUTPUTS"</span> <span class="variable">--model</span> <span class="string">"$MODEL"</span>
+<span class="keyword">if</span> [[ <span class="string">"$MODEL"</span> = <span class="string">"AIRI"</span> || <span class="string">"$MODEL"</span> = <span class="string">"uSARA"</span> ]]; <span class="keyword">then</span>
+    <span class="keyword">python</span> <span class="string">calculate_metrics.py</span> --data_file <span class="string">"$DATA_FILE"</span> --excel_save_path <span class="string">"$EXCEL_SAVE_PATH"</span> --GT_path <span class="string">"$GT_PATH"</span> --model_outputs <span class="string">"$MODEL_OUTPUTS"</span> --model <span class="string">"$MODEL"</span>
+<span class="keyword">elif</span> [[ <span class="string">"$MODEL"</span> = <span class="string">"R2D2_A1"</span> || <span class="string">"$MODEL"</span> = <span class="string">"R2D2_A2"</span> ]]; <span class="keyword">then</span>
+    <span class="keyword">for</span> <span class="variable">i</span> in <span class="string">{2..2}</span>; <span class="keyword">do</span>
+        <span class="variable">R2D2_iteration</span>=<span class="string">${i}</span>
+        <span class="keyword">python</span> <span class="string">calculate_metrics.py</span> --data_file <span class="string">"$DATA_FILE"</span> --excel_save_path <span class="string">"$EXCEL_SAVE_PATH"</span> --GT_path <span class="string">"$GT_PATH"</span> --model_outputs <span class="string">"$MODEL_OUTPUTS"</span> --model <span class="string">"$MODEL"</span> --R2D2_iteration <span class="string">"$R2D2_iteration"</span>
+    <span class="keyword">done</span>
+<span class="keyword">fi</span>
+
         </pre>
     </div>
 
@@ -978,7 +1010,7 @@
 <!--            The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy.-->
 <!--            ApJS, 273(1):3, 2024, | <a href="https://arxiv.org/abs/2403.05452">arXiv:2403.05452</a> | <a href="https://doi.org/10.3847/1538-4365/ad46f5">DOI:10.3847/1538-4365/ad46f5</a>-->
 <!--            <br><br>-->
-            [1] Aghabiglou A, Chu CS, Dabbech A, Wiaux Y.
+            [1] Aghabiglou A, Chu CS, Tang C, Dabbech A, Wiaux Y.
             Towards a robust R2D2 paradigm for radio-interferometric imaging: revisiting DNN training and architecture.
             <a href="https://doi.org/10.48550/arXiv.2503.02554" target="_blank">arXiv:2503.02554v1</a>
             <br><br>
@@ -1017,7 +1049,7 @@
 <!--            Monthly Notices of the Royal Astronomical Society. 2014 Oct 11;444(1):606-19. |-->
 <!--            <a href="https://doi.org/10.1093/mnras/stu1368">DOI:10.1093/mnras/stu1368</a>-->
 <!--            <br><br>-->
-            [8] Offringa AR, Smirnov O. An optimized algorithm for multiscale wideband deconvolution of radio
+            [8] Offringa AR, Smirnov O. An optimised algorithm for multiscale wideband deconvolution of radio
             astronomical images. Monthly Notices of the Royal Astronomical Society. 2017 Oct;471(1):301-16. |
             <a href="https://doi.org/10.1093/mnras/stx1547">DOI:10.1093/mnras/stx1547</a>
             <br><br>

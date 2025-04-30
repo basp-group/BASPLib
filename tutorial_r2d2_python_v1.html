@@ -7530,7 +7530,7 @@ a.anchor-link {
 <p>[1] Aghabiglou, A., Chu, C. S., Dabbech, A. &amp; Wiaux, Y., <a href="https://doi.org/10.3847/1538-4365/ad46f5">The R2D2 deep neural network series paradigm for fast precision imaging in radio astronomy</a>, ApJS 273(1), 3.</p>
 <p>[2] Dabbech, A., Aghabiglou, A., Chu, C. S. &amp; Wiaux, Y., <a href="https://doi.org/10.3847/2041-8213/ad41df">CLEANing Cygnus A deep and fast with R2D2</a>, ApJL 966(2), L34.</p>
 </blockquote>
-<p>In this tutorial, we focus on a <a href="https://github.com/basp-group/R2D2-SII">Python implementation of R2D2</a> for small-scale monochromatic intensity imaging in SII from the environment setup, to imaging.</p>
+<p>In this tutorial, we focus on a <a href="https://github.com/basp-group/R2D2-SII">Python implementation of R2D2</a> for small-scale monochromatic intensity imaging in RI from the environment setup, to imaging.</p>
 </div>
 </div>
 </div>
@@ -7541,10 +7541,10 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="SII-Inverse-Problem">SII Inverse Problem<a class="anchor-link" href="#SII-Inverse-Problem">¶</a></h2><p>The SII imaging inverse problem can be formulated as:</p>
+<h2 id="SII-Inverse-Problem">RI Inverse Problem<a class="anchor-link" href="#SII-Inverse-Problem">¶</a></h2><p>The RI imaging inverse problem can be formulated as:</p>
 <p>$$ \boldsymbol{y} = \boldsymbol{\Phi \bar{x}} + \boldsymbol{n},$$</p>
 <p>where  $\boldsymbol{y} \in \mathbb{C}^M$  is the measurement vector,  $\boldsymbol{\bar{x}} \in \mathbb{R}^N$  is the unknown radio image,  $\boldsymbol{\Phi} \in \mathbb{C}^{N \times M}$ is the measurement operator corresponding to incomplete Fourier sampling, and  $\boldsymbol{n} \in \mathbb{C}^M$  is a realisation of a white Gaussian noise with standard deviation  $\tau &gt; 0$  and mean $0$.</p>
-<p>The SII inverse problem can be formulated in the image domain via back-projection of the measurements using the adjoint of the measurement operator $\boldsymbol{\Phi}^\dagger$.
+<p>The RI inverse problem can be formulated in the image domain via back-projection of the measurements using the adjoint of the measurement operator $\boldsymbol{\Phi}^\dagger$.
 The image-domain data, known as the dirty image, reads:</p>
 <p>$$ \boldsymbol{x}_{\textrm{d}} = \kappa \textrm{Re}\{ \boldsymbol{\Phi}^\dagger \boldsymbol{y}\} = \kappa \textrm{Re}\{ \boldsymbol{\Phi}^\dagger \boldsymbol{\Phi} \bar{x}+ \boldsymbol{\Phi}^\dagger \boldsymbol{n}\},$$</p>
 <p>where  $\textrm{Re}\{ \cdot \} $ denotes the real part of its arugment, and  $\kappa&gt;0 $ is a normalisation factor ensuring the maximum value of the point spread function (PSF), given by  $\kappa \textrm{Re} \{\boldsymbol{\Phi}^\dagger \boldsymbol{\Phi} \boldsymbol{\delta}\} $, is equal to $1$, with  $\boldsymbol{\delta} $ denoting the image with value $1$ at its center pixel and $0$ otherwise.</p>

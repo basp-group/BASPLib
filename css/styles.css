@@ -176,6 +176,14 @@ a:hover {
     margin-top: 0.5vw;
 }
 
+.logo-container2 {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1vw;
+    margin-top: 0.1vw;
+}
+
 .logo {
     width: 3.5vw;
     height: auto;
@@ -184,7 +192,21 @@ a:hover {
     border-radius: 0.4vw;
 }
 
+.logo2 {
+    width: 2vw;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.4s, box-shadow 0.4s;
+    border-radius: 0.4vw;
+}
+
 .logo:hover {
+    transform: scale(1.7);
+    box-shadow: 0 2vw 2vw rgba(0, 0, 0, 0.3);
+    border-radius: 2.5vw;
+}
+
+.logo2:hover {
     transform: scale(1.7);
     box-shadow: 0 2vw 2vw rgba(0, 0, 0, 0.3);
     border-radius: 2.5vw;
@@ -475,3 +497,4 @@ color: white;text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.version{color: darkorange;}
