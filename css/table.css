@@ -6,7 +6,7 @@ table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            font-size: 1.1vw;
+            font-size: 0.9vw;
             font-family: Arial, sans-serif;
         }
 table, th, td {
@@ -23,7 +23,7 @@ th:first-child {
     width: 6vw; /* Adjust the width percentage as needed */
   }
 td:first-child {
-    font-size: 1.1vw; /* Adjust the font size as needed */
+    font-size: 0.9vw; /* Adjust the font size as needed */
   }
 tr:nth-child(even) {
             background-color: #f9f9f9;
