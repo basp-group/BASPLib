@@ -7,7 +7,7 @@ header {
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /*padding: 1%;*/
-    height: 100px;
+    height: 3.5vw;
     /*justify-content: space-between;*/
     align-items: center;
     position: relative; /* Ensure the navigation bar stays on top */
@@ -17,7 +17,7 @@ header {
 .left-side {
     display: flex;
     align-items: center;
-    width: 150px;
+    width: 10vw;
     Justify-content:center;
 }
 .middle-nav {
@@ -25,7 +25,7 @@ header {
     align-items: center;
     flex:1;
     Justify-content:start;
-    font-size: 1.2vw;
+    font-size: 0.9vw;
     /*margin-right: 5px;*/
     /*margin-left: 5px;*/
 }
@@ -38,8 +38,8 @@ header {
 }
 
 .left-side img {
-    width: 100px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: 5vw; /* Adjust this value for desired size */
+    height: auto;
 }
 
 nav {
@@ -127,7 +127,7 @@ nav a:hover,
     color: white;
     padding: 5px;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 0.8vw;
     white-space: nowrap; /* Prevent text from wrapping */
 }
 
@@ -143,86 +143,154 @@ nav a:hover,
 }
 
 
-/*.search-bar {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*}*/
-
-/*.search-bar input {*/
-/*    padding: 10px;*/
-/*    margin-right: 5px;*/
-/*    border: none;*/
-/*    border-radius: 5px;*/
-/*    font-size: 16px;*/
-/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
-/*    transition: box-shadow 0.3s, background-color 0.3s;*/
-/*}*/
-
-/*.search-bar input:focus {*/
-/*    outline: none;*/
-/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
-/*}*/
-
-/*.search-bar button {*/
-/*    padding: 10px 20px;*/
-/*    border: none;*/
-/*    background-color: #555;*/
-/*    color: white;*/
-/*    border-radius: 5px;*/
-/*    font-size: 16px;*/
-/*    cursor: pointer;*/
-/*    transition: background-color 0.3s;*/
-/*}*/
-
-/*.search-bar button:hover {*/
-/*    background-color: #333;*/
-/*}*/
-
-
 .contact-icon {
-    margin-right: 50px; /* Add margin between contact and search icons */
+    margin-right: 5vw; /* Add margin between contact and search icons */
     cursor: pointer;
     position: relative; /* Position relative for positioning the tooltip */
 }
 
 .contact-icon img {
-    width: 50px; /* Adjust the width as needed */
-    height: 50px; /* Adjust the height as needed */
+    width: 2.5vw; /* Adjust the width as needed */
+    height: auto; /* Adjust the height as needed */
 }
 
 /* Hide hamburger menu by default */
 .hamburger-menu {
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 5vw;
+    height: 36px;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    /* Add styles for hamburger icon */
+    padding: 6vw;
 }
 
-/* Styles for hamburger bars */
 .bar {
-    width: 25px;
-    height: 3px;
-    background-color: dimgray;
-    margin: 5px 15px;
-
+    width: 4vw;
+    height: 0.4vw;
+    background-color: gray;
+    border-radius: 2vw;
 }
 
 /* Add media query to show hamburger menu on smaller screens */
 /* Add media query to show hamburger menu on smaller screens */
+
+
+
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown button styling */
+.dropbtn {
+    font-weight: bold;
+    color: gray;
+    text-decoration: none;
+    padding: 1vw 1.3vw;
+    margin: 0 0.1vw;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+/* Hover effect for dropdown button */
+.dropbtn:hover {
+    background-color: lightgray;
+    color: white;
+}
+
+/* Dropdown content box */
+.dropdown-content {
+    display: none;
+    border-top: 0.25vw solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    background-color: white;
+    min-width: 10vw;
+    width: max-content; /* Allow menu to grow with content */
+    white-space: nowrap; /* Prevent wrapping */
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+    border-radius: 5px;
+    z-index: 5;
+    top: 3vw;
+    left: 0;
+    padding: 0.3vw 0;
+}
+
+/* Each link in dropdown */
+.dropdown-content a {
+    color: gray;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 0.8vw;
+    gap: 0.7vw;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap; /* Force all text to one line */
+}
+
+/* Remove border from last item */
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+/* Hover for dropdown links */
+.dropdown-content a:hover {
+    background-color: lightgray;
+    color: white;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Image sizing inside dropdown */
+.dropdown-content a img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+
 @media screen and (max-width: 768px) {
     .hamburger-menu {
-        display: block; /* Show the hamburger menu on smaller screens */
+        display: flex; /* Show the hamburger menu on smaller screens */
     }
+    header {
+    display: flex;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*padding: 1%;*/
+    height: 6vw;
+    /*justify-content: space-between;*/
+    align-items: center;
+    position: relative; /* Ensure the navigation bar stays on top */
+    z-index: 2; /* Set a higher z-index to bring the navigation bar forward */
+}
+    .left-side img {
+    width: 7vw; /* Adjust this value for desired size */
+    height: auto;
+}
 
     /* Hide header links when hamburger menu is shown */
     .middle-nav {
         display: none; /* Initially hide the navigation links */
         flex-direction: column; /* Change direction to column */
         position: absolute;
-        top: 100%; /* Position below the hamburger menu */
+        top: 3.5vw; /* Position below the hamburger menu */
         left: 0;
         background-color: white; /* Adjust as needed */
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
         z-index: 999; /* Ensure it's on top */
+        font-size: 2vw;
     }
 
     /* Adjust styles for menu items */
@@ -234,14 +302,50 @@ nav a:hover,
     .right-side {
     display: flex;
     align-items: center;
-    width: 100px;
+    width: 110vw;
     Justify-content:end;
     margin-left: 40%;
     }
-    .left-side img {
-    width: 20vw; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
+    .contact-icon img {
+    width: 5vw; /* Adjust the width as needed */
+    height: auto; /* Adjust the height as needed */
+}
+
+}
+
+/* Responsive styling for dropdown */
+@media screen and (max-width: 768px) {
+    .dropdown-content {
+    	top: 6vw;
+    	left: 0;
+}
+    .dropdown-content {
+    min-width: 15vw;
+}
+    .dropdown-content a {
+    color: gray;
+    padding: 1vw 10vw 1vw 1vw;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 1.5vw;
+    gap: 0.7vw;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap; /* Force all text to one line */
+}
+
+
+
+    .dropbtn {
+        padding: 12px;
+        display: block;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
     }
 }
+
+
 
 
