@@ -28,6 +28,7 @@
             while cAIRI (standing for "constrained AIRI") relies on a Primal-Dual Forward-Backward optimisation algorithmic backbone enabling handling hard data-fidelity
             constraints. Both AIRI and cAIRI are shipped with uncertainty quantification functionality. Their primary application is to solve large-scale high-resolution high-dynamic range inverse problems for RI in radio astronomy, more specifically 2D planar monochromatic intensity imaging. AIRI and cAIRI provide improved precision and acceleration
             of the image reconstruction process over their pure optimisation counterparts, respectively uSARA and SARA (see SARA page).
+            HyperAIRI extends AIRI to the hyperspectral setting, enabling joint reconstruction across wide frequency bands through learned hyperspectral denoisers that enforce a power-law spectral model. Built upon a Forward–Backward backbone with convergence guarantees, HyperAIRI updates all spectral channels in parallel and provides enhanced precision and scalability for large-scale hyperspectral RI imaging.
             </p>
 <!--            <p>-->
 <!--            As of early 2024, the transfer-->
@@ -40,8 +41,13 @@
                     AIRI
                 </div>
             </a>
+
             <a href="cAIRI.html" target="_blank">
                 <div class="link-box_main">cAIRI</div>
+            </a>
+
+            <a href="HyperAIRI.html" target="_blank">
+                <div class="link-box_main">HyperAIRI</div>
             </a>
             </div>
             <br><br>
