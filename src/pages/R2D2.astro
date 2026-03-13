@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="R2D2 | BASPLib">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
+
+        <div class="flex-1 space-y-8">
+            <header class="mb-8">
+                <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                    R2D2
+                </h1>
+                <h2 class="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-[#6E898A] italic border-b border-slate-200 pb-4">
+                    Residual-to-Residual DNN series for high-Dynamic range imaging
+                </h2>
+            </header>
+
+            <blockquote class="border-l-4 border-[#CF9E5F] pl-6 py-3 bg-[#292350]/5 rounded-r-xl shadow-sm">
+                <p class="text-xl font-bold text-[#2F3E5E] italic">
+                    "Did you know that R2D2 is a DNN series?"
+                </p>
+            </blockquote>
+
+            <article class="space-y-6 text-lg leading-relaxed text-slate-700">
+                <p style="text-align: justify;">
+                    R2D2 takes a hybrid structure between a Plug-and-Play (PnP) algorithm and a learned version of the well-know "Matching Pursuit" algorithm. Its reconstruction is
+                    formed as a series of residual images, iteratively estimated as outputs of Deep Neural Networks (DNNs) taking the previous iteration’s image estimate and associated
+                    data residual as inputs. R2D2's primary application is to solve large-scale high-resolution high-dynamic range inverse problems for RI in radio astronomy, more specifically 2D planar
+                    monochromatic intensity imaging. R2D2 provides significant acceleration of the image reconstruction process over highly iterative PnP and proximal (optimisation) algorithms, while
+                    maintaining imaging precision. It thus opens the door to ultra-fast precision imaging.
+                </p>
+                <p style="text-align: justify;">
+                    As of early 2026, several active research directions are expanding the scope and capabilities of R2D2 at BASP.
+                    These include scaling R2D2 to handle increasingly large and complex datasets, such as large-scale
+                    and 3D wideband radio interferometric imaging, and transferring the methodology to challenging
+                    medical imaging modalities including MRI and ultrasound. Ongoing developments also extend R2D2
+                    to spherical imaging (S-R2D2) and explore its generalisation into a cross-domain foundation model
+                    for inverse problems across multiple sensing modalities. Stay tuned!
+                </p>
+            </article>
+
+            <div class="pt-8 mt-8 border-t border-slate-200">
+                <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3">
+                    Papers & Codes
+                    <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-8 w-auto object-contain" />
+                </h3>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="/R2D2_RI" class="group relative flex items-center gap-3 px-8 py-3.5 bg-[#292350] border border-[#292350] text-slate-100 font-bold rounded-xl shadow-md hover:shadow-lg hover:border-[#CF9E5F] hover:text-white transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#CF9E5F]/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <span class="relative z-10">R2D2 RI</span>
+                        <svg class="relative z-10 w-4 h-4 transition-transform group-hover:translate-x-1 text-[#CF9E5F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+
+                    <a href="/R2D2_MRI" class="group relative flex items-center gap-3 px-8 py-3.5 bg-[#292350] border border-[#292350] text-slate-100 font-bold rounded-xl shadow-md hover:shadow-lg hover:border-[#CF9E5F] hover:text-white transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#CF9E5F]/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <span class="relative z-10">R2D2 MRI</span>
+                        <svg class="relative z-10 w-4 h-4 transition-transform group-hover:translate-x-1 text-[#CF9E5F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+
+                    <a href="/S-R2D2" class="group relative flex items-center gap-3 px-8 py-3.5 bg-[#292350] border border-[#292350] text-slate-100 font-bold rounded-xl shadow-md hover:shadow-lg hover:border-[#CF9E5F] hover:text-white transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#CF9E5F]/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <span class="relative z-10">S-R2D2</span>
+                        <svg class="relative z-10 w-4 h-4 transition-transform group-hover:translate-x-1 text-[#CF9E5F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/3 flex justify-center md:justify-end md:sticky top-32 pt-8 md:pt-0">
+            <div class="relative group">
+                <div class="absolute -inset-4 bg-gradient-to-br from-[#2F3E5E]/10 to-[#CF9E5F]/10 rounded-full blur-2xl opacity-30 group-hover:opacity-60 transition-opacity duration-500"></div>
+
+                <img
+                    src="/images/R2D2.png"
+                    alt="R2D2 Reconstruction"
+                    class="relative w-48 md:w-full max-w-xs object-contain opacity-100 hover:opacity-100 hover:scale-105 transition-all duration-500"
+                />
+            </div>
+        </div>
+
+    </div>
+</Layout>

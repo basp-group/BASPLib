@@ -1,0 +1,990 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Benchmarking | BASPLib">
+
+    <script is:inline src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script is:inline id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <div class="max-w-5xl mx-auto space-y-12 pb-20">
+
+        <header>
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                Benchmarking
+            </h1>
+            <h2 class="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-[#6E898A] italic border-b border-slate-200 pb-4">
+                Benchmarking Platform for State-of-the-Art RI Imaging Algorithms
+            </h2>
+        </header>
+
+        <article class="space-y-6 text-lg leading-relaxed text-slate-700">
+            <p>
+                We present a benchmarking platform for the state-of-the-art algorithms for synthesis imaging by interferometry (RI) provided by <a href="#" class="font-bold text-[#CF9E5F] hover:underline">BASPLib</a>: uSARA, AIRI, and R2D2.
+                We provide access to our simulated comprehensive testbed that is composed of 200 RI inverse problems,
+                and offer detailed guidelines to reproduce the reconstruction results published in our study [1].
+            </p>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-12 mb-6 border-b border-slate-200 pb-2">RI inverse problem</h3>
+
+            <p>
+                In radio interferometry, each pair of antennas acquires a
+                noisy complex measurement corresponding to a spatial Fourier component of the target radio
+                sky, at a given time instant. The collection of the sensed spatial Fourier modes accumulated over the total observation period forms
+                the Fourier sampling pattern, describing an incomplete coverage of the 2D Fourier plane.
+                Considering the unknown radio image of
+                interest \(&#123;\boldsymbol&#123;x&#125;^&#123;\star&#125;&#125; \in \mathbb&#123;R&#125;_&#123;+&#125;^&#123;N&#125;,\)  the RI data model reads:
+                \[
+                &#123;\boldsymbol&#123;y&#125;&#125; = &#123;\boldsymbol&#123;\Phi&#125; &#123;\boldsymbol&#123;x&#125;^&#123;\star&#125;&#125; + \boldsymbol&#123;n&#125;&#125;
+                \]
+                where \(&#123;\boldsymbol&#123;y&#125;&#125; \in \mathbb&#123;C&#125;^M\) denotes the data vector, \(&#123;\boldsymbol&#123;n&#125;&#125; \in \mathbb&#123;C&#125;^M\) represents a complex Gaussian random noise with a standard deviation \(\tau>0\)
+                and mean 0. The linear operator \(&#123;\boldsymbol&#123;\Phi&#125;&#125;\colon \mathbb&#123;R&#125;^N \to \mathbb&#123;C&#125;^M\) is the measurement operator
+                (i.e., describing the acquisition process), consisting in a nonuniform Fourier sampling. The operator
+                 \(&#123;\boldsymbol&#123;\Phi&#125;&#125;\) can also include a data-weighting scheme to improve the observation's effective
+                resolution.
+            </p>
+            <p>
+                The radio-interferometric data model can be expressed in the image domain via a normalised back-projection using the adjoint of the measurement operator  \(\boldsymbol&#123;\Phi&#125;^\dagger \) such that:
+
+                \[\boldsymbol&#123;x&#125;_&#123;\textrm&#123;d&#125;&#125; =\kappa \text&#123;Re&#125;\&#123;\boldsymbol&#123;\Phi&#125;^\dagger \boldsymbol&#123;y&#125;\&#125;=
+                \kappa \text&#123;Re&#125;\&#123;\boldsymbol&#123;\Phi&#125;^\dagger \boldsymbol&#123;\Phi&#125;\boldsymbol&#123;x&#125;^&#123;\star&#125;+ \boldsymbol&#123;\Phi&#125;^\dagger \boldsymbol&#123;n&#125;\&#125;\]
+
+                where \(\boldsymbol&#123;x&#125;_&#123;\textrm&#123;d&#125;&#125; \in \mathbb&#123;R&#125;^N\) stands for the back-projected data, known as the dirty image,
+                and \(\textrm&#123;Re&#125;\&#123;\cdot\&#125;\) stands for the real part of its argument.
+                In this equation, the normalisation factor \(\kappa>0\) is equal to
+                \((\max(\text&#123;Re&#125;\&#123;&#123;\boldsymbol&#123;\Phi&#125;&#125;^&#123;\dagger&#125;&#123;\boldsymbol&#123;\Phi&#125;&#125;\boldsymbol&#123;\delta&#125;\&#125;))^&#123;-1&#125;\),
+                ensuring that the point spread function (PSF), defined as
+                \(\kappa \text&#123;Re&#125;\&#123;\boldsymbol&#123;\Phi&#125;^&#123;\dagger&#125;&#123;\boldsymbol&#123;\Phi&#125;&#125;\boldsymbol&#123;\delta&#125;\&#125; \in \mathbb&#123;R&#125;^N\),
+                has a peak value of 1. The Dirac \(\boldsymbol&#123;\delta&#125; \in \mathbb&#123;R&#125;^N\) is the image with value 1 at its center and 0 elsewhere.
+            </p>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-12 mb-6 border-b border-slate-200 pb-2">RI testbed description</h3>
+            <p>
+                The testbed is composed of ground-truth images (in .fits format) and associated data files (in .mat format).
+                The ground-truth images are derived from four real radio images, which underwent post-processing to eliminate artefacts such as deconvolution errors and noise, and endow them
+                with high dynamic ranges.
+            </p>
+            <p>
+                The considered raw radio images are the giant radio galaxies 3C353 and M106, and the radio galaxy clusters A2034 and PSZ2G165.68+44.01, sourced from NRAO Archives and LOFAR surveys [2,3,4].
+                From each radio image, 50 curated ground-truth images of size 512\(\times\)512 were generated, characterised with large dynamic ranges varying in [10<sup>3</sup>, 5\(\times\)10<sup>5</sup>].
+                Simulated radio interferometric data associated with the ground-truth images are obtained from sampling patterns of the Very Large Array (VLA), generated under a wide
+                variety of the observation settings, including total observation time, pointing direction, etc. Sampling patterns
+                combining both VLA configurations A and C were considered for a balanced Fourier coverage. The total number of points in the resulting Fourier sampling patterns ranges from 0.2M to 2M. The data are corrupted with additive Gaussian noise with mean 0 and a standard deviation commensurate of the dynamic range of the corresponding ground truth images.
+            </p>
+            <p>
+                The simulated data are such that the spatial bandwidth of the Fourier sampling is fixed to 2/3 of
+                the spatial Fourier bandwidth of the ground-truth images. Under these considerations, the
+                testbed comprises 200 unique inverse problems. During imaging, the Briggs weighting scheme was applied to the
+                data  (also injected into the measurement operator) to enhance the effective resolution of
+                the reconstructions, where the Briggs parameter was uniformly randomised between \(-1\) and \(1\),
+                with lower values approaching uniform weighting, and higher values approaching natural weighting.
+                The pixel resolution of the dirty images was also randomly chosen to reflect a super-resolution factor
+                during imaging in the range \([1.5, 2.5]\).
+            </p>
+            <p>
+                Detailed information on the testbed can be found in [1]. The code utilised to generate a wide variety of sampling patterns and corresponding RI data is part of the <a href="https://basp-group.github.io/BASPLib/UTILS.html" class="text-[#CF9E5F] font-bold hover:underline">utilities</a> offered by <a href="#" class="font-bold text-[#CF9E5F] hover:underline">BASPLib</a>.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8 image-gallery">
+                <figure class="bg-slate-50 p-4 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/GT/M106_GT.png" alt="M106 Ground Truth" class="w-full rounded shadow hover:scale-105 transition-transform duration-300 cursor-pointer" />
+                    <figcaption class="text-sm text-center text-slate-500 mt-3 font-medium">Ground truth image derived from M106<br />Dynamic range: 387,203</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-4 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/GT/uv_id_80297.png" alt="VLA sampling pattern" class="w-full rounded shadow hover:scale-105 transition-transform duration-300 cursor-pointer" />
+                    <figcaption class="text-sm text-center text-slate-500 mt-3 font-medium">VLA sampling pattern</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-4 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/GT/M106_dirty.png" alt="Dirty image" class="w-full rounded shadow hover:scale-105 transition-transform duration-300 cursor-pointer" />
+                    <figcaption class="text-sm text-center text-slate-500 mt-3 font-medium">Dirty image \(\boldsymbol&#123;x&#125;_&#123;\textrm&#123;d&#125;&#125;\)</figcaption>
+                </figure>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-12 mb-6 border-b border-slate-200 pb-2">RI imaging algorithms</h3>
+            <p>The <a href="#" class="font-bold text-[#CF9E5F] hover:underline">BASPLib</a> imaging algorithms used for benchmarking are:</p>
+            <ul class="space-y-4">
+                <li><a href="uSARA.html" class="text-[#292350] font-bold hover:text-[#CF9E5F] transition-colors">uSARA:</a> the unconstrained counterpart of the SARA algorithm [5,6]. It promotes a handcrafted sparsity-based regularisation, and is underpinned by the forward-backward algorithmic structure. The Python implementation of uSARA for small-scale RI imaging is available in <a href="https://github.com/basp-group/Small-scale-RI-imaging" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">uSARA repository</a>.</li>
+
+                <li><a href="AIRI.html" class="text-[#292350] font-bold hover:text-[#CF9E5F] transition-colors">AIRI:</a> a Plug-and-Play (PnP) algorithm at the intersection of optimisation theory and deep learning. By inserting carefully trained AIRI denoisers into the proximal splitting algorithms, one waives the computational complexity of optimisation algorithms induced by sophisticated image priors. AIRI is the PnP counterpart of uSARA. The Python implementation of AIRI for small-scale RI imaging is available in <a href="https://github.com/basp-group/Small-scale-RI-imaging" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">AIRI repository</a>.</li>
+
+                <li><a href="R2D2.html" class="text-[#292350] font-bold hover:text-[#CF9E5F] transition-colors">R2D2:</a> a novel paradigm for RI, interpreted as a learned version of the well-known Matching Pursuit algorithm [1,7]. R2D2 reconstruction is formed as a series of residual images, iteratively estimated as outputs of iteration-specific DNNs, each taking the previous iteration’s image estimate and associated back-projected data residual as inputs. We incorporate two distinct DNN architectures as the core components of R2D2:
+                    <ul class="list-disc pl-8 mt-2 text-slate-600 space-y-2">
+                        <li><strong class="text-slate-800">R2D2\(_&#123;\mathcal&#123;A&#125;_1&#125;\):</strong> This configuration employs the widely-used U-Net architecture for its DNNs.</li>
+                        <li><strong class="text-slate-800">R2D2\(_&#123;\mathcal&#123;A&#125;_2&#125;\):</strong> This variant leverages a more advanced architecture, U-WDSR, which enhances performance.</li>
+                    </ul>
+                    The Python implementation of both R2D2\(_&#123;\mathcal&#123;A&#125;_1&#125;\) and R2D2\(_&#123;\mathcal&#123;A&#125;_2&#125;\) are available in <a href="https://github.com/basp-group/R2D2-RI" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">R2D2 repository</a>.
+                </li>
+
+                <li><a href="R2D2.html" class="text-[#292350] font-bold hover:text-[#CF9E5F] transition-colors">U-Net / U-WDSR:</a> an end-to-end DNN, which also corresponds to the first term of the R2D2 DNN series.</li>
+            </ul>
+            <p>
+                In addition to <a href="#" class="font-bold text-[#CF9E5F] hover:underline">BASPLib</a> imaging algorithms, the benchmarking results also include the celebrated CLEAN algorithm.
+                CLEAN, recognised as a standard algorithm for RI imaging, is represented here by its multiscale variant implemented in the widely used <a href="https://gitlab.com/aroffringa/wsclean" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">WSClean</a> software [8].
+            </p>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-12 mb-6 border-b border-slate-200 pb-2">Evaluation metrics</h3>
+            <p>To assess the performance of the reconstruction algorithms, we use quantitative metrics described below.</p>
+
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-6">
+                <div>
+                    <strong class="text-[#292350] block mb-2">Ground truth fidelity (SNR, logSNR)</strong>
+                    The Signal-to-Noise Ratio (SNR) metric is defined as:
+                    \[\text&#123;SNR&#125;(\boldsymbol&#123;x&#125;^&#123;\star&#125;, \boldsymbol&#123;x&#125;) = 20\log_&#123;10&#125;\left(\frac&#123;\|\boldsymbol&#123;x&#125;^&#123;\star&#125;\|_&#123;2&#125;&#125;&#123;\|\boldsymbol&#123;x&#125;^&#123;\star&#125; - \boldsymbol&#123;x&#125;\|_&#123;2&#125;&#125; \right), \]
+                    where \(\boldsymbol&#123;x&#125;^&#123;\star&#125;\) stands for the ground truth, and \(\boldsymbol&#123;x&#125;\) denotes the reconstructed image.
+                </div>
+                <div>
+                    The logSNR metric emphasises faint structures by applying a logarithmic mapping to the images, parametrised by the target dynamic range \(a\):
+                    \[ \text&#123;r&#125;\log(\boldsymbol&#123;x&#125;) = x_&#123;\text&#123;max&#125;&#125; \log_&#123;a&#125; \left( \frac&#123;a&#125;&#123;x_&#123;\text&#123;max&#125;&#125;&#125; \cdot \boldsymbol&#123;x&#125; + 1 \right), \]
+                    where \(x_&#123;\text&#123;max&#125;&#125;\) indicates the peak pixel value of the image \(\boldsymbol&#123;x&#125;\).
+                    Using this mapping, the logSNR metric is defined as:
+                    \[ \log\text&#123;SNR&#125;(\boldsymbol&#123;x&#125;^&#123;\star&#125;, \boldsymbol&#123;x&#125;) = \text&#123;SNR&#125;(\text&#123;rlog&#125;(\boldsymbol&#123;x&#125;^&#123;\star&#125;), \text&#123;rlog&#125;(\boldsymbol&#123;x&#125;)). \]
+                </div>
+                <div class="border-t border-slate-300 pt-4">
+                    <strong class="text-[#292350] block mb-2">Image-domain data fidelity RDR</strong>
+                    Image-domain data fidelity metric, known as the residual-to-dirty image ratio (RDR) is assessed using the estimated residual dirty image defined as \(\mathbf&#123;r&#125; = \boldsymbol&#123;x&#125;_&#123;\textrm&#123;d&#125;&#125; - \kappa \text&#123;Re&#125;\&#123;\boldsymbol&#123;\Phi&#125;^\dagger \boldsymbol&#123;\Phi&#125;\boldsymbol&#123;x&#125;\&#125;\). The RDR metric is defined as:
+                    \[ \text&#123;RDR&#125;(\mathbf&#123;r&#125;, &#123;\boldsymbol&#123;x&#125;_&#123;\textrm&#123;d&#125;&#125;&#125;) = \frac&#123;\|\mathbf&#123;r&#125;\|_&#123;2&#125;&#125;&#123;\|\boldsymbol&#123;x&#125;_&#123;\textrm&#123;d&#125;&#125;\|_&#123;2&#125;&#125; \]
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-12 mb-6 border-b border-slate-200 pb-2">Table of Results</h3>
+            <p>
+                The numerical reconstruction results obtained by state-of-the-art imaging algorithms are reported in the table below.
+                The reconstruction quality is assessed using metrics such as SNR, logSNR, and RDR.
+                Computational performance is detailed in terms of the total number of iterations (I) and the total reconstruction time (t<sub>tot</sub>).
+                Please note that reported timings depend on the machine used and are provided for reference only.
+                \([\boldsymbol&#123;\Phi&#125;^\dagger \boldsymbol&#123;\Phi&#125;]_&#123;imp.&#125;\) is indicating the measurement operator implementation. The subscript \(\mathcal&#123;T&#125;_2\) in R2D2 variants refer to the generlised VLA-specific training set that is used to train these R2D2 algorithms.
+                All reported values represent mean \(\pm\) standard deviation, calculated over 200 inverse problems.
+            </p>
+
+            <div class="overflow-x-auto shadow-md rounded-xl border border-slate-200">
+                <table class="w-full text-sm text-left text-slate-600">
+                    <thead class="text-xs text-slate-700 uppercase bg-slate-100 border-b border-slate-200">
+                        <tr>
+                            <th class="px-6 py-4">Algorithm</th>
+                            <th class="px-6 py-4">SNR (dB)</th>
+                            <th class="px-6 py-4">logSNR (dB)</th>
+                            <th class="px-6 py-4">RDR (&times;10<sup>-3</sup>)</th>
+                            <th class="px-6 py-4">I</th>
+                            <th class="px-6 py-4">t<sub>tot.</sub> (s)</th>
+                            <th class="px-6 py-4 normal-case">\([\boldsymbol&#123;\Phi&#125;^\dagger \boldsymbol&#123;\Phi&#125;]_&#123;imp.&#125;\)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b hover:bg-slate-50">
+                            <td class="px-6 py-4 font-bold">CLEAN</td>
+                            <td class="px-6 py-4">12.0±19.3</td>
+                            <td class="px-6 py-4">9.4±18.9</td>
+                            <td class="px-6 py-4">3.29±28.2</td>
+                            <td class="px-6 py-4">8.4±1.0</td>
+                            <td class="px-6 py-4">106.5±81.6</td>
+                            <td class="px-6 py-4">-</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50 border-t-2 border-slate-100">
+                            <td rowspan="4" class="px-6 py-4 font-bold border-r border-slate-100 align-top">uSARA</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">28.1±3.4</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">20.4±3.4</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">2.15±27.5</td>
+                            <td class="px-6 py-3">1482.2±586.1</td>
+                            <td class="px-6 py-3">368.8±296.8</td>
+                            <td class="px-6 py-3">TorchKbNufft</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">1490.7±563.2</td>
+                            <td class="px-6 py-3 border-t border-slate-50">216.7±119.3</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PyNUFFT</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">1483.1±587.0</td>
+                            <td class="px-6 py-3 border-t border-slate-50">103.0±39.52</td>
+                            <td class="px-6 py-3 border-t border-slate-50">FINUFFT</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">1482.6±586.4</td>
+                            <td class="px-6 py-3 border-t border-slate-50">88.03±31.98</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PSF</td>
+                        </tr>
+
+                        <tr class="bg-white hover:bg-slate-50 border-t-2 border-slate-100">
+                            <td rowspan="4" class="px-6 py-4 font-bold border-r border-slate-100 align-top">AIRI</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">28.3±3.1</td>
+                            <td class="px-6 py-3">21.1±3.8</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">2.24±28.0</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">5000.0±0.0</td>
+                            <td class="px-6 py-3">937.4±801.8</td>
+                            <td class="px-6 py-3">TorchKbNufft</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td rowspan="3" class="px-6 py-3 border-t border-slate-50 border-r border-slate-100 align-top">21.0±3.8</td>
+                            <td class="px-6 py-3 border-t border-slate-50">566.5±355.8</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PyNUFFT</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">157.0±36.92</td>
+                            <td class="px-6 py-3 border-t border-slate-50">FINUFFT</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">114.2±3.450</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PSF</td>
+                        </tr>
+
+                        <tr class="bg-white hover:bg-slate-50 border-t-2 border-slate-100">
+                            <td class="px-6 py-4 font-bold">U-Net</td>
+                            <td class="px-6 py-4">17.9±3.0</td>
+                            <td class="px-6 py-4">6.8±3.9</td>
+                            <td class="px-6 py-4">113.3±589.2</td>
+                            <td class="px-6 py-4">1</td>
+                            <td class="px-6 py-4">0.641±0.110</td>
+                            <td class="px-6 py-4">-</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50 border-t-2 border-slate-100">
+                            <td class="px-6 py-4 font-bold">U-WDSR</td>
+                            <td class="px-6 py-4">16.0±3.6</td>
+                            <td class="px-6 py-4">6.6±3.8</td>
+                            <td class="px-6 py-4">155.8±815.5</td>
+                            <td class="px-6 py-4">1</td>
+                            <td class="px-6 py-4">0.662±0.031</td>
+                            <td class="px-6 py-4">-</td>
+                        </tr>
+
+                        <tr class="bg-white hover:bg-slate-50 border-t-2 border-slate-100">
+                            <td rowspan="4" class="px-6 py-4 font-bold border-r border-slate-100 align-top">R2D2<sub>\(&#123;\mathcal&#123;A&#125;_1,\mathcal&#123;T&#125;_2&#125;\)</sub></td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">30.0±3.0</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">23.4±4.2</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">4.07±91.6</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">18.3±5.6</td>
+                            <td class="px-6 py-3">7.243±4.131</td>
+                            <td class="px-6 py-3">TorchKbNufft</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">6.932±3.960</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PyNUFFT</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">3.771±1.224</td>
+                            <td class="px-6 py-3 border-t border-slate-50">FINUFFT</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">3.342±0.931</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PSF</td>
+                        </tr>
+
+                        <tr class="bg-white hover:bg-slate-50 border-t-2 border-slate-100">
+                            <td rowspan="4" class="px-6 py-4 font-bold border-r border-slate-100 align-top">R2D2<sub>\(&#123;\mathcal&#123;A&#125;_2,\mathcal&#123;T&#125;_2&#125;\)</sub></td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">31.2±2.4</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">24.6±4.2</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">2.22±28.1</td>
+                            <td rowspan="4" class="px-6 py-4 border-r border-slate-100 align-top">15.8±5.5</td>
+                            <td class="px-6 py-3">8.831±3.923</td>
+                            <td class="px-6 py-3">TorchKbNufft</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">9.023±4.112</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PyNUFFT</td>
+                        </tr>
+                        <tr class="bg-white hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">5.951±2.199</td>
+                            <td class="px-6 py-3 border-t border-slate-50">FINUFFT</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-slate-50">
+                            <td class="px-6 py-3 border-t border-slate-50">5.649±1.911</td>
+                            <td class="px-6 py-3 border-t border-slate-50">PSF</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-16 mb-6 border-b border-slate-200 pb-2">Reconstructions & Residual dirty images</h3>
+            <p>
+                Reconstruction images obtained by the RI algorithms associated with one inverse problem selected from our testbed (ID:80009) are displayed below. In this case, the ground truth is characterised by a dynamic range of 150,000.
+            </p>
+
+            <strong class="text-[#292350] block mt-8 mb-4">Estimated model images:</strong>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 image-gallery">
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/GT.png" alt="Ground truth (derived from 3c353)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">Ground truth (derived from 3c353)</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/clean_rec.png" alt="CLEAN (SNR:14.92 - logSNR:12.16) dB" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">CLEAN (SNR:14.92 - logSNR:12.16) dB</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/uSARA_rec.png" alt="uSARA (SNR:30.04 - logSNR:26.22) dB" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">uSARA (SNR:30.04 - logSNR:26.22) dB</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/AIRI_rec.png" alt="AIRI (SNR:35.60 - logSNR:29.84) dB" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">AIRI (SNR:35.60 - logSNR:29.84) dB</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_unet_rec1.png" alt="U-Net (SNR:18.49 - logSNR:6.25) dB" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">U-Net (SNR:18.49 - logSNR:6.25) dB</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_uwdsr_rec1.png" alt="U-WDSR (SNR:15.76 - logSNR:5.64) dB" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">U-WDSR (SNR:15.76 - logSNR:5.64) dB</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_unet_rec.png" alt="R2D2 A1 (SNR:37.45 - logSNR:29.85) dB" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">R2D2<sub>\(&#123;\mathcal&#123;A&#125;_1,\mathcal&#123;T&#125;_2&#125;\)</sub> (SNR:37.45 - logSNR:29.85) dB</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_uwdsr_rec.png" alt="R2D2 A2 (SNR:37.86 - logSNR:33.08) dB" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">R2D2<sub>\(&#123;\mathcal&#123;A&#125;_2,\mathcal&#123;T&#125;_2&#125;\)</sub> (SNR:37.86 - logSNR:33.08) dB</figcaption>
+                </figure>
+            </div>
+
+            <strong class="text-[#292350] block mt-10 mb-4">Residual dirty images:</strong>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 image-gallery">
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/dirty.png" alt="Dirty image" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">Dirty image</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/clean_res.png" alt="CLEAN (RDR: 30.62e-4)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">CLEAN (RDR: 30.62e-4)</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/uSARA_res.png" alt="uSARA (RDR: 10.84e-4)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">uSARA (RDR: 10.84e-4)</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/AIRI_res.png" alt="AIRI (RDR: 14.09e-4)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">AIRI (RDR: 14.09e-4)</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_unet_res1.png" alt="U-Net (RDR: 1.1e-1)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">U-Net (RDR: 1.1e-1)</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_uwdsr_res1.png" alt="U-WDSR (RDR: 1.5e-1)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">U-WDSR (RDR: 1.5e-1)</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_unet_res.png" alt="R2D2 A1 (RDR: 12.92e-4)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">R2D2<sub>\(&#123;\mathcal&#123;A&#125;_1,\mathcal&#123;T&#125;_2&#125;\)</sub> (RDR: 12.92e-4)</figcaption>
+                </figure>
+                <figure class="bg-slate-50 p-2 rounded-xl shadow-sm border border-slate-200">
+                    <img src="/images/reconstructions_basplib/R2D2_uwdsr_res.png" alt="R2D2 A2 (RDR: 10.93e-4)" class="w-full rounded cursor-pointer hover:scale-105 transition-transform" />
+                    <figcaption class="text-xs text-center text-slate-500 mt-2">R2D2<sub>\(&#123;\mathcal&#123;A&#125;_2,\mathcal&#123;T&#125;_2&#125;\)</sub> (RDR: 10.93e-4)</figcaption>
+                </figure>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-16 mb-6 border-b border-slate-200 pb-2">How to Use the Benchmarking Platform</h3>
+            <p>In what follows, we provide instructions to reproduce the results summarised in the above table.</p>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-6">Setup</h4>
+            <p class="font-bold text-slate-600">Setting up the main directory</p>
+            <p>Firstly, set up the main directory, which will comprise the benchmark testbed, RI imaging repositories, and pre-trained DNNs (for AIRI and R2D2). Replace <code>/path/to/your/directory</code> with your local path. Subdirectories will be created accordingly.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-blue-300">main_dir</span>=/path/to/your/directory
+<span class="text-emerald-400">cd</span> $main_dir
+<span class="text-emerald-400">mkdir</span> -p $main_dir/data   <span class="text-slate-500"># subdirectory for testbed</span></code></pre>
+            </div>
+
+            <p class="font-bold text-slate-600">Downloading testbed</p>
+            <p>Secondly, download the testbed zip files. These correspond to compressed ground truth files in .fits and data files in .mat format.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-slate-500"># ground truth images</span>
+<span class="text-emerald-400">wget</span> -O "$main_dir/data/gdth.tar.gz" \
+    "https://www.dropbox.com/scl/fi/mkkvfwleoh9udztlu4uuu/gdth.tar.gz?rlkey=incfutaoiqx3dlwnf8npxn1we&st=tdi1dwjw&dl=0"
+<span class="text-slate-500"># measurement data</span>
+<span class="text-emerald-400">wget</span> -O $main_dir/data/data.tar.gz \
+    "https://www.dropbox.com/scl/fi/91werx96vc5j28xjxzdqq/data.tar.gz?rlkey=7s837c2whdniwli6kt0pkeae3&st=q1s6520h&dl=0"</code></pre>
+            </div>
+
+            <p>Thirdly, extract the compressed files in the dedicated subdirectory.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">tar</span> -xf $main_dir/data/gdth.tar.gz --strip-components=7 -C $main_dir/data/
+<span class="text-emerald-400">tar</span> -xf $main_dir/data/data.tar.gz --strip-components=7 -C $main_dir/data/
+
+<span class="text-emerald-400">rm</span> -r $main_dir/data/data.tar.gz
+<span class="text-emerald-400">rm</span> -r $main_dir/data/gdth.tar.gz</code></pre>
+            </div>
+
+            <p>You can access each inverse problem details via this Excel <a href="https://www.dropbox.com/scl/fi/73gj34n5th37fz6eaezy4/data_detail.xlsx?rlkey=tocsrydc73e9glyfcof5dpjxx&st=d91g1lil&dl=1" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">file</a>.</p>
+
+            <p class="font-bold text-slate-600 mt-6">Setting up imaging algorithms repositories</p>
+            <h4 class="text-lg font-bold text-[#292350] mt-4">Python environment</h4>
+            <p>Firstly, create your Python environment using either <code>venv</code> or <code>conda</code>, with Python version &gt;= 3.10.0. In this tutorial, we will be using <code>venv</code> and <code>pip</code>.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">python3</span> -m venv $main_dir/basplib</code></pre>
+            </div>
+
+            <p>Secondly, activate this new environment.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">source</span> $main_dir/basplib/bin/activate</code></pre>
+            </div>
+
+            <p>The uSARA, AIRI and R2D2 repository is Pytorch-based for accelerated computation on GPU. To ensure compatibility of your CUDA driver version, follow <a href="https://pytorch.org/get-started/locally/" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">PyTorch instruction</a>. If your CUDA version is older than what is displayed, please refer to <a href="https://pytorch.org/get-started/locally/" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">here</a> for the newest PyTorch version compatible for your GPU.</p>
+
+            <p>Thirdly, once PyTorch is installed, install the remaining dependencies.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">wget</span> -P "$main_dir" https://raw.githubusercontent.com/basp-group/R2D2-RI/main/requirements.txt
+<span class="text-emerald-400">pip</span> install -r $main_dir/requirements.txt</code></pre>
+            </div>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-10">uSARA & AIRI</h4>
+            <p>Clone the repository to the current directory by running the command below.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">git</span> clone --recurse-submodules https://github.com/basp-group/Small-scale-RI-imaging.git
+<span class="text-emerald-400">cd</span> ./Small-scale-RI-imaging</code></pre>
+            </div>
+
+            <p>The --recurse-submodules flag is required so that the required sub-modules RI-measurement-operator will be cloned at the same time.</p>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-6">Pre-trained AIRI denoisers</h4>
+            <p>Pre-trained AIRI denoisers are in .onnx format. From main AIRI directory run commands below to download the denoiser shelf compressed in a .tar.gz file, and extract the DNNs in the appropriate subdirectory.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">wget</span> -O ./airi_denoisers/airi_mix_denoisers.tar.gz \
+"https://www.dropbox.com/scl/fi/4grlzujhpyovzbn4hm3nd/airi_mix_denoisers.tar.gz?rlkey=ej1k48faisni14fs04tgbddyi&st=508oy66y&dl=0"
+<span class="text-slate-500"># extract the files</span>
+<span class="text-emerald-400">tar</span> -xzf ./airi_denoisers/airi_mix_denoisers.tar.gz -C ./airi_denoisers/
+<span class="text-slate-500"># Remove the zip file</span>
+<span class="text-emerald-400">rm</span> ./airi_denoisers/airi_mix_denoisers.tar.gz</code></pre>
+            </div>
+
+            <p>Two additional collections of pre-trained AIRI denoisers are available [9]. While they are not required for this benchmarking, they can be utilisd if needed.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">wget</span> -O ./airi_denoisers/v1_airi_astro-based_oaid_shelf.zip \
+"https://researchportal.hw.ac.uk/files/115109618/v1_airi_astro-based_oaid_shelf.zip"
+<span class="text-emerald-400">wget</span> -O ./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip \
+"https://researchportal.hw.ac.uk/files/115109619/v1_airi_mri-based_mrid_shelf.zip"
+<span class="text-slate-500"># extract the files</span>
+<span class="text-emerald-400">unzip</span> "./airi_denoisers/v1_airi_astro-based_oaid_shelf.zip" -d "./airi_denoisers/"
+<span class="text-emerald-400">unzip</span> "./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip" -d "./airi_denoisers"
+<span class="text-slate-500"># Remove the zip file</span>
+<span class="text-emerald-400">rm</span> ./airi_denoisers/v1_airi_astro-based_oaid_shelf.zip
+<span class="text-emerald-400">rm</span> ./airi_denoisers/v1_airi_mri-based_mrid_shelf.zip</code></pre>
+            </div>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-10">R2D2</h4>
+            <p>
+                The R2D2 repository encompasses the end-to-end DNNs U-Net, U-WDSR, R2D2 variants: R2D2<sub>\(\mathcal&#123;A&#125;_1\)</sub>,
+                and R2D2<sub>\(\mathcal&#123;A&#125;_2\)</sub>. The algorithm of choice is selected from the input parameters of the imager.
+                The currently available R2D2 models are trained specifically for the imaging settings considered in [1].
+                Deviating from these settings may result in sub-optimal results.
+                <br>
+                First clone the repository.
+            </p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">git</span> clone --recurse-submodules https://github.com/basp-group/R2D2-RI
+<span class="text-emerald-400">cd</span> ./R2D2-RI</code></pre>
+            </div>
+
+            <p>Download the pretrained R2D2<sub>\(\mathcal&#123;A&#125;_1\)</sub> model.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-blue-300">r2d2_ckpt_path</span>=./ckpt/R2D2_A1
+<span class="text-emerald-400">mkdir</span> -p $r2d2_ckpt_path
+<span class="text-emerald-400">wget -O</span> $r2d2_ckpt_path/R2D2_A1.zip  https://pure.hw.ac.uk/ws/portalfiles/portal/146289536/R2D2_A1_T2_Realisation1.zip
+<span class="text-slate-500"># Extract the files</span>
+<span class="text-emerald-400">unzip -j</span> $r2d2_ckpt_path/R2D2_A1.zip -d $r2d2_ckpt_path
+<span class="text-slate-500"># Remove the zip file</span>
+<span class="text-emerald-400">rm</span> $r2d2_ckpt_path/R2D2_A1.zip</code></pre>
+            </div>
+
+            <p>Download the pretrained R2D2<sub>\(\mathcal&#123;A&#125;_2\)</sub> model.</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-blue-300">r2d2_ckpt_path</span>=./ckpt/R2D2_A2
+<span class="text-emerald-400">mkdir</span> -p $r2d2_ckpt_path
+<span class="text-emerald-400">wget -O</span> $r2d2_ckpt_path/R2D2_A2.zip  https://pure.hw.ac.uk/ws/portalfiles/portal/146314175/R2D2_A2_T2_Realisation1.zip
+<span class="text-slate-500"># Extract the files</span>
+<span class="text-emerald-400">unzip -j</span> $r2d2_ckpt_path/R2D2_A2.zip -d $r2d2_ckpt_path
+<span class="text-slate-500"># Remove the zip file</span>
+<span class="text-emerald-400">rm</span> $r2d2_ckpt_path/R2D2_A2.zip</code></pre>
+            </div>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-10">CLEAN</h4>
+            <p>We use the multi-scale variant of CLEAN in WSClean. Please refer to <a href="https://wsclean.readthedocs.io/" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">WSClean official website</a> for full instructions on how to install the software.</p>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-16 mb-6 border-b border-slate-200 pb-2">Imaging</h3>
+            <p>
+                Instructions to run <a href="#" class="font-bold text-[#CF9E5F] hover:underline">BASPLib</a> RI imaging algorithms and WSClean are outlined.
+                We recall the imaging settings are as follows: (i) the target image is of size 512x512 pixels, with
+                (ii) a random pixel size corresponding to super-resolution factor between [1.5, 2.5], and
+                (iii) random Briggs weighting with parameter with range between [-1, 1] is applied to the data.
+                All algorithms take as input a configuration file in either JSON (for uSARA and AIRI)
+                or YAML format (for U-Net, U-WDSR and R2D2 variants: R2D2<sub>\(\mathcal&#123;A&#125;_1\)</sub>, and R2D2<sub>\(\mathcal&#123;A&#125;_2\)</sub>).
+                Below are example Bash scripts designed to image all inverse problems at once.
+                Users are encouraged to customise these scripts to suit the specifications of their local machines as needed.
+            </p>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-6">uSARA</h4>
+            <p>
+                For uSARA imaging algorithm, all inverse problems were solved with fixed parameters.
+                For best results, specifically the regularisation parameter was set to two times its heuristic value.
+                You can access sample config file for uSARA in <a href="https://github.com/basp-group/Small-scale-RI-imaging/blob/main/config/example.json" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">uSARA.json</a>.
+                <br>
+                uSARA imager can be run by calling:
+            </p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-slate-500">#!/bin/bash</span>
+
+<span class="text-slate-500"># Configuration paths</span>
+<span class="text-blue-300">config_path</span>=<span class="text-green-400">"./config/example.json"</span>
+<span class="text-blue-300">data_file_base</span>=<span class="text-green-400">"/path/to/data/"</span>
+<span class="text-blue-300">log_file</span>=<span class="text-green-400">"./log/"</span>
+
+<span class="text-slate-500"># Values to update</span>
+<span class="text-blue-300">result_path</span>=<span class="text-green-400">"./outputs/"</span>
+<span class="text-blue-300">algorithm</span>=<span class="text-green-400">"usara"</span>
+<span class="text-blue-300">nufft_package</span>=<span class="text-green-400">"finufft"</span> <span class="text-slate-500"># tkbn/finufft/pynufft/psf</span>
+<span class="text-blue-300">heu_reg_param_scale</span>=<span class="text-green-400">2.0</span>
+
+<span class="text-slate-500"># Activate Python environment</span>
+<span class="text-emerald-400">source</span> $main_dir/basplib/bin/activate
+
+<span class="text-emerald-400">echo</span> <span class="text-green-400">"Script started at: $(date)"</span>
+<span class="text-slate-500"># Loop over data files</span>
+<span class="text-pink-400">for</span> data <span class="text-pink-400">in</span> "$data_file_base"/*.mat; <span class="text-pink-400">do</span>
+  <span class="text-blue-300">data_filename</span>=$(basename "$data" .mat)
+
+  <span class="text-slate-500"># Extract the source name (first part of the filename before "_")</span>
+  <span class="text-blue-300">source_name</span>=$(echo "$data_filename" | cut -d'_' -f1)
+
+  <span class="text-blue-300">temp_config</span>="temp_config_$&#123;data_filename&#125;.json"
+
+  <span class="text-slate-500"># Create a temporary JSON file</span>
+  <span class="text-emerald-400">cp</span> "$config_path" "$temp_config"
+
+  <span class="text-slate-500"># Modify the temporary JSON file</span>
+  <span class="text-emerald-400">sed</span> -i "s|\(\"algorithm\": \).*|\1\"$algorithm\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"result_path\": \).*|\1\"$result_path/\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"data_file\": \).*|\1\"$data\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"nufft_package\": \).*|\1\"$nufft_package\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"weight_load\": \).*|\1false,|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"heu_reg_param_scale\": \).*|\1$heu_reg_param_scale,|" "$temp_config"
+
+  <span class="text-slate-500"># Run the Python script with the temporary config</span>
+  <span class="text-emerald-400">python3</span> run_imager.py -c "$temp_config" --data_file "$data"
+
+  <span class="text-slate-500"># Remove the temporary config file after processing</span>
+  <span class="text-emerald-400">rm</span> "$temp_config"
+<span class="text-pink-400">done</span>
+    <span class="text-slate-500"># Log the end time</span>
+<span class="text-emerald-400">echo</span> <span class="text-green-400">"Script completed at: $(date)"</span> | <span class="text-emerald-400">tee</span> -a "$log_file"</code></pre>
+            </div>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-6">AIRI</h4>
+            <p>
+                The AIRI parameter was fixed to the heuristic value for all RI data, except for those simulated from the radio image of 3C353, where 3 times the heuristic value was used.
+                You can access sample config files for AIRI in <a href="https://github.com/basp-group/Small-scale-RI-imaging/blob/main/config/example.json" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">AIRI.json</a> and
+                <br>
+                AIRI imager can be run by calling:
+            </p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-slate-500">#!/bin/bash</span>
+
+<span class="text-slate-500"># Configuration paths</span>
+<span class="text-blue-300">config_path</span>=<span class="text-green-400">"./config/example.json"</span>
+<span class="text-blue-300">data_file_base</span>=<span class="text-green-400">"/path/to/data/"</span>
+<span class="text-blue-300">log_file</span>=<span class="text-green-400">"./log/"</span>
+<span class="text-blue-300">dnn_shelf_path</span>=<span class="text-green-400">"./airi_denoisers/airi_mix_denoisers/shelf.csv/"</span>
+
+<span class="text-slate-500"># Values to update</span>
+<span class="text-blue-300">result_path</span>=<span class="text-green-400">"./outputs/"</span>
+<span class="text-blue-300">algorithm</span>=<span class="text-green-400">"airi"</span>
+<span class="text-blue-300">nufft_package</span>=<span class="text-green-400">"finufft"</span> <span class="text-slate-500"># tkbn/finufft/pynufft/psf</span>
+
+<span class="text-slate-500"># Activate Python environment</span>
+<span class="text-emerald-400">source</span> $main_dir/basplib/bin/activate
+
+<span class="text-emerald-400">echo</span> <span class="text-green-400">"Script started at: $(date)"</span>
+<span class="text-slate-500"># Loop over data files</span>
+<span class="text-pink-400">for</span> data <span class="text-pink-400">in</span> "$data_file_base"/*.mat; <span class="text-pink-400">do</span>
+  <span class="text-blue-300">data_filename</span>=$(basename "$data" .mat)
+
+  <span class="text-slate-500"># Extract the source name (first part of the filename before "_")</span>
+  <span class="text-blue-300">source_name</span>=$(echo "$data_filename" | cut -d'_' -f1)
+
+  <span class="text-slate-500"># Conditional assignment of heu_noise_scale</span>
+  <span class="text-pink-400">if</span> [[ "$source_name" == <span class="text-green-400">"3c353"</span> ]]; <span class="text-pink-400">then</span>
+    <span class="text-blue-300">heu_noise_scale</span>=<span class="text-green-400">3.0</span>
+  <span class="text-pink-400">else</span>
+    <span class="text-blue-300">heu_noise_scale</span>=<span class="text-green-400">1.0</span>
+  <span class="text-pink-400">fi</span>
+
+  <span class="text-blue-300">temp_config</span>="temp_config_$&#123;data_filename&#125;.json"
+
+  <span class="text-slate-500"># Create a temporary JSON file</span>
+  <span class="text-emerald-400">cp</span> "$config_path" "$temp_config"
+
+  <span class="text-slate-500"># Modify the temporary JSON file</span>
+  <span class="text-emerald-400">sed</span> -i "s|\(\"algorithm\": \).*|\1\"$algorithm\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"result_path\": \).*|\1\"$result_path/\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"data_file\": \).*|\1\"$data\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"nufft_package\": \).*|\1\"$nufft_package\",|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"weight_load\": \).*|\1false,|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"heu_noise_scale\": \).*|\1$heu_noise_scale,|" "$temp_config"
+  <span class="text-emerald-400">sed</span> -i "s|\(\"dnn_shelf_path\": \).*|\1\"$dnn_shelf_path\",|" "$temp_config"
+
+  <span class="text-slate-500"># Run the Python script with the temporary config</span>
+  <span class="text-emerald-400">python3</span> run_imager.py -c "$temp_config" --data_file "$data"
+
+  <span class="text-slate-500"># Remove the temporary config file after processing</span>
+  <span class="text-emerald-400">rm</span> "$temp_config"
+<span class="text-pink-400">done</span>
+    <span class="text-slate-500"># Log the end time</span>
+<span class="text-emerald-400">echo</span> <span class="text-green-400">"Script completed at: $(date)"</span> | <span class="text-emerald-400">tee</span> -a "$log_file"</code></pre>
+            </div>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-6">R2D2</h4>
+            <p>
+                You can access sample config file for R2D2 in <a href="https://github.com/basp-group/R2D2-RI/blob/main/config/inference/R2D2.yaml" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">R2D2.yaml</a>.
+                <br>
+                The R2D2 imager can be run by calling:
+            </p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-slate-500">#!/bin/bash</span>
+
+<span class="text-slate-500"># Activate the environment</span>
+<span class="text-emerald-400">source</span> $main_dir/basplib/bin/activate
+
+<span class="text-slate-500"># Prompt user for input</span>
+<span class="text-emerald-400">read</span> -p <span class="text-green-400">"Enter architecture (U-Net or U-WDSR DNN): "</span> architecture
+<span class="text-emerald-400">read</span> -p <span class="text-green-400">"Enter number of iterations (25 available): "</span> num_iter
+<span class="text-emerald-400">read</span> -p <span class="text-green-400">"Enter NUFFT package (tkbn/finufft/pynufft/psf): "</span> nufft_pkg
+
+<span class="text-slate-500"># Set paths</span>
+<span class="text-pink-400">if</span> [ <span class="text-green-400">"$architecture"</span> = <span class="text-green-400">"U-Net"</span> ]; <span class="text-pink-400">then</span>
+    <span class="text-blue-300">ckpt_path</span>=<span class="text-green-400">"./ckpt/R2D2_A1/"</span>
+    <span class="text-blue-300">num_chans</span>=<span class="text-green-400">64</span>
+    <span class="text-blue-300">output_path</span>=<span class="text-green-400">"./outputs/R2D2_A1/"</span>
+<span class="text-pink-400">elif</span> [ <span class="text-green-400">"$architecture"</span> = <span class="text-green-400">"U-WDSR"</span> ]; <span class="text-pink-400">then</span>
+    <span class="text-blue-300">ckpt_path</span>=<span class="text-green-400">"./ckpt/R2D2_A2/"</span>
+    <span class="text-blue-300">num_chans</span>=<span class="text-green-400">32</span>
+    <span class="text-blue-300">output_path</span>=<span class="text-green-400">"./outputs/R2D2_A2/"</span>
+<span class="text-pink-400">fi</span>
+
+
+<span class="text-blue-300">data_file_base</span>=<span class="text-green-400">"/path/to/data/"</span>
+<span class="text-blue-300">yaml_template</span>=<span class="text-green-400">"./config/inference/R2D2.yaml"</span>
+<span class="text-blue-300">save_all_outputs</span>=<span class="text-green-400">True</span>
+<span class="text-blue-300">prune</span>=<span class="text-green-400">True</span>
+<span class="text-blue-300">sigma_res_tol</span>=<span class="text-green-400">1e-3</span>
+
+<span class="text-slate-500"># Iterate over all .mat files in the specified directory</span>
+<span class="text-pink-400">for</span> data_file <span class="text-pink-400">in</span> "$data_file_base"/*.mat; <span class="text-pink-400">do</span>
+    <span class="text-slate-500"># Extract the base name of the data file without the extension</span>
+    <span class="text-blue-300">base_name</span>=$(basename "$data_file" .mat)
+    <span class="text-blue-300">specific_output_path</span>=<span class="text-green-400">"$output_path"</span>
+    <span class="text-emerald-400">mkdir</span> -p "$specific_output_path"
+
+    <span class="text-slate-500"># Construct the corresponding ground truth file path</span>
+    <span class="text-blue-300">gdth_file</span>=<span class="text-green-400">"/path/to/ground-truth/$&#123;base_name&#125;_gdth.fits"</span>
+
+    <span class="text-slate-500"># Create a unique YAML file for this iteration</span>
+    <span class="text-blue-300">yaml_file</span>=<span class="text-green-400">"/path/to/template/temp_$&#123;base_name&#125;.yaml"</span>
+    <span class="text-emerald-400">cp</span> "$yaml_template" "$yaml_file"
+
+    <span class="text-slate-500"># Update the YAML file with the user-provided inputs and other parameters</span>
+    <span class="text-emerald-400">sed</span> -i "s|ckpt_path:.*|ckpt_path: $ckpt_path|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|data_file:.*|data_file: $data_file|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|gdth_file:.*|gdth_file: $gdth_file|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|num_iter:.*|num_iter: $num_iter|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|num_chans:.*|num_chans: $num_chans|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|ckpt_realisations:.*|ckpt_realisations: $ckpt_realisations|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|die_calib:.*|die_calib: $die_calib|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|architecture:.*|architecture: $architecture|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|save_all_outputs:.*|save_all_outputs: $save_all_outputs|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|prune:.*|prune: $prune|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|sigma_res_tol:.*|sigma_res_tol: $sigma_res_tol|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|nufft_pkg:.*|nufft_pkg: $nufft_pkg|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|output_path:.*|output_path: $specific_output_path|" "$yaml_file"
+    <span class="text-emerald-400">sed</span> -i "s|res_on_gpu:.*|res_on_gpu: True|" "$yaml_file"
+
+    <span class="text-slate-500"># Ensure the output path exists</span>
+    <span class="text-emerald-400">mkdir</span> -p "$output_path"
+
+    <span class="text-slate-500"># Run the Python script with the updated YAML file</span>
+    <span class="text-emerald-400">python3</span> src/imager.py --config "$yaml_file"
+
+    <span class="text-slate-500"># Optionally, remove the temporary YAML file after the run</span>
+    <span class="text-emerald-400">rm</span> "$yaml_file"
+<span class="text-pink-400">done</span></code></pre>
+            </div>
+
+            <p>For running R2D2 imager save above bash script into a bash file like <code>R2D2.sh</code>, and run like:</p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-emerald-400">bash</span> R2D2.sh</code></pre>
+            </div>
+
+            <p>
+                The script will prompt you to enter the R2D2 underpinned  DNN architecture name. For example, you can enter U-Net,
+                U-WDSR. The script will then execute the corresponding configuration for the specified algorithm.
+                Later, user need to enter the the number of R2D2 iteration needed. 25 iterations are available.
+                For U-Net (resp. U-WDSR) the number of input channels should be input as 64 (resp. 32).
+                BASPLib provides four options for implementing the RI measurement operator model.
+                Three of these consist in different implementations of the NUFFT including TorchKbNufft [10], FINUFFT [11], and PyNUFFT [12].
+                The fourth option leverages the PSF, which under the assumption of a narrow field of view, enables approximating
+                the RI mapping operator \(\boldsymbol&#123;\Phi&#125;^\dagger \boldsymbol&#123;\Phi&#125;\) via a convolution with the PSF.
+            </p>
+
+            <h4 class="text-lg font-bold text-[#292350] mt-6">CLEAN</h4>
+            <p>
+                For CLEAN, specifically its multi-scale variant all inverse problems were solved with fixed parameters.
+                WSClean imager can be run by calling:
+            </p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-slate-500">#!/bin/bash</span>
+<span class="text-slate-500"># Define variables</span>
+<span class="text-blue-300">data_files</span>=<span class="text-green-400">"/path/to/ms_files/folder"</span>
+<span class="text-blue-300">output_path</span>=<span class="text-green-400">"/path/to/save/outputs/"</span>
+<span class="text-blue-300">msFile_detail_path</span>=<span class="text-green-400">"/path/to/meas_convert.csv"</span>
+<span class="text-blue-300">niter</span>=<span class="text-green-400">2000000</span>
+<span class="text-blue-300">briggs_factor</span>=<span class="text-green-400">0</span>
+
+<span class="text-slate-500"># Log the start time</span>
+<span class="text-emerald-400">echo</span> <span class="text-green-400">"Script started at: $(date)"</span>
+
+<span class="text-slate-500"># Loop through each .mat file in the directory</span>
+<span class="text-pink-400">for</span> data_file <span class="text-pink-400">in</span> "$data_files"/*.mat; <span class="text-pink-400">do</span>
+  <span class="text-blue-300">base_name</span>=$(basename "$data_file" .mat)
+  <span class="text-emerald-400">echo</span> <span class="text-green-400">"Processing file: $data_file"</span>
+
+  <span class="text-slate-500"># Read cell_size from the CSV file based on the base_name</span>
+  <span class="text-blue-300">cellsize</span>=$(awk -F, -v filename="$base_name" 'NR > 1 && $1 == filename &#123;print $3&#125;' "$msFile_detail_path")
+
+  <span class="text-slate-500"># Check if cellsize is found</span>
+  <span class="text-pink-400">if</span> [ -z "$cellsize" ]; <span class="text-pink-400">then</span>
+    <span class="text-emerald-400">echo</span> <span class="text-green-400">"Error: No matching cell size found for $base_name in $msFile_detail_path"</span>
+    <span class="text-pink-400">continue</span>
+  <span class="text-pink-400">fi</span>
+  <span class="text-slate-500"># Run the MATLAB command for each .mat file</span>
+  <span class="text-emerald-400">wsclean</span> -size 512  512  -scale "$cellsize"asec -data-column DATA -padding 2 -weight briggs "$briggs_factor"  \
+    -niter "$niter" -nwlayers 1 -j 1 -mem 0.2 -multiscale -gain 0.1 -mgain 0.8 -nmiter 0  -auto-mask 1.5  \
+      -auto-threshold  0.5  -name "$output_path"/wsclean-briggs"$briggs_factor"- "$data_file"
+
+  <span class="text-slate-500"># Log the completion of each file</span>
+  <span class="text-emerald-400">echo</span> <span class="text-green-400">"Finished processing file: $data_file"</span>
+<span class="text-pink-400">done</span>
+
+<span class="text-slate-500"># Log the end time</span>
+<span class="text-emerald-400">echo</span> <span class="text-green-400">"Script completed at: $(date)"</span></code></pre>
+            </div>
+
+            <p><span class="font-bold text-[#292350]">Note:</span> Additional information on how to convert the data files into a measurement set that is readable by WSClean will be provided soon.</p>
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-12 mb-6 border-b border-slate-200 pb-2">Evaluation metrics calculation</h3>
+            <p>
+                The evaluation metrics can be calculated using this
+                <a href="https://www.dropbox.com/scl/fi/h4pfum0ujeud58drf8xn5/calculate_metrics.py?rlkey=9njfmpyba4apfu3e5fcwc4ony&e=1&st=aqaovl56&dl=1" target="_blank" class="text-[#CF9E5F] font-bold hover:underline">
+                    Python file</a>.
+                To run calculate_metrics.py you can use below bash script:
+            </p>
+
+            <div class="relative bg-[#292350] rounded-xl shadow-lg mt-4 mb-8 group overflow-hidden">
+                <button class="copy-btn absolute right-2 top-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors z-10" title="Copy code">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-300"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+                <pre class="p-6 overflow-x-auto text-sm font-mono text-slate-300"><code><span class="text-slate-500">#!/bin/bash</span>
+
+<span class="text-slate-500"># Define variables</span>
+<span class="text-blue-300">MODEL</span>=<span class="text-green-400">"R2D2_A1"</span> <span class="text-slate-500">#  or "R2D2_A2" or "uSARA" or "AIRI"</span>
+<span class="text-blue-300">DATA_FILE</span>=<span class="text-green-400">"/path/to/data/"</span>
+
+<span class="text-blue-300">EXCEL_SAVE_PATH</span>=<span class="text-green-400">"/path/to/save/reslt_excel_file/$MODEL.xlsx"</span>
+
+<span class="text-blue-300">GT_PATH</span>=<span class="text-green-400">"/path/to/GT/images/"</span>
+
+<span class="text-blue-300">MODEL_OUTPUTS</span>=<span class="text-green-400">"./outputs/$MODEL"</span>
+
+<span class="text-slate-500"># Activate your virtual environment</span>
+<span class="text-emerald-400">source</span> ./bin/activate
+
+<span class="text-slate-500"># Run the Python script</span>
+<span class="text-pink-400">if</span> [[ "$MODEL" = "AIRI" || "$MODEL" = "uSARA" ]]; <span class="text-pink-400">then</span>
+    <span class="text-emerald-400">python</span> calculate_metrics.py --data_file "$DATA_FILE" --excel_save_path "$EXCEL_SAVE_PATH" --GT_path "$GT_PATH" --model_outputs "$MODEL_OUTPUTS" --model "$MODEL"
+<span class="text-pink-400">elif</span> [[ "$MODEL" = "R2D2_A1" || "$MODEL" = "R2D2_A2" ]]; <span class="text-pink-400">then</span>
+    <span class="text-pink-400">for</span> i <span class="text-pink-400">in</span> &#123;2..2&#125;; <span class="text-pink-400">do</span>
+        <span class="text-blue-300">R2D2_iteration</span>=$&#123;i&#125;
+        <span class="text-emerald-400">python</span> calculate_metrics.py --data_file "$DATA_FILE" --excel_save_path "$EXCEL_SAVE_PATH" --GT_path "$GT_PATH" --model_outputs "$MODEL_OUTPUTS" --model "$MODEL" --R2D2_iteration "$R2D2_iteration"
+    <span class="text-pink-400">done</span>
+<span class="text-pink-400">fi</span></code></pre>
+            </div>
+
+
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mt-16 mb-6 border-b border-slate-200 pb-2">References</h3>
+            <p class="text-base text-slate-600 leading-relaxed">
+                [1] Aghabiglou A, Chu CS, Tang C, Dabbech A, Wiaux Y.
+                Towards a robust R2D2 paradigm for radio-interferometric imaging: revisiting DNN training and architecture.
+                <a href="https://doi.org/10.48550/arXiv.2503.02554" target="_blank" class="text-[#CF9E5F] hover:underline">arXiv:2503.02554v1</a>
+                <br><br>
+                [2] Edler HW, de Gasperin F, Shimwell TW, Hardcastle MJ, Boselli A, Heesen V, McCall H, Bomans DJ, Brüggen
+                M, Bulbul E, Chyży KT. ViCTORIA project: The LOFAR HBA Virgo Cluster Survey. Astronomy & Astrophysics. 2023 Aug 1;676:A24.
+                | <a href="https://doi.org/10.1051/0004-6361/202346458" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.1051/0004-6361/202346458</a>
+                <br><br>
+                [3] Shimwell TW, Hardcastle MJ, Tasse C, Best PN, Röttgering HJ, Williams WL, Botteon A, Drabent A,
+                Mechev A, Shulevski A, van Weeren RJ. The LOFAR two-metre sky survey-V. Second data release.
+                Astronomy & astrophysics. 2022 Mar 1;659:A1. | <a href="https://doi.org/10.1051/0004-6361/202142484" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.1051/0004-6361/202142484</a>
+                <br><br>
+                [4] Botteon A, Shimwell TW, Cassano R, Cuciti V, Zhang X, Bruno L, Camillini L, Natale R, Jones A,
+                Gastaldello F, Simionescu A. The Planck clusters in the LOFAR sky-I. LoTSS-DR2:
+                new detections and sample overview. Astronomy & Astrophysics. 2022 Apr 1;660:A78. |
+                <a href="https://doi.org/10.1051/0004-6361/202143020" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.1051/0004-6361/202143020</a>
+                <br><br>
+                [5]Carrillo RE, McEwen JD, Wiaux Y. Sparsity Averaging Reweighted Analysis (SARA): a novel algorithm for
+                radio-interferometric imaging. Monthly Notices of the Royal Astronomical Society. 2012 Oct 21;426(2):1223-34. |
+                <a href="https://doi.org/10.1111/j.1365-2966.2012.21605.x" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.1111/j.1365-2966.2012.21605.x</a>
+                <br><br>
+                [6] Onose A, Dabbech A, Wiaux Y. An accelerated splitting algorithm for radio-interferometric imaging:
+                when natural and uniform weighting meet. Monthly Notices of the Royal Astronomical Society. 2017 Jul;469(1):938-49. |
+                <a href="https://doi.org/10.1093/mnras/stx755" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.1093/mnras/stx755</a>
+                <br><br>
+                [7] Dabbech A, Aghabiglou A, San Chu C, Wiaux Y. CLEANing Cygnus A deep and fast with R2D2.
+                The Astrophysical Journal Letters. 2024 May 7;966(2):L34. | <a href="https://arxiv.org/abs/2309.03291" target="_blank" class="text-[#CF9E5F] hover:underline">ArXiv:2309.03291</a> | <a href="https://doi.org/10.3847/2041-8213/ad41df" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.3847/2041-8213/ad41df</a>
+                <br><br>
+                [8] Offringa AR, Smirnov O. An optimised algorithm for multiscale wideband deconvolution of radio
+                astronomical images. Monthly Notices of the Royal Astronomical Society. 2017 Oct;471(1):301-16. |
+                <a href="https://doi.org/10.1093/mnras/stx1547" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.1093/mnras/stx1547</a>
+                <br><br>
+                [9] Terris M, Tang C, Jackson A, Wiaux Y. Plug-and-play imaging with model uncertainty quantification in
+                radio astronomy. arXiv preprint <a href="https://arxiv.org/abs/2312.07137" target="_blank" class="text-[#CF9E5F] hover:underline">arXiv:2312.07137.</a> 2023 Dec 12.
+                <br><br>
+                [10] Muckley, M. J., Stern, R., Murrell, T., & Knoll, F. TorchKbNufft: A High-Level, Hardware-Agnostic Non-Uniform Fast &#123;Fourier&#125; Transform.
+                ISMRM Workshop on Data Sampling & Image Reconstruction. 2020 May.
+                <br><br>
+                [11] Shih, Y.-h., Wright, G., And´en, J., Blaschke, J., & Barnett, A. H: cuFINUFFT: a load-balanced GPU library for general-purpose nonuniform FFTs.
+                2021 IEEE International Parallel and Distributed Processing Symposium Workshops (IPDPSW), 688–697 | <a href="https://arxiv.org/abs/2102.08463" target="_blank" class="text-[#CF9E5F] hover:underline">ArXiv:2102.08463</a>
+                <br><br>
+                [12] Lin, J.-M. Python non-uniform fast Fourier transform (PyNUFFT): An accelerated non-Cartesian MRI package on a heterogeneous platform (CPU/GPU).
+                2018, Journal of Imaging. 4, 51. | <a href="https://arxiv.org/abs/1710.03197" target="_blank" class="text-[#CF9E5F] hover:underline">ArXiv:1710.03197</a> | <a href="https://doi.org/10.3390/jimaging4030051" target="_blank" class="text-[#CF9E5F] hover:underline">DOI:10.3390/jimaging4030051</a>
+            </p>
+
+            <div class="mt-12 bg-[#292350] p-8 rounded-2xl shadow-lg border border-slate-200 text-center relative overflow-hidden group">
+                <div class="absolute -inset-4 bg-gradient-to-br from-[#CF9E5F]/10 to-transparent blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <h3 class="text-2xl font-bold text-white mb-3 relative z-10">Support</h3>
+                <p class="text-slate-300 relative z-10">
+                    If you need assistance with setting up the <a href="#" class="font-bold text-[#CF9E5F] hover:underline">BASPLib</a> imaging algorithms or encounter any issues during
+                    installation, please don’t hesitate to contact our <a href="support_formspree.html" class="font-bold text-white underline hover:text-[#CF9E5F] transition-colors">support team</a>.
+                </p>
+            </div>
+
+        </article>
+    </div>
+
+    <div id="imageModal" class="fixed inset-0 z-50 hidden bg-black/90 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <span id="closeModal" class="absolute top-6 right-8 text-white text-5xl font-bold cursor-pointer hover:text-[#CF9E5F] transition-colors">&times;</span>
+        <div class="relative max-w-5xl w-full flex flex-col items-center">
+            <img id="modalImg" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl" />
+            <div id="modalCaption" class="mt-6 text-white text-xl font-medium text-center px-4"></div>
+        </div>
+    </div>
+
+</Layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Copy to Clipboard
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const pre = btn.nextElementSibling as HTMLElement;
+                if(pre) {
+                    navigator.clipboard.writeText(pre.innerText).then(() => {
+                        const originalHTML = btn.innerHTML;
+                        btn.innerHTML = '<span class="text-xs font-bold text-[#CF9E5F]">Copied!</span>';
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                        }, 2000);
+                    });
+                }
+            });
+        });
+
+        // Fullscreen Image Modal
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg') as HTMLImageElement;
+        const modalCaption = document.getElementById('modalCaption');
+        const closeModal = document.getElementById('closeModal');
+
+        if (modal && modalImg && modalCaption && closeModal) {
+            document.querySelectorAll('.image-gallery img').forEach(img => {
+                img.addEventListener('click', (e) => {
+                    const target = e.target as HTMLImageElement;
+                    modal.classList.remove('hidden');
+                    setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                    modalImg.src = target.src;
+                    modalCaption.innerHTML = target.getAttribute('alt') || '';
+                });
+            });
+
+            const hideModal = () => {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            };
+
+            closeModal.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) hideModal();
+            });
+        }
+    });
+</script>

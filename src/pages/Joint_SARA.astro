@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Joint SARA | BASPLib">
+    <div class="max-w-4xl mx-auto space-y-12">
+        <header>
+            <a href="/SARA_family" class="text-sm font-bold text-[#6E898A] hover:text-[#CF9E5F] transition-colors flex items-center gap-2 mb-4 w-fit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Back to SARA
+            </a>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                Joint SARA
+            </h1>
+            <h2 class="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-[#6E898A] opacity-80 italic border-b border-slate-200 pb-4">
+                Joint Sparsity Averaging Reweighted Analysis
+            </h2>
+        </header>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Main codes
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <a href="https://github.com/basp-group/SARA-CALIB-realdata/" target="_blank" class="block bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#CF9E5F]/50 transition-all duration-300 group">
+                    <h4 class="font-bold text-[#292350] mb-4 pb-2 border-b border-slate-100 group-hover:text-[#CF9E5F] transition-colors">Joint SARA RI V1.0</h4>
+                    <div class="flex items-center gap-4">
+                        <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-8 w-auto object-contain" />
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Papers and Codes
+            </h3>
+            <div class="space-y-6">
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">Cygnus A jointly calibrated and imaged via non-convex optimisation from JVLA data</strong>
+                        A. Dabbech, A. Repetti, R. Perley, O. Smirnov and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 506(4):4855–4876, 2021.<br>
+                        <a href="https://arxiv.org/abs/2102.00065" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2102.00065</a> |
+                        <a href="https://doi.org/10.1093/mnras/stab1903" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/stab1903</a>
+                    </p>
+                    <div class="flex items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <a href="https://github.com/basp-group/SARA-CALIB-realdata/" target="_blank" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">Polca SARA - Full polarization, direction-dependent calibration and sparse imaging for radio interferometry</strong>
+                        J. Birdi, A. Repetti, and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 492(3):3509–3528, 2019.<br>
+                        <a href="https://arxiv.org/abs/1904.00663" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:1904.00663</a> |
+                        <a href="https://doi.org/10.1093/mnras/stz3555" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/stz3555</a>
+                    </p>
+                    <div class="flex items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <a href="https://github.com/basp-group/Polca-SARA/" target="_blank" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">Time-Regularized Blind Deconvolution Approach for Radio Interferometry</strong>
+                        P.-A. Thouvenin, A. Repetti, A. Dabbech and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">in Proc. IEEE SAM Workshop</i>, pp. 475-479, Sheffield, United Kingdom, July 2018.<br>
+                        <a href="https://doi.org/10.1109/SAM.2018.8448891" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1109/SAM.2018.8448891</a>
+                    </p>
+                    <div class="flex items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <a href="https://github.com/basp-group/SARA-CALIB-time-regularised/" target="_blank" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-2">
+                        <strong class="text-[#292350] block mb-1">A non-convex perspective on calibration and imaging in radio interferometry</strong>
+                        A. Repetti and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">in Proc. Wavelets and Sparsity XVII</i>, San Diego, California, United States, 6-9 August 2017.<br>
+                        <a href="https://doi.org/10.1117/12.2273766" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI: 10.1117/12.2273766</a>
+                    </p>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">Non-convex optimization for self-calibration of direction-dependent effects in radio interferometric imaging</strong>
+                        A. Repetti, J. Birdi, A. Dabbech and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 470(4):3981-4006, 2017.<br>
+                        <a href="https://arxiv.org/abs/1701.03689" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:1701.03689</a> |
+                        <a href="http://dx.doi.org/10.1093/mnras/stx1267" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/stx1267</a>
+                    </p>
+                    <div class="flex items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <a href="https://github.com/basp-group/SARA-CALIB/" target="_blank" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+</Layout>

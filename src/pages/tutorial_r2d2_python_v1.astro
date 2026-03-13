@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="R2D2 RI V1.0 Tutorial | BASPLib">
+    <div class="max-w-5xl mx-auto space-y-6">
+
+        <header>
+            <a href="/R2D2_RI" class="text-sm font-bold text-[#6E898A] hover:text-[#CF9E5F] transition-colors flex items-center gap-2 mb-4 w-fit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Back to R2D2 RI
+            </a>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tighter mb-2 text-[#292350]">
+                R2D2 RI V1.0 Tutorial
+            </h1>
+
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+            <div class="bg-slate-100 border-b border-slate-200 px-4 py-3 flex items-center gap-3">
+                <img src="/images/logo/jupyter.png" alt="Jupyter Logo" class="h-6 w-auto object-contain" />
+                <span class="text-sm font-bold text-slate-600 font-mono">tutorial_r2d2_python_v1.ipynb</span>
+            </div>
+
+            <div class="w-full bg-white">
+                <iframe
+                    id="notebook-iframe-v1"
+                    src="/notebooks/tutorial_r2d2_python_v1.html"
+                    class="w-full border-none block"
+                    scrolling="no"
+                    title="Jupyter Notebook Tutorial V1">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    function resizeIframe() {
+        const iframe = document.getElementById('notebook-iframe-v1') as HTMLIFrameElement;
+        if (iframe && iframe.contentWindow) {
+            try {
+                // Extract the exact height of the HTML document inside the iframe
+                const newHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                // Add a small 50px buffer to ensure the absolute bottom doesn't cut off
+                iframe.style.height = (newHeight + 50) + 'px';
+            } catch (error) {
+                console.warn("Iframe resizing blocked or not ready:", error);
+            }
+        }
+    }
+
+    // Trigger the resize once the iframe content fully loads
+    const iframeElement = document.getElementById('notebook-iframe-v1');
+    if (iframeElement) {
+        iframeElement.addEventListener('load', () => {
+            resizeIframe();
+            // Fallback timeouts in case Jupyter's MathJax or images render a split-second later and push the layout down
+            setTimeout(resizeIframe, 500);
+            setTimeout(resizeIframe, 2000);
+        });
+    }
+</script>

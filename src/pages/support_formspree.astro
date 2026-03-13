@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Support | BASPLib">
+
+    <script is:inline src="https://www.google.com/recaptcha/enterprise.js?render=6LdusQYqAAAAALdAwzYWGUH2DOQpiPFMYSforgfL"></script>
+
+    <div class="max-w-3xl mx-auto space-y-8 pb-20">
+
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                BASPLib Support
+            </h1>
+            <h2 class="text-base md:text-lg font-medium text-[#6E898A]">
+                Connect with the BASPLib support team for assistance or inquiries.
+            </h2>
+        </header>
+
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F]"></div>
+
+            <form id="support-form" action="https://formspree.io/f/mqazowyr" method="POST" class="space-y-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="name" class="block text-sm font-bold text-[#292350]">Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="name" name="name" required
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#CF9E5F]/50 focus:border-[#CF9E5F] transition-all"
+                            placeholder="Dr. Jane Doe">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="email" class="block text-sm font-bold text-[#292350]">Email <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" name="email" required
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#CF9E5F]/50 focus:border-[#CF9E5F] transition-all"
+                            placeholder="jane.doe@university.edu">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="topic" class="block text-sm font-bold text-[#292350]">Topic <span class="text-red-500">*</span></label>
+                    <input type="text" id="topic" name="topic" required
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#CF9E5F]/50 focus:border-[#CF9E5F] transition-all"
+                        placeholder="e.g. Issue running uSARA Imager">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="issue" class="block text-sm font-bold text-[#292350]">Message <span class="text-red-500">*</span></label>
+                    <textarea id="issue" name="issue" rows="6" required
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#CF9E5F]/50 focus:border-[#CF9E5F] transition-all resize-y"
+                        placeholder="Please describe your issue or inquiry in detail..."></textarea>
+                </div>
+
+                <div class="hidden">
+                    <label for="website">Website:</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div>
+                        <label for="captcha" class="block text-sm font-bold text-[#292350] mb-1">Human Verification <span class="text-red-500">*</span></label>
+                        <p class="text-sm text-slate-500">Please solve the equation: <span id="captcha-equation" class="font-bold text-[#432E60] text-lg bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-sm ml-2"></span></p>
+                    </div>
+                    <input type="number" id="captcha" name="captcha" required
+                        class="w-32 px-4 py-3 text-center text-lg font-bold rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#CF9E5F]/50 focus:border-[#CF9E5F] transition-all"
+                        placeholder="?">
+                </div>
+
+                <div id="recaptcha-container"></div>
+
+                <div id="form-error" class="hidden bg-red-50 text-red-600 px-4 py-3 rounded-xl border border-red-100 text-sm font-medium"></div>
+
+                <button type="submit"
+                    class="w-full group relative flex justify-center items-center gap-3 px-8 py-4 bg-[#292350] text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#CF9E5F]/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                    <span class="relative z-10">Send Message</span>
+                    <svg class="relative z-10 w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+</Layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Generate random numbers for Math CAPTCHA
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        const expectedAnswer = num1 + num2;
+
+        // Display equation
+        const equationSpan = document.getElementById('captcha-equation');
+        if (equationSpan) {
+            equationSpan.textContent = `${num1} + ${num2}`;
+        }
+
+        // Intercept form submission to validate CAPTCHA
+        const form = document.getElementById('support-form');
+        const errorDiv = document.getElementById('form-error');
+        const captchaInput = document.getElementById('captcha') as HTMLInputElement;
+
+        if (form && errorDiv && captchaInput) {
+            form.addEventListener('submit', (e) => {
+                const userAnswer = parseInt(captchaInput.value, 10);
+
+                if (userAnswer !== expectedAnswer) {
+                    e.preventDefault(); // Stop form submission
+                    errorDiv.textContent = "Incorrect math verification answer. Please try again.";
+                    errorDiv.classList.remove('hidden');
+                    captchaInput.classList.add('border-red-500', 'focus:ring-red-500/50', 'focus:border-red-500');
+                    captchaInput.value = ''; // Clear the wrong answer
+                } else {
+                    errorDiv.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>

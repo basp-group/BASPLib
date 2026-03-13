@@ -1,0 +1,99 @@
+---
+// src/components/Navigation.astro
+---
+
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <div class="flex items-center gap-10">
+            <a href="https://basp.site.hw.ac.uk/" class="flex items-center gap-3 group">
+                <img src="/images/logo/basp_logo_putple.png" alt="BASP Logo" class="h-15 w-auto group-hover:scale-150 transition-transform duration-300" />
+                <span class="font-bold tracking-tight text-xl text-[#2F3E5E] hidden sm:block">
+
+                </span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm font-semibold text-slate-500 hover:text-[#CF9E5F] transition-colors tracking-wide py-2">HOME</a>
+
+                <div class="relative group">
+                    <button class="text-sm font-semibold text-slate-500 hover:text-[#CF9E5F] transition-colors tracking-wide flex items-center gap-1 py-2">
+                        ALGORITHMS
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="absolute left-0 top-full mt-1 w-48 bg-white border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                        <a href="/R2D2" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 border-b border-slate-100">
+                            <img src="/images/R2D2.png" alt="R2D2" class="w-6 h-6 object-contain" />
+                            <span class="text-sm font-medium text-[#2F3E5E]">R2D2</span>
+                        </a>
+                        <a href="/AIRI" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 border-b border-slate-100">
+                            <img src="/images/Chewbacca1_rmb.png" alt="AIRI" class="w-6 h-6 object-contain" />
+                            <span class="text-sm font-medium text-[#2F3E5E]">AIRI</span>
+                        </a>
+                        <a href="/SARA_family" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 border-b border-slate-100">
+                            <img src="/images/Leia_uSARA_rmb.png" alt="SARA" class="w-6 h-6 object-contain" />
+                            <span class="text-sm font-medium text-[#2F3E5E]">SARA</span>
+                        </a>
+                        <a href="/EIRA" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50">
+                            <img src="/images/DarthVader.png" alt="EIRA" class="w-6 h-6 object-contain" />
+                            <span class="text-sm font-medium text-[#2F3E5E]">EIRA</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button class="text-sm font-semibold text-slate-500 hover:text-[#CF9E5F] transition-colors tracking-wide flex items-center gap-1 py-2">
+                        FUNCTIONALITIES
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="absolute left-0 top-full mt-1 w-56 bg-white border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                        <a href="/measurment_model" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 border-b border-slate-100">
+                            <img src="/images/falcon3.png" alt="PHI & MROP" class="w-6 h-6 object-contain" />
+                            <span class="text-sm font-medium text-[#2F3E5E]">PHI & MROP</span>
+                        </a>
+                        <a href="/BUQO" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50">
+                            <img src="/images/Yoda.png" alt="BUQO" class="w-6 h-6 object-contain" />
+                            <span class="text-sm font-medium text-[#2F3E5E]">BUQO</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="/benchmarking" class="text-sm font-semibold text-slate-500 hover:text-[#CF9E5F] transition-colors tracking-wide py-2">BENCHMARKING</a>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-5">
+            <div class="hidden md:flex items-center gap-5">
+                <button class="text-slate-400 hover:text-[#2F3E5E] transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+                <a href="/support_formspree" class="text-slate-400 hover:text-[#2F3E5E] transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </a>
+            </div>
+
+            <button id="mobile-menu-toggle" class="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white shadow-lg absolute w-full left-0">
+        <div class="flex flex-col p-4 space-y-4">
+            <a href="/" class="text-[#2F3E5E] font-semibold p-2 hover:text-[#CF9E5F]">HOME</a>
+            <a href="/benchmarking" class="text-[#2F3E5E] font-semibold p-2 hover:text-[#CF9E5F]">BENCHMARKING</a>
+            <a href="/support_formspree" class="text-[#2F3E5E] font-semibold p-2 flex items-center gap-2 hover:text-[#CF9E5F]">CONTACT <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    const toggleButton = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (toggleButton && mobileMenu) {
+        toggleButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+</script>

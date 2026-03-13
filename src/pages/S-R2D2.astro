@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="S-R2D2 | BASPLib">
+    <div class="max-w-4xl mx-auto space-y-12">
+
+        <header>
+            <a href="/R2D2" class="text-sm font-bold text-[#6E898A] hover:text-[#CF9E5F] transition-colors flex items-center gap-2 mb-4 w-fit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Back to R2D2
+            </a>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                S-R2D2
+            </h1>
+            <h2 class="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-[#6E898A] opacity-80 italic border-b border-slate-200 pb-4">
+                Residual-to-Residual DNN series for high-Dynamic range imaging
+            </h2>
+        </header>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Main codes & Tutorials
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#CF9E5F]/50 transition-all duration-300">
+                    <h4 class="font-bold text-[#292350] mb-4 pb-2 border-b border-slate-100">S-R2D2 RI V1.0</h4>
+                    <div class="flex items-center gap-4">
+                        <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-8 w-auto object-contain" />
+                        <a href="#" target="_blank" title="Python" class="opacity-80 hover:opacity-100 transition-opacity">
+                            <img src="/images/logo/R2D2_coming_soon.png" alt="Coming Soon" class="h-8 w-auto object-contain" />
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#CF9E5F]/50 transition-all duration-300">
+                    <h4 class="font-bold text-[#292350] mb-4 pb-2 border-b border-slate-100">S-R2D2 Tutorials</h4>
+                    <div class="flex items-center gap-4">
+                        <a href="#" target="_blank" title="Jupyter Notebook" class="opacity-80 hover:opacity-100 transition-opacity">
+                            <img src="/images/logo/R2D2_coming_soon.png" alt="Coming Soon" class="h-8 w-auto object-contain" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Papers & Codes
+            </h3>
+
+            <div class="space-y-6">
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">S-R2D2: a spherical extension of the R2D2 deep neural network series paradigm for wide-field radio-interferometric imaging</strong>
+                        A. Tajja, A. Aghabiglou, E. Tolley, JP. Kneib, JP. Thiran, Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 542(1):2426-442, 2025.<br>
+                        <a href="https://arxiv.org/abs/2503.01462" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">arXiv:2503.01462</a> |
+                        <a href="https://doi.org/10.1093/mnras/staf1082" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/staf1082</a>
+                    </p>
+                    <div class="flex items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <span class="font-bold text-sm text-[#2F3E5E]">S-R2D2 <span class="text-[#CF9E5F]">V1.0</span> & Tutorial:</span>
+                        <a href="#" title="MATLAB" class="opacity-80 hover:opacity-100 transition-opacity">
+                            <img src="/images/logo/R2D2_coming_soon.png" alt="Coming Soon Logo" class="h-8 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </div>
+</Layout>

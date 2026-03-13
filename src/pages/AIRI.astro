@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="AIRI | BASPLib">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
+
+        <div class="flex-1 space-y-8">
+            <header class="mb-8">
+                <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                    AIRI
+                </h1>
+                <h2 class="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-[#6E898A] italic border-b border-slate-200 pb-4">
+                    <strong>AI</strong> for <strong>R</strong>egularisation in <strong>I</strong>maging
+                </h2>
+            </header>
+
+            <blockquote class="border-l-4 border-[#CF9E5F] pl-6 py-3 bg-[#292350]/5 rounded-r-xl shadow-sm">
+                <p class="text-xl font-bold text-[#2F3E5E] italic">
+                    "Chewbacca is AIRI, not Hairy!"
+                </p>
+            </blockquote>
+
+            <article class="space-y-6 text-lg leading-relaxed text-slate-700">
+                <p>
+                    The AIRI algorithms are Plug-and-Play (PnP) algorithms propelled by learned regularisation denoisers and endowed with robust convergence guarantees.
+                    The (unconstrained) AIRI algorithm is built on a Forward-Backward optimisation algorithmic backbone enabling handling soft data-fidelity terms,
+                    while cAIRI (standing for "constrained AIRI") relies on a Primal-Dual Forward-Backward optimisation algorithmic backbone enabling handling hard data-fidelity
+                    constraints. Both AIRI and cAIRI are shipped with uncertainty quantification functionality. Their primary application is to solve large-scale high-resolution high-dynamic range inverse problems for RI in radio astronomy, more specifically 2D planar monochromatic intensity imaging. AIRI and cAIRI provide improved precision and acceleration
+                    of the image reconstruction process over their pure optimisation counterparts, respectively uSARA and SARA (see SARA page).
+                    HyperAIRI extends AIRI to the hyperspectral setting, enabling joint reconstruction across wide frequency bands through learned hyperspectral denoisers that enforce a power-law spectral model. Built upon a Forward–Backward backbone with convergence guarantees, HyperAIRI updates all spectral channels in parallel and provides enhanced precision and scalability for large-scale hyperspectral RI imaging.
+                </p>
+            </article>
+
+            <div class="pt-8 mt-8 border-t border-slate-200">
+                <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3">
+                    Papers & Codes
+                    <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-8 w-auto object-contain" />
+                </h3>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="/uAIRI" class="group relative flex items-center gap-3 px-8 py-3.5 bg-[#292350] border border-[#292350] text-slate-100 font-bold rounded-xl shadow-md hover:shadow-lg hover:border-[#CF9E5F] hover:text-white transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#CF9E5F]/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <span class="relative z-10">AIRI</span>
+                        <svg class="relative z-10 w-4 h-4 transition-transform group-hover:translate-x-1 text-[#CF9E5F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+
+                    <a href="/cAIRI" class="group relative flex items-center gap-3 px-8 py-3.5 bg-[#292350] border border-[#292350] text-slate-100 font-bold rounded-xl shadow-md hover:shadow-lg hover:border-[#CF9E5F] hover:text-white transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#CF9E5F]/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <span class="relative z-10">cAIRI</span>
+                        <svg class="relative z-10 w-4 h-4 transition-transform group-hover:translate-x-1 text-[#CF9E5F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+
+                    <a href="/HyperAIRI" class="group relative flex items-center gap-3 px-8 py-3.5 bg-[#292350] border border-[#292350] text-slate-100 font-bold rounded-xl shadow-md hover:shadow-lg hover:border-[#CF9E5F] hover:text-white transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#CF9E5F]/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <span class="relative z-10">HyperAIRI</span>
+                        <svg class="relative z-10 w-4 h-4 transition-transform group-hover:translate-x-1 text-[#CF9E5F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/3 flex justify-center md:justify-end md:sticky top-32">
+            <div class="relative group">
+                <div class="absolute -inset-4 bg-gradient-to-br from-[#2F3E5E]/10 to-[#CF9E5F]/10 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <img src="/images/Chewbacca1_rmb.png" alt="AIRI" class="relative w-64 md:w-full max-w-sm object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500" />
+            </div>
+        </div>
+
+    </div>
+</Layout>

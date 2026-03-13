@@ -1,0 +1,94 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="PHI | BASPLib">
+    <div class="max-w-4xl mx-auto space-y-12">
+        <header>
+            <a href="/measurment_model" class="text-sm font-bold text-[#6E898A] hover:text-[#CF9E5F] transition-colors flex items-center gap-2 mb-4 w-fit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Back to PHI & MROP
+            </a>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                PHI
+            </h1>
+            <h2 class="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-[#6E898A] opacity-80 italic border-b border-slate-200 pb-4">
+                Small scale RI measurement operator
+            </h2>
+        </header>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Main codes & Tutorials
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#CF9E5F]/50 transition-all duration-300">
+                    <h4 class="font-bold text-[#292350] mb-4 pb-2 border-b border-slate-100">PHI V2.0</h4>
+                    <div class="flex items-center gap-4">
+                        <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-8 w-auto object-contain" />
+                        <a href="https://github.com/basp-group/RI-measurement-operator/tree/python" target="_blank" title="Python" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/python_logo.png" alt="Python Logo" class="h-8 w-auto object-contain" />
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#CF9E5F]/50 transition-all duration-300">
+                    <h4 class="font-bold text-[#292350] mb-4 pb-2 border-b border-slate-100">PHI Tutorial</h4>
+                    <div class="flex items-center gap-4">
+                        <a href="/tutorial_ri_measurement_operator_python" title="Jupyter Notebook" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/jupyter.png" alt="Jupyter Logo" class="h-8 w-auto object-contain" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Papers & Codes
+            </h3>
+
+            <div class="space-y-6">
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">Towards a robust R2D2 paradigm for radio-interferometric imaging: revisiting DNN training and architecture</strong>
+                        A. Aghabiglou, C. S. Chu, C. Tang, A. Dabbech, Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">Submitted for publication at ApJS</i>, 2025.<br>
+                        <a href="https://arxiv.org/abs/2503.02554" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2503.02554v1</a>
+                    </p>
+                    <div class="flex items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <span class="font-bold text-sm text-[#2F3E5E]">PHI <span class="text-[#CF9E5F]">V2.0</span> & Tutorial:</span>
+                        <a href="https://github.com/basp-group/R2D2/tree/main" target="_blank" title="Python" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/python_logo.png" alt="Python Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                        <span class="font-bold text-[#6E898A]">&</span>
+                        <a href="/tutorial_ri_measurement_operator_python" title="Jupyter Notebook" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/jupyter.png" alt="Jupyter Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">Parallel faceted imaging in radio interferometry via proximal splitting (Faceted HyperSARA): II. Real data proof-of-concept and code</strong>
+                        P.-A. Thouvenin, A. Dabbech, M. Jiang, J.-P. Thiran, A. Jackson, Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 521(1), 20–34, 2023.<br>
+                        <a href="https://arxiv.org/abs/2209.07604" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2209.07604</a> |
+                        <a href="https://academic.oup.com/mnras/article/521/1/20/6823713" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/stac3175</a>
+                    </p>
+                    <div class="flex items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <span class="font-bold text-sm text-[#2F3E5E]">PHI <span class="text-[#CF9E5F]">V1.0</span> & Tutorial:</span>
+                        <a href="https://github.com/basp-group/RI-measurement-operator" target="_blank" title="Matlab" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/maltalb_logo.png" alt="Matlab Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                        <span class="font-bold text-[#6E898A]">&</span>
+                        <a href="/tutorial_ri_meas_op_matlab" title="Matlab" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/maltalb_logo.png" alt="Matlab Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </div>
+</Layout>

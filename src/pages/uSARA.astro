@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="uSARA | BASPLib">
+    <div class="max-w-4xl mx-auto space-y-12">
+        <header>
+            <a href="/SARA_family" class="text-sm font-bold text-[#6E898A] hover:text-[#CF9E5F] transition-colors flex items-center gap-2 mb-4 w-fit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Back to SARA
+            </a>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 inline-block pr-2 bg-gradient-to-r from-[#292350] via-[#432E60] to-[#CF9E5F] bg-clip-text text-transparent">
+                uSARA
+            </h1>
+            <h2 class="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-[#6E898A] opacity-80 italic border-b border-slate-200 pb-4">
+                unconstrained Sparsity Averaging Reweighted Analysis
+            </h2>
+        </header>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Main codes & Tutorials
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#CF9E5F]/50 transition-all duration-300">
+                    <h4 class="font-bold text-[#292350] mb-4 pb-2 border-b border-slate-100">uSARA RI V2.0</h4>
+                    <div class="flex items-center gap-4">
+                        <img src="/images/logo/GitHub-logo2.png" alt="GitHub Logo" class="h-8 w-auto object-contain" />
+                        <a href="https://github.com/basp-group/Small-scale-RI-imaging" target="_blank" title="Python" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/python_logo.png" alt="Python Logo" class="h-8 w-auto object-contain" />
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-[#CF9E5F]/50 transition-all duration-300">
+                    <h4 class="font-bold text-[#292350] mb-4 pb-2 border-b border-slate-100">uSARA Tutorials</h4>
+                    <div class="flex items-center gap-4">
+                        <a href="/tutorial_usara_python" title="Jupyter Notebook" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/jupyter.png" alt="Jupyter Logo" class="h-8 w-auto object-contain" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="text-2xl font-bold text-[#2F3E5E] mb-6 flex items-center gap-3 border-b border-slate-200 pb-2">
+                Papers & Codes
+            </h3>
+            <div class="space-y-6">
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">Toward a robust R2D2 paradigm for radio-interferometric imaging: revisiting DNN training and architecture</strong>
+                        A. Aghabiglou, C. S. Chu, C. Tang, A. Dabbech, Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">ApJS</i>, 280(2):63, 2025.<br>
+                        <a href="https://arxiv.org/abs/2503.02554" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2503.02554v1</a> |
+                        <a href="https://doi.org/10.3847/1538-4365/adfbed" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.3847/1538-4365/adfbed</a>
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <span class="font-bold text-sm text-[#2F3E5E]">uSARA RI <span class="text-[#CF9E5F]">V2.0</span> & Tutorial:</span>
+                        <a href="https://github.com/basp-group/Small-scale-RI-imaging" target="_blank" title="Python" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/python_logo.png" alt="Python Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                        <span class="font-bold text-[#6E898A]">&</span>
+                        <a href="tutorial_usara_python" title="Jupyter Notebook" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/jupyter.png" alt="Jupyter Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-4">
+                        <strong class="text-[#292350] block mb-1">The AIRI plug-and-play algorithm for image reconstruction in radio-interferometry: variations and robustness</strong>
+                        M. Terris , C. Tang , A. Jackson , Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 537(2):1608-1619, 2025.<br>
+                        <a href="https://arxiv.org/abs/2312.07137" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2312.07137</a> |
+                        <a href="https://doi.org/10.1093/mnras/staf022" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/staf022</a>
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 bg-[#292350]/5 p-4 rounded-xl">
+                        <span class="font-bold text-sm text-[#2F3E5E]">uSARA RI <span class="text-[#CF9E5F]">V1.0</span> & Tutorial:</span>
+                        <a href="https://github.com/basp-group/AIRI" target="_blank" title="MATLAB" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/maltalb_logo.png" alt="MATLAB Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                        <span class="font-bold text-[#6E898A]">&</span>
+                        <a href="/tutorial_usara_matlab" title="Matlab Tutorial" class="hover:scale-110 transition-transform">
+                            <img src="/images/logo/maltalb_logo.png" alt="MATLAB Logo" class="h-6 w-auto object-contain" />
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-2">
+                        <strong class="text-[#292350] block mb-1">Scalable precision wide-field imaging in radio interferometry: I. uSARA validated on ASKAP data</strong>
+                        A. Wilber, A. Dabbech, A. Jackson, and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 522(4):5558–5575, 2023.<br>
+                        <a href="http://arxiv.org/abs/2302.14148" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2302.14148</a> |
+                        <a href="https://doi.org/10.1093/mnras/stad1351" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/stad1351</a>
+                    </p>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-2">
+                        <strong class="text-[#292350] block mb-1">Image reconstruction algorithms in radio interferometry: from handcrafted to learned regularization denoisers</strong>
+                        M. Terris, A. Dabbech, C. Tang, and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">MNRAS</i>, 518(1):604–622, 2023.<br>
+                        <a href="http://arxiv.org/abs/2202.12959" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2202.12959</a> |
+                        <a href="https://doi.org/10.1093/mnras/stac2672" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1093/mnras/stac2672</a>
+                    </p>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-2">
+                        <strong class="text-[#292350] block mb-1">First AI for deep super-resolution wide-field imaging in radio astronomy: unveiling structure in ESO 137-006</strong>
+                        A. Dabbech, M. Terris, A. Jackson, M. Ramatsoku, O. Smirnov, and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">ApJL</i>, 939:L4, 2022.<br>
+                        <a href="http://arxiv.org/abs/2207.11336" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:2207.11336</a> |
+                        <a href="https://doi.org/10.3847/2041-8213/ac98af" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.3847/2041-8213/ac98af</a>
+                    </p>
+                </article>
+
+                <article class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-slate-700 mb-2">
+                        <strong class="text-[#292350] block mb-1">Variable metric forward-backward algorithm for composite minimization problems</strong>
+                        A. Repetti, and Y. Wiaux,<br>
+                        <i class="text-[#6E898A]">SIOPT</i>, 31(2):1215-1241, 2021.<br>
+                        <a href="https://arxiv.org/abs/1907.11486" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">ArXiv:1907.11486</a> |
+                        <a href="https://doi.org/10.1137/19M1277552" target="_blank" class="text-[#CF9E5F] hover:underline font-medium">DOI:10.1137/19M1277552</a>
+                    </p>
+                </article>
+            </div>
+        </section>
+    </div>
+</Layout>
