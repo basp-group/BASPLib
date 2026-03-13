@@ -64,10 +64,7 @@
 
         <div class="flex items-center gap-5">
             <div class="hidden md:flex items-center gap-5">
-                <button class="text-slate-400 hover:text-[#2F3E5E] transition-colors">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                </button>
-                <a href="/support_formspree" class="text-slate-400 hover:text-[#2F3E5E] transition-colors">
+                <a href="/support_formspree" title="Contact Support" class="text-slate-400 hover:text-[#2F3E5E] transition-colors">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </a>
             </div>
@@ -78,11 +75,51 @@
         </div>
     </div>
 
-    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white shadow-lg absolute w-full left-0">
-        <div class="flex flex-col p-4 space-y-4">
-            <a href="/" class="text-[#2F3E5E] font-semibold p-2 hover:text-[#CF9E5F]">HOME</a>
-            <a href="/benchmarking" class="text-[#2F3E5E] font-semibold p-2 hover:text-[#CF9E5F]">BENCHMARKING</a>
-            <a href="/support_formspree" class="text-[#2F3E5E] font-semibold p-2 flex items-center gap-2 hover:text-[#CF9E5F]">CONTACT <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white shadow-xl absolute w-full left-0 max-h-[85vh] overflow-y-auto">
+        <div class="flex flex-col p-4 space-y-2">
+            <a href="/" class="text-[#2F3E5E] font-semibold p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] transition-colors">HOME</a>
+
+            <details class="group">
+                <summary class="text-[#2F3E5E] font-semibold p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] transition-colors cursor-pointer flex justify-between items-center list-none [&::-webkit-details-marker]:hidden">
+                    ALGORITHMS
+                    <svg class="w-4 h-4 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </summary>
+                <div class="flex flex-col pl-4 mt-1 mb-2 space-y-1 border-l-2 border-slate-100 ml-3">
+                    <a href="/R2D2" class="text-slate-600 font-medium p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] flex items-center gap-3 transition-colors">
+                        <img src="/images/R2D2.png" alt="R2D2" class="w-6 h-6 object-contain" /> R2D2
+                    </a>
+                    <a href="/AIRI" class="text-slate-600 font-medium p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] flex items-center gap-3 transition-colors">
+                        <img src="/images/Chewbacca1_rmb.png" alt="AIRI" class="w-6 h-6 object-contain" /> AIRI
+                    </a>
+                    <a href="/SARA_family" class="text-slate-600 font-medium p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] flex items-center gap-3 transition-colors">
+                        <img src="/images/Leia_uSARA_rmb.png" alt="SARA" class="w-6 h-6 object-contain" /> SARA
+                    </a>
+                    <a href="/EIRA" class="text-slate-600 font-medium p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] flex items-center gap-3 transition-colors">
+                        <img src="/images/DarthVader.png" alt="EIRA" class="w-6 h-6 object-contain" /> EIRA
+                    </a>
+                </div>
+            </details>
+
+            <details class="group">
+                <summary class="text-[#2F3E5E] font-semibold p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] transition-colors cursor-pointer flex justify-between items-center list-none [&::-webkit-details-marker]:hidden">
+                    FUNCTIONALITIES
+                    <svg class="w-4 h-4 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </summary>
+                <div class="flex flex-col pl-4 mt-1 mb-2 space-y-1 border-l-2 border-slate-100 ml-3">
+                    <a href="/measurment_model" class="text-slate-600 font-medium p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] flex items-center gap-3 transition-colors">
+                        <img src="/images/falcon3.png" alt="PHI & MROP" class="w-6 h-6 object-contain" /> PHI & MROP
+                    </a>
+                    <a href="/BUQO" class="text-slate-600 font-medium p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] flex items-center gap-3 transition-colors">
+                        <img src="/images/Yoda.png" alt="BUQO" class="w-6 h-6 object-contain" /> BUQO
+                    </a>
+                </div>
+            </details>
+
+            <a href="/benchmarking" class="text-[#2F3E5E] font-semibold p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] transition-colors">BENCHMARKING</a>
+            <a href="/support_formspree" class="text-[#2F3E5E] font-semibold p-3 rounded-lg hover:bg-slate-50 hover:text-[#CF9E5F] transition-colors flex items-center gap-2">
+                CONTACT
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </a>
         </div>
     </div>
 </nav>
